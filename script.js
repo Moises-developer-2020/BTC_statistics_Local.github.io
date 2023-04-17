@@ -11,6 +11,15 @@ function getlastCheck() {
 }
 
 getlastCheck();
+//data of API
+let critopApi={
+    priceData:0,
+    percentData:0,
+    pricelow:0,
+    priceHight:0
+}
+
+//data API save
 let BTCjson = {
     status: {
         h: 30,
@@ -73,39 +82,20 @@ const elements = {
 };
 Object.assign(window, elements);
 
-async function requestPainted() {
-    try {
-        var data = await fetchData();
-    } catch (error) {
-        online_offline = false;
-    }
-
-    if (data == undefined) {
-        online_offline = false;
-    }
-    offlinePage();//open or close
-
+ function requestPainted() {
+    
+    getRequestData();
 
     if (online_offline) {
         console.log(data.data);
-        let priceData = data.data.BTC.ohlc.c;
-        let percentData = data.data.BTC.change.percent;
 
-        let pricelow = data.data.BTC.ohlc.l;
-        let priceHight = data.data.BTC.ohlc.h;
-
-        if (Math.sign(percentData) == -1 || Math.sign(percentData) == -0) {
+        if (Math.sign(critopApi.percentData) == -1 || Math.sign(critopApi.percentData) == -0) {
             percent.classList.add("negative");
         } else {
             percent.classList.remove("negative");
         }
 
 
-
-
-        // console.log((data.data.BTC.ohlc.h)-(data.data.BTC.ohlc.c));
-        //console.log(LastCheck);
-        //console.log(data.data.BTC.ohlc.c);
         if (parseFloat(LastCheck) < parseFloat(data.data.BTC.ohlc.c)) {
             diferenceH.classList.add("negative");
             diferenceL.classList.add("positive");
@@ -135,13 +125,13 @@ async function requestPainted() {
         Saveinvertion = data.data.BTC.ohlc.c;
         BTCjson.price_invested = localStorage.getItem('price_invested') != undefined ? localStorage.getItem("price_invested") : 0;
         invested_saved.innerHTML = BTCjson.price_invested;
-        BTCjson.status.h = new Intl.NumberFormat('es-MX').format(parseFloat(priceHight).toFixed(2));
-        BTCjson.status.l = new Intl.NumberFormat('es-MX').format(parseFloat(pricelow).toFixed(2));
+        BTCjson.status.h = new Intl.NumberFormat('es-MX').format(parseFloat(critopApi.priceHight).toFixed(2));
+        BTCjson.status.l = new Intl.NumberFormat('es-MX').format(parseFloat(critopApi.pricelow).toFixed(2));
         BTCjson.status.difH = new Intl.NumberFormat('es-MX').format((parseFloat(data.data.BTC.ohlc.h).toFixed(2)) - (parseFloat(data.data.BTC.ohlc.c).toFixed(2)));
         BTCjson.status.difL = new Intl.NumberFormat('es-MX').format((parseFloat(data.data.BTC.ohlc.c).toFixed(2)) - (parseFloat(data.data.BTC.ohlc.l).toFixed(2)));
 
-        BTCjson.status.c = new Intl.NumberFormat('es-MX').format(parseFloat(priceData).toFixed(2));
-        BTCjson.percent = parseFloat(percentData).toFixed(2);
+        BTCjson.status.c = new Intl.NumberFormat('es-MX').format(parseFloat(critopApi.priceData).toFixed(2));
+        BTCjson.percent = parseFloat(critopApi.percentData).toFixed(2);
 
 
         diferenceH.innerHTML = BTCjson.status.difH
@@ -165,9 +155,7 @@ async function requestPainted() {
         Low.innerHTML = BTCjson.status.l;
         Hight.innerHTML = BTCjson.status.h;
         percent.innerHTML = BTCjson.percent;
-        //console.log(parseFloat(priceData).toFixed(2));
-
-        // console.log(new Intl.NumberFormat('es-MX').format((parseFloat(data.data.BTC.ohlc.h))-(parseFloat(data.data.BTC.ohlc.c)).toFixed(2)));
+        
         
         //check out the last change of the price to paint red or green
         if (parseFloat(LastCheck) != parseFloat(data.data.BTC.ohlc.c)) {
@@ -181,6 +169,25 @@ async function requestPainted() {
 
     }
 };
+
+async function getRequestData(){
+    try {
+        var data = await fetchData();
+
+        critopApi.priceData = data.data.BTC.ohlc.c;
+        critopApi.percentData = data.data.BTC.change.percent;
+        critopApi.pricelow = data.data.BTC.ohlc.l;
+        critopApi.priceHight = data.data.BTC.ohlc.h;
+
+    } catch (error) {
+        online_offline = false;
+    }
+
+    if (data == undefined) {
+        online_offline = false;
+    }
+    offlinePage();//open or close
+}
 function upDomwIndicator(variable,compare,element,option,initStyle,endStyle){
     switch (option) {
         case 'style':
