@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="main">
+        <div class="center">
+            <div class="elapseTimeInfo">
+                
+                <span id="elapseTim"></span>
+            </div>
+            <div class="priceSavd">
+                <span id="priceSavdStorage"></span>
+                <span id="priceStatus"><span>&#8800</span> <span class="indicator"></span><span id="savdDifferen" class="positive"></span></span>
+            </div>
+            <div class="earnings">
+                <span>earnings</span>
+                <span class="earningStatus">$<span id="invested_saved"></span> <span>&#8800</span> <span id="earnings_today" class="positive">0</span></span>
+            </div>
+            <div class="investeInfo">
+                <span>invested since: </span>
+                <span id="investedDate"></span>
+            </div>
+            <div class="status">
+                <div id="statusTextH">
+                    <div>
+                        <span>H: </span>
+                        <span id="Hight"></span>
+                    </div>
+                    <div>
+                        <span>&#8800: </span>
+                        <span id="diferenceH" >00000</span>
+                    </div>
+                    
+                </div>
+                <div id="statusTextL">
+                    <div>
+                        <span>L: </span>
+                        <span id="Low"></span>
+                    </div>
+                    <div>
+                        <span>&#8800: </span>
+                        <span id="diferenceL" >00000</span>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="dataH1"><span>Price:</span> <span id="price"></span></div>
+            <div class="priceDiffer">&#8800: <span id="priceDifferences"></span></div>
+            <div class="dataH2"><span>Percent:</span> <span id="percent" class="positive"></span></div>
+            <div class="reload"> 
+                <div>
+                    <button class="button-34" id="sellSubmit" role="button">Sell</button>
+                </div>
+                <div>
+                    <button class="button-34" id="investInput" role="button">Buy</button>
+                    <button class="button-34" id="submit" role="button">Reload</button>
+                </div>
+            </div>
+            <div class="offline">
+                <div>
+                    <span>Opps! <br> You`re offline</span>
+                    <span><input type="button" id="offline_button" class="button-34" value="Reload"></span>
+                </div>
+            </div>
+            <div class="profits">
+                <span>Money to Invest</span>
+                <div class="profits_content">
+                    <div class="form-group">
+                        <span>$</span>
+                        <input class="form-field" id="price_invest" type="number" placeholder="000.00">
+                    </div>
+                    <div class="profits_bottom">
+                        <button class="button-34" id="cancelSubmit" role="button">Cancel</button>
+                        <button class="button-34" id="saveSubmit" role="button">Buy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="star-field">
+    <canvas id="bgCanvas"></canvas>
+    <script src="script.js"></script>
+    <script src="animation.js"></script>
+</body>
+</html>
