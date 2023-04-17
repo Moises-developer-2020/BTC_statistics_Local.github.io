@@ -8,7 +8,7 @@ var firtsLoad=0;
 
 function getlastCheck() {
     LastCheck = localStorage.getItem("checkPr") != undefined ? localStorage.getItem("checkPr") : 0;
-
+    
 }
 
 getlastCheck();
@@ -37,6 +37,13 @@ let BTCjson = {
     earnings: 0,
     price_invested: 0,
     price_to_invest: 0
+}
+
+let saveStyle={
+    diferenceH:'',
+    diferenceL:'',
+    priceDifferences:'',
+    indicator:''
 }
 async function fetchData() {
 
@@ -77,7 +84,7 @@ const elements = {
     diferenceH: getElement("#diferenceH"),
     diferenceL: getElement("#diferenceL"),
     priceDifferences: getElement("#priceDifferences"),
-    indicator: getElement(".indicator"),
+    indicator: getElement("#indicator"),
     savdDifferen: getElement("#savdDifferen"),
     priceSavdStorage: getElement("#priceSavdStorage")
 };
@@ -115,8 +122,10 @@ async function requestPainted() {
         } else {
             percent.classList.remove("negative");
         }
-
-
+        //not lose the color of the numbers
+        if(firtsLoad == 0){
+            getStyleSaved();
+        }
         if (parseFloat(LastCheck) < parseFloat(critopApi.priceData)) {
             diferenceH.classList.add("negative");
             diferenceL.classList.add("positive");
@@ -184,7 +193,7 @@ async function requestPainted() {
         checkToSAvedPrice();
         
         CalcularGanancia(parseFloat(BTCjson.price_invested), parseFloat(priceSavdStorage.innerHTML.replace(",", "")), parseFloat(price.innerHTML.replace(",", "")));
-
+        firtsLoad=1;
     }
 };
  
@@ -273,6 +282,7 @@ function checkToSAvedPrice() {
     if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
         //diferent;
         localStorage.setItem("checkPr", critopApi.priceData);
+        saveStyles();
     }//else{ no diferent};
 };
 
@@ -445,8 +455,47 @@ sellSubmit.onclick = function () {
 }
 showDate();
 
+function getStyleSaved(){
+    let savedStyle = checkStorageData('saveStyle')? getStorageData('saveStyle'):'';
+    if(savedStyle != ''){
+        let savedStyleParse = JSON.parse(savedStyle);
+        diferenceH.classList.add(savedStyleParse.diferenceH);
+        diferenceL.classList.add(savedStyleParse.diferenceL);
+        priceDifferences.classList.add(savedStyleParse.priceDifferences);
+        indicator.classList.add(savedStyleParse.indicator);
+    }
+}
+function saveStyles() {
+    if(priceDifferences.classList.value !== undefined && diferenceH.className != null){
+        
+        saveStyle.diferenceH=diferenceH.classList.value;
+        saveStyle.diferenceL=diferenceL.classList.value;
+        saveStyle.priceDifferences=priceDifferences.classList.value;
+        saveStyle.indicator=indicator.classList.value;
+        setStorageData('json','saveStyle',saveStyle);
 
-function getStorageData(item) {
+    }
+}
+  
+//window.addEventListener('beforeunload', saveStyles);
+
+//check if exist
+function checkStorageData(item) {
     return localStorage.getItem(item) !== null;
 }
-
+//get
+function getStorageData(item) {
+    return localStorage.getItem(item);
+}
+//set
+function setStorageData(key,name,miObjeto) {
+    switch (key) {
+        case 'json':
+            let miObjetoJSON = JSON.stringify(miObjeto);
+            localStorage.setItem(name, miObjetoJSON);
+            break;
+        default:
+            localStorage.setItem(name, miObjeto);
+            break;
+    }
+}
