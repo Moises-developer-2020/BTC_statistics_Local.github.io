@@ -4,6 +4,7 @@ var Saveinvertion;
 var price_invested_saved;
 var online_offline;
 var DifferIndicator;
+var firtsLoad=0;
 
 function getlastCheck() {
     LastCheck = localStorage.getItem("checkPr") != undefined ? localStorage.getItem("checkPr") : 0;
@@ -11,7 +12,7 @@ function getlastCheck() {
 }
 
 getlastCheck();
-//data of API
+//Api`s data
 let critopApi={
     priceData:0,
     percentData:0,
@@ -19,7 +20,7 @@ let critopApi={
     priceHight:0
 }
 
-//data API save
+//Api`s data modifed to show them
 let BTCjson = {
     status: {
         h: 30,
@@ -82,12 +83,32 @@ const elements = {
 };
 Object.assign(window, elements);
 
- function requestPainted() {
+async function getRequestData(k){
+    try {
+        var data =k;
+
+        critopApi.priceData = data.data.BTC.ohlc.c;
+        critopApi.percentData = data.data.BTC.change.percent;
+        critopApi.pricelow = data.data.BTC.ohlc.l;
+        critopApi.priceHight = data.data.BTC.ohlc.h;
+
+    } catch (error) {
+        console.log(100);
+        online_offline = false;
+    }
+
+    if (data == undefined) {
+        online_offline = false;
+        console.log(200);
+    }
+    offlinePage();//open or close
+}
+
+async function requestPainted() {
     
-    getRequestData();
+    getRequestData(await fetchData());
 
     if (online_offline) {
-        console.log(data.data);
 
         if (Math.sign(critopApi.percentData) == -1 || Math.sign(critopApi.percentData) == -0) {
             percent.classList.add("negative");
@@ -96,25 +117,25 @@ Object.assign(window, elements);
         }
 
 
-        if (parseFloat(LastCheck) < parseFloat(data.data.BTC.ohlc.c)) {
+        if (parseFloat(LastCheck) < parseFloat(critopApi.priceData)) {
             diferenceH.classList.add("negative");
             diferenceL.classList.add("positive");
             priceDifferences.classList.add("positive");
             indicator.classList.add("positive");
             upDomwIndicator(0,0,price,'class','positive',0);
-        } else if (parseFloat(LastCheck) != parseFloat(data.data.BTC.ohlc.c)) {
+        } else if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
             diferenceH.classList.remove("negative");
             diferenceL.classList.remove("positive");
             priceDifferences.classList.remove("positive");
             indicator.classList.remove("positive");
         }
-        if (parseFloat(LastCheck) > parseFloat(data.data.BTC.ohlc.c)) {
+        if (parseFloat(LastCheck) > parseFloat(critopApi.priceData)) {
             diferenceH.classList.add("positive");
             diferenceL.classList.add("negative");
             priceDifferences.classList.add("negative");
             indicator.classList.add("negative");
             upDomwIndicator(0,0,price,'class','negative',0);
-        } else if (parseFloat(LastCheck) != parseFloat(data.data.BTC.ohlc.c)) {
+        } else if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
             diferenceH.classList.remove("positive");
             diferenceL.classList.remove("negative");
             priceDifferences.classList.remove("negative");
@@ -122,27 +143,29 @@ Object.assign(window, elements);
         }
 
         SavePriceInvert = localStorage.getItem("PriceSaved") != undefined ? localStorage.getItem("PriceSaved") : 0;
-        Saveinvertion = data.data.BTC.ohlc.c;
+        Saveinvertion = critopApi.priceData;
         BTCjson.price_invested = localStorage.getItem('price_invested') != undefined ? localStorage.getItem("price_invested") : 0;
         invested_saved.innerHTML = BTCjson.price_invested;
-        BTCjson.status.h = new Intl.NumberFormat('es-MX').format(parseFloat(critopApi.priceHight).toFixed(2));
-        BTCjson.status.l = new Intl.NumberFormat('es-MX').format(parseFloat(critopApi.pricelow).toFixed(2));
-        BTCjson.status.difH = new Intl.NumberFormat('es-MX').format((parseFloat(data.data.BTC.ohlc.h).toFixed(2)) - (parseFloat(data.data.BTC.ohlc.c).toFixed(2)));
-        BTCjson.status.difL = new Intl.NumberFormat('es-MX').format((parseFloat(data.data.BTC.ohlc.c).toFixed(2)) - (parseFloat(data.data.BTC.ohlc.l).toFixed(2)));
+        BTCjson.status.h = convertPrice(critopApi.priceHight, false, 0);
+        BTCjson.status.l = convertPrice(critopApi.pricelow, false, 0);
+        BTCjson.status.difH = convertPrice(critopApi.priceHight,'-' , critopApi.priceData); 
+        BTCjson.status.difL = convertPrice(critopApi.priceData,'-' , critopApi.pricelow); 
 
-        BTCjson.status.c = new Intl.NumberFormat('es-MX').format(parseFloat(critopApi.priceData).toFixed(2));
+        BTCjson.status.c = convertPrice(critopApi.priceData, false, 0);
         BTCjson.percent = parseFloat(critopApi.percentData).toFixed(2);
 
 
         diferenceH.innerHTML = BTCjson.status.difH
         diferenceL.innerHTML = BTCjson.status.difL
 
-        priceDifferences.innerHTML = new Intl.NumberFormat('es-MX').format((parseFloat(data.data.BTC.ohlc.c).toFixed(2)) - (parseFloat(LastCheck).toFixed(2)));
+        priceDifferences.innerHTML = convertPrice(critopApi.priceData,'-' , LastCheck);
+
+        //indicator of increase or decrease
         upDomwIndicator(DifferIndicator,priceDifferences.innerHTML,indicator,'style','opacity:0;','opacity:1;');
         
 
-        priceSavdStorage.innerHTML = new Intl.NumberFormat('es-MX').format(parseFloat(SavePriceInvert).toFixed(2));
-        savdDifferen.innerHTML = new Intl.NumberFormat('es-MX').format((parseFloat(SavePriceInvert) > 0 ? parseFloat(data.data.BTC.ohlc.c).toFixed(2) : 0) - (parseFloat(SavePriceInvert).toFixed(2)));
+        priceSavdStorage.innerHTML = convertPrice(SavePriceInvert, false, 0); 
+        savdDifferen.innerHTML = convertPrice(SavePriceInvert > 0 ? critopApi.priceData : 0, '-', SavePriceInvert);
 
         if (Math.sign(savdDifferen.innerHTML) == -1 || Math.sign(savdDifferen.innerHTML) == -0) {
             savdDifferen.classList.add("negative");
@@ -157,36 +180,24 @@ Object.assign(window, elements);
         percent.innerHTML = BTCjson.percent;
         
         
-        //check out the last change of the price to paint red or green
-        if (parseFloat(LastCheck) != parseFloat(data.data.BTC.ohlc.c)) {
-            // console.log("es diferente");
-            checkPrice(data.data.BTC.ohlc.c);
-        } else {
-            //console.log("no es diferente");
-
-        }
+        //check out the last change of the price to save it if it`s diferent
+        checkToSAvedPrice();
+        
         CalcularGanancia(parseFloat(BTCjson.price_invested), parseFloat(priceSavdStorage.innerHTML.replace(",", "")), parseFloat(price.innerHTML.replace(",", "")));
 
     }
 };
+ 
+//cconvert the price of API`s data to show them
+function convertPrice(price, operator, secondPrice){
+    let priceModifed;
+    if(!operator){
+        priceModifed = new Intl.NumberFormat('es-MX').format(parseFloat(price).toFixed(2));
+    }else if(operator == '-'){
+        priceModifed = new Intl.NumberFormat('es-MX').format((parseFloat(price).toFixed(2)) - (parseFloat(secondPrice).toFixed(2)));
+    } 
 
-async function getRequestData(){
-    try {
-        var data = await fetchData();
-
-        critopApi.priceData = data.data.BTC.ohlc.c;
-        critopApi.percentData = data.data.BTC.change.percent;
-        critopApi.pricelow = data.data.BTC.ohlc.l;
-        critopApi.priceHight = data.data.BTC.ohlc.h;
-
-    } catch (error) {
-        online_offline = false;
-    }
-
-    if (data == undefined) {
-        online_offline = false;
-    }
-    offlinePage();//open or close
+    return priceModifed;
 }
 function upDomwIndicator(variable,compare,element,option,initStyle,endStyle){
     switch (option) {
@@ -258,12 +269,12 @@ submit.onclick = function () {
 
 };
 
-function checkPrice(c) {
-    //console.log("true");
-    localStorage.setItem("checkPr", c);
-
-
-}
+function checkToSAvedPrice() {
+    if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
+        //diferent;
+        localStorage.setItem("checkPr", critopApi.priceData);
+    }//else{ no diferent};
+};
 
 
 saveSubmit.onclick = function () {
