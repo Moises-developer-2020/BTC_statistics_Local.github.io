@@ -24,8 +24,11 @@ function setStorageData(key,name,miObjeto) {
 }
 
 //set class
-function setClass(element, classElement){
-    element.classList.add(classElement);
+function setClass(d = [{ e: null, c: '' }]) {
+    let elements = d;
+    for (let i = 0; i < elements.length; i++) {
+        elements[i]['e'].classList.add(elements[i]['c']);
+    }
 }
 
 //remove class

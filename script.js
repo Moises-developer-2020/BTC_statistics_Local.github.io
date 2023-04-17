@@ -5,12 +5,7 @@ var price_invested_saved;
 var DifferIndicator;
 var firtsLoad=0;
 
-function getlastCheck() {
-    LastCheck = localStorage.getItem("checkPr") != undefined ? localStorage.getItem("checkPr") : 0;
-    
-}
 
-getlastCheck();
 //Api`s data
 let critopApi={
     priceData:0,
@@ -95,23 +90,21 @@ async function requestPainted() {
     getRequestData(await fetchData());
 
     if (online_offline) {
+        LastCheck = checkStorageData("checkPr")?getStorageData("checkPr"):0;
 
         if (Math.sign(critopApi.percentData) == -1 || Math.sign(critopApi.percentData) == -0) {
-            percent.classList.add("negative");
+            setClass([{e:percent,c:"negative"}]);
         } else {
-            percent.classList.remove("negative");
+            removeClass(percent,"negative");
         }
         //not lose the color of the numbers
         if(firtsLoad == 0){
             getStyleSaved();
         }
         if (parseFloat(LastCheck) < parseFloat(critopApi.priceData)) {
-            setClass(diferenceH,"negative");
-            setClass(diferenceL,"positive");
-            setClass(priceDifferences,"positive");
-            setClass(indicator,"positive");
-        
+            setClass([{e:diferenceH,c:"negative"} , {e:diferenceL,c:"positive"} , {e:priceDifferences,c:"positive"} , {e:indicator,c:"positive"}]);
             upDomwIndicator(0,0,price,'class','positive',0);
+
         } else if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
             removeClass(diferenceH,"negative");
             removeClass(diferenceL,"positive");
@@ -119,12 +112,9 @@ async function requestPainted() {
             removeClass(indicator,"positive");
         }
         if (parseFloat(LastCheck) > parseFloat(critopApi.priceData)) {
-            setClass(diferenceH,"positive");
-            setClass(diferenceL,"negative");
-            setClass(priceDifferences,"negative");
-            setClass(indicator,"negative");
-
+            setClass([{e:diferenceH,c:"positive"} , {e:diferenceL,c:"negative"} , {e:priceDifferences,c:"negative"} , {e:indicator,c:"negative"}]);
             upDomwIndicator(0,0,price,'class','negative',0);
+
         } else if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
             removeClass(diferenceH,"positive");
             removeClass(diferenceL,"negative");
@@ -158,9 +148,9 @@ async function requestPainted() {
         savdDifferen.innerHTML = convertPrice(SavePriceInvert > 0 ? critopApi.priceData : 0, '-', SavePriceInvert);
 
         if (Math.sign(savdDifferen.innerHTML) == -1 || Math.sign(savdDifferen.innerHTML) == -0) {
-            savdDifferen.classList.add("negative");
+            setClass([{e:savdDifferen,c:"negative"}]);
         } else {
-            savdDifferen.classList.remove("negative");
+            removeClass(savdDifferen,"negative");
         }
 
 
@@ -202,9 +192,9 @@ function upDomwIndicator(variable,compare,element,option,initStyle,endStyle){
             variable=compare;
             break;
         case 'class':
-            element.classList.add(initStyle);
+            setClass([{e:element,c:initStyle}]);
             setTimeout(() => {
-                element.classList.remove(initStyle);
+                removeClass(element,initStyle);
             }, 300);
             break;
         default:
@@ -229,29 +219,29 @@ function CalcularGanancia(invested_money, Saved_price, Price_actual) {
     earnings_today.innerHTML = BTCjson.earnings != 'NaN' ? BTCjson.earnings : 0;
 
     if (Math.sign(earnings_today.innerHTML) == -1 || Math.sign(earnings_today.innerHTML) == -0) {
-        earnings_today.classList.add("negative");
+        setClass([{e:earnings_today,c:"negative"}]);
     } else {
-        earnings_today.classList.remove("negative");
+        removeClass(earnings_today,"negative");
     }
 }
-//console.log(Math.sign(-3,431.05));
+//animation to buy or reload
 function submitGet() {
     if (!center.classList.contains('animation') && !statusD.classList.contains('statusAnimation')) {
         setTimeout(() => {
-            center.classList.remove('animation')
-            statusD.classList.remove('statusAnimation')
+            removeClass(center,'animation')
+            removeClass(statusD,'statusAnimation')
         }, 1500);
     }
-    center.classList.add('animation');
-    statusD.classList.add('statusAnimation');
+    setClass([{e:center,c:'animation'} , {e:statusD,c:'statusAnimation'}]);
+
     requestPainted();
     showDate();
 }
 requestPainted();
 
+//reload DATA
 setInterval(() => {
     submitGet();
-    getlastCheck();
 }, 15000); //15000, 10000
 
 submit.onclick = function () {
@@ -440,10 +430,7 @@ function getStyleSaved(){
     let savedStyle = checkStorageData('saveStyle')? getStorageData('saveStyle'):'';
     if(savedStyle != ''){
         let savedStyleParse = JSON.parse(savedStyle);
-        diferenceH.classList.add(savedStyleParse.diferenceH);
-        diferenceL.classList.add(savedStyleParse.diferenceL);
-        priceDifferences.classList.add(savedStyleParse.priceDifferences);
-        indicator.classList.add(savedStyleParse.indicator);
+        setClass([{e:diferenceH,c:savedStyleParse.diferenceH} , {e:diferenceL,c:savedStyleParse.diferenceL} , {e:priceDifferences,c:savedStyleParse.priceDifferences} , {e:indicator,c:savedStyleParse.indicator}]);
     }
 }
 function saveStyles() {
