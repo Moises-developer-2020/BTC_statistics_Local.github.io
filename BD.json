@@ -1,0 +1,21 @@
+{
+   
+  "users":[{
+      "idUser":"",
+      "name":"",
+      "password": ""
+  }],
+  "historySell":[{
+      "idUser":"",
+      "savedPrice":"",
+      "dateSold":""
+  }],
+  "criptos":[{
+      "idCripto":"",
+      "idUser":"",
+      "savedPrice":"",
+      "date":""
+          
+  }]
+
+}

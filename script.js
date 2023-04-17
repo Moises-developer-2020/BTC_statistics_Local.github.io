@@ -446,8 +446,7 @@ sellSubmit.onclick = function () {
 showDate();
 
 
-function getStorageData(){
-    var data= localStorage.getItem();
-    return data
+function getStorageData(item) {
+    return localStorage.getItem(item) !== null;
 }
 
