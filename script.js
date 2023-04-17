@@ -2,7 +2,6 @@ var LastCheck;
 var SavePriceInvert;
 var Saveinvertion;
 var price_invested_saved;
-var online_offline;
 var DifferIndicator;
 var firtsLoad=0;
 
@@ -45,24 +44,6 @@ let saveStyle={
     priceDifferences:'',
     indicator:''
 }
-async function fetchData() {
-
-    if(window.navigator.onLine){
-        try {
-            const response = await fetch("https://production.api.coindesk.com/v2/tb/price/ticker?assets=BTC");
-            const data = await response.json();
-            online_offline = true;
-            return data;
-        } catch (error) {
-            online_offline = false;
-        }
-    }else online_offline = false;
-
-}
-
-function getElement(selector) {
-    return document.querySelector(selector);
-}
 
 const elements = {
     price: getElement("#price"),
@@ -90,9 +71,9 @@ const elements = {
 };
 Object.assign(window, elements);
 
-async function getRequestData(k){
+async function getRequestData(API){
     try {
-        var data =k;
+        var data =API;
 
         critopApi.priceData = data.data.BTC.ohlc.c;
         critopApi.percentData = data.data.BTC.change.percent;
@@ -100,13 +81,11 @@ async function getRequestData(k){
         critopApi.priceHight = data.data.BTC.ohlc.h;
 
     } catch (error) {
-        console.log(100);
         online_offline = false;
     }
 
     if (data == undefined) {
         online_offline = false;
-        console.log(200);
     }
     offlinePage();//open or close
 }
@@ -127,28 +106,30 @@ async function requestPainted() {
             getStyleSaved();
         }
         if (parseFloat(LastCheck) < parseFloat(critopApi.priceData)) {
-            diferenceH.classList.add("negative");
-            diferenceL.classList.add("positive");
-            priceDifferences.classList.add("positive");
-            indicator.classList.add("positive");
+            setClass(diferenceH,"negative");
+            setClass(diferenceL,"positive");
+            setClass(priceDifferences,"positive");
+            setClass(indicator,"positive");
+        
             upDomwIndicator(0,0,price,'class','positive',0);
         } else if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
-            diferenceH.classList.remove("negative");
-            diferenceL.classList.remove("positive");
-            priceDifferences.classList.remove("positive");
-            indicator.classList.remove("positive");
+            removeClass(diferenceH,"negative");
+            removeClass(diferenceL,"positive");
+            removeClass(priceDifferences,"positive");
+            removeClass(indicator,"positive");
         }
         if (parseFloat(LastCheck) > parseFloat(critopApi.priceData)) {
-            diferenceH.classList.add("positive");
-            diferenceL.classList.add("negative");
-            priceDifferences.classList.add("negative");
-            indicator.classList.add("negative");
+            setClass(diferenceH,"positive");
+            setClass(diferenceL,"negative");
+            setClass(priceDifferences,"negative");
+            setClass(indicator,"negative");
+
             upDomwIndicator(0,0,price,'class','negative',0);
         } else if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
-            diferenceH.classList.remove("positive");
-            diferenceL.classList.remove("negative");
-            priceDifferences.classList.remove("negative");
-            indicator.classList.remove("negative");
+            removeClass(diferenceH,"positive");
+            removeClass(diferenceL,"negative");
+            removeClass(priceDifferences,"negative");
+            removeClass(indicator,"negative");
         }
 
         SavePriceInvert = localStorage.getItem("PriceSaved") != undefined ? localStorage.getItem("PriceSaved") : 0;
@@ -479,23 +460,4 @@ function saveStyles() {
   
 //window.addEventListener('beforeunload', saveStyles);
 
-//check if exist
-function checkStorageData(item) {
-    return localStorage.getItem(item) !== null;
-}
-//get
-function getStorageData(item) {
-    return localStorage.getItem(item);
-}
-//set
-function setStorageData(key,name,miObjeto) {
-    switch (key) {
-        case 'json':
-            let miObjetoJSON = JSON.stringify(miObjeto);
-            localStorage.setItem(name, miObjetoJSON);
-            break;
-        default:
-            localStorage.setItem(name, miObjeto);
-            break;
-    }
-}
+
