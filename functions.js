@@ -23,7 +23,7 @@ function setStorageData(key,name,miObjeto) {
     }
 }
 
-//set class
+//set class [{ e: element, c: class }]
 function setClass(d = [{ e: null, c: '' }]) {
     let elements = d;
     for (let i = 0; i < elements.length; i++) {
@@ -32,9 +32,13 @@ function setClass(d = [{ e: null, c: '' }]) {
 }
 
 //remove class
-function removeClass(element, classElement){
-    element.classList.remove(classElement);
+function removeClass(d = [{ e: null, c: '' }]) {
+    let elements = d;
+    for (let i = 0; i < elements.length; i++) {
+        elements[i]['e'].classList.remove(elements[i]['c']);
+    }
 }
+
 //get element
 function getElement(selector) {
     return document.querySelector(selector);

@@ -95,7 +95,7 @@ async function requestPainted() {
         if (Math.sign(critopApi.percentData) == -1 || Math.sign(critopApi.percentData) == -0) {
             setClass([{e:percent,c:"negative"}]);
         } else {
-            removeClass(percent,"negative");
+            removeClass([{e:percent,c:"negative"}]);
         }
         //not lose the color of the numbers
         if(firtsLoad == 0){
@@ -106,20 +106,16 @@ async function requestPainted() {
             upDomwIndicator(0,0,price,'class','positive',0);
 
         } else if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
-            removeClass(diferenceH,"negative");
-            removeClass(diferenceL,"positive");
-            removeClass(priceDifferences,"positive");
-            removeClass(indicator,"positive");
+            removeClass([{e:diferenceH,c:"negative"},{e:diferenceL,c:"positive"},{e:priceDifferences,c:"positive"},{e:indicator,c:"positive"}]);
+    
         }
         if (parseFloat(LastCheck) > parseFloat(critopApi.priceData)) {
             setClass([{e:diferenceH,c:"positive"} , {e:diferenceL,c:"negative"} , {e:priceDifferences,c:"negative"} , {e:indicator,c:"negative"}]);
             upDomwIndicator(0,0,price,'class','negative',0);
 
         } else if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
-            removeClass(diferenceH,"positive");
-            removeClass(diferenceL,"negative");
-            removeClass(priceDifferences,"negative");
-            removeClass(indicator,"negative");
+            removeClass([{e:diferenceH,c:"positive"},{e:diferenceL,c:"negative"},{e:priceDifferences,c:"negative"},{e:indicator,c:"negative"}]);
+            
         }
 
         SavePriceInvert = localStorage.getItem("PriceSaved") != undefined ? localStorage.getItem("PriceSaved") : 0;
@@ -150,7 +146,7 @@ async function requestPainted() {
         if (Math.sign(savdDifferen.innerHTML) == -1 || Math.sign(savdDifferen.innerHTML) == -0) {
             setClass([{e:savdDifferen,c:"negative"}]);
         } else {
-            removeClass(savdDifferen,"negative");
+            removeClass([{e:savdDifferen,c:"negative"}]);
         }
 
 
@@ -194,7 +190,7 @@ function upDomwIndicator(variable,compare,element,option,initStyle,endStyle){
         case 'class':
             setClass([{e:element,c:initStyle}]);
             setTimeout(() => {
-                removeClass(element,initStyle);
+                removeClass([{e:element,c:initStyle}]);
             }, 300);
             break;
         default:
@@ -221,15 +217,14 @@ function CalcularGanancia(invested_money, Saved_price, Price_actual) {
     if (Math.sign(earnings_today.innerHTML) == -1 || Math.sign(earnings_today.innerHTML) == -0) {
         setClass([{e:earnings_today,c:"negative"}]);
     } else {
-        removeClass(earnings_today,"negative");
+        removeClass([{e:earnings_today,c:"negative"}]);
     }
 }
 //animation to buy or reload
 function submitGet() {
     if (!center.classList.contains('animation') && !statusD.classList.contains('statusAnimation')) {
         setTimeout(() => {
-            removeClass(center,'animation')
-            removeClass(statusD,'statusAnimation')
+            removeClass([{e:center,c:'animation'},{e:statusD,c:'statusAnimation'}])
         }, 1500);
     }
     setClass([{e:center,c:'animation'} , {e:statusD,c:'statusAnimation'}]);
