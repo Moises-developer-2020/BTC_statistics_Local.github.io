@@ -59,6 +59,7 @@ async function fetchData() {
 
 }
 
+
 //get BD
 async function fetchBD() {
 
