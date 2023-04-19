@@ -17,17 +17,13 @@ let critopApi={
 //Api`s data modifed to show them
 let BTCjson = {
     status: {
-        h: 30,
-        l: 10,
-        c: 50,
+        h: 0,
+        l: 0,
+        c: 0,
         difH: 0,
-        difL: 0
+        difL: 0 //different with the Low price
     },
     percent: 0,
-    simbols: {
-        plus: "+",
-        less: "-"
-    },
     earnings: 0,
     price_invested: 0,
     price_to_invest: 0
