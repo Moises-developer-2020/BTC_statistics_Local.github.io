@@ -78,7 +78,7 @@ async function getRequestData(API){
     if (data == undefined) {
         online_offline = false;
     }
-    offlinePage();//open or close
+    AlertOfflinePage();//open or close
 }
 
 async function requestPainted() {
@@ -276,13 +276,7 @@ price_invest.onkeyup = function () {
         BTCjson.price_to_invest = 0;
     }
 }
-function offlinePage() {
-    //console.log('online: '+ online_offline);
-    if (online_offline == false) {
-        offline.setAttribute('style', 'display:flex;')
-    } else { offline.setAttribute('style', 'display:none;') }
 
-}
 offline_button.onclick = function () {
     window.location.reload();
 }
@@ -290,121 +284,10 @@ offline_button.onclick = function () {
 var investedDate = document.getElementById("investedDate");
 var elapseTim = document.getElementById("elapseTim");
 
-function DateformatContacts(dateSave) {
-    if (dateSave) {
-        function dateInHours() {
-            // Set the date we're counting down to
-            var getDateSave = new Date(dateSave).getTime();
-
-            // Get todays date and time
-            var now = new Date().getTime();
-
-            // Find the distance between now an the count down date
-            var distance = now - getDateSave;
-
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            return JSON.parse(`{
-            "dateFormat":{
-                "days":${days},
-                "hours":${hours},
-                "minutes":${minutes},
-                "seconds":${seconds}
-            }}`);
-        };
-
-        var date = new Date(dateSave);
-        let timestampSave = date.toLocaleTimeString('en-US');
-
-        var formatHour = timestampSave.split(':');
-        //without seconds
-        var hour = formatHour[0] + ':' + formatHour[1] + ' ' + formatHour[2].split(' ')[1];
-
-        var days = date.toDateString().split(' ')[0];
-        var monts = date.toDateString().split(' ')[1];
-        var days_number = date.toDateString().split(' ')[2];
-        var year = date.toDateString().split(' ')[3];
-
-        var dateSaveFormat = days + ', ' + monts + ' ' + days_number + ', ' + year.slice(2, 4) + '&nbsp &nbsp ' + hour;
-        var endData = {
-            dateSaved: dateSaveFormat,
-            elapseTimes: dateInHours().dateFormat
-        }
-        return endData;
-
-    }
-}
-
-
-//validate way to chow the elapse time
-function validateElapseTime() {
-    if (localStorage.getItem("date")) {
-        var elapseTime = DateformatContacts(localStorage.getItem("date"));
-        elapseTime = elapseTime.elapseTimes;
-
-        var validated = "";
-        if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes <= 1) {
-            validated = elapseTime.seconds + " seconds ago.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes == 1) {
-            validated = elapseTime.minutes + " min. ";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes > 1) {
-            validated = elapseTime.minutes + " mins. ";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes == 0) {
-            validated = elapseTime.hours + " hour ago.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes > 1) {
-            validated = elapseTime.hours + " hour " + elapseTime.minutes + " mins.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes == 1) {
-            validated = elapseTime.hours + " hour " + elapseTime.minutes + " min.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes == 0) {
-            validated = elapseTime.hours + " hours ago.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes == 1) {
-            validated = elapseTime.hours + " hours " + elapseTime.minutes + " min.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes > 1) {
-            validated = elapseTime.hours + " hours " + elapseTime.minutes + " mins.";
-        }
-
-        if (elapseTime.days == 1 && elapseTime.hours == 0) {
-            validated = elapseTime.days + " day ago.";
-        }
-        if (elapseTime.days > 1 && elapseTime.hours == 0) {
-            validated = elapseTime.days + " days ago. ";
-        }
-        if (elapseTime.days == 1 && elapseTime.hours == 1) {
-            validated = elapseTime.days + " day " + elapseTime.hours + " hour";
-        }
-        if (elapseTime.days == 1 && elapseTime.hours > 1) {
-            validated = elapseTime.days + " day " + elapseTime.hours + " hours";
-        }
-        if (elapseTime.days > 1 && elapseTime.hours == 1) {
-            validated = elapseTime.days + " days " + elapseTime.hours + " hour";
-        }
-        if (elapseTime.days > 1 && elapseTime.hours > 1) {
-            validated = elapseTime.days + " days " + elapseTime.hours + " hours";
-        }
-
-
-        return validated;
-    }
-    else {
-        return "-----";
-    }
-}
-
+//show date on window
 function showDate() {
-    investedDate.innerHTML = localStorage.getItem("date") ? DateformatContacts(localStorage.getItem("date")).dateSaved : "---, ---, --, -- &nbsp &nbsp &nbsp --:-- --";
-    elapseTim.innerHTML = validateElapseTime();
+    investedDate.innerHTML = checkStorageData('date')? DateformatContacts(getStorageData("date")).dateSaved : "---, ---, --, -- &nbsp &nbsp &nbsp --:-- --";
+    elapseTim.innerHTML = validateElapseTime('date');
 }
 
 

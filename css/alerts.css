@@ -1,0 +1,11 @@
+#AlertsSpace{
+    position: fixed;
+    top: 50%;
+    background-color: red;
+    display: none;
+}
+
+#AlertsSpace.show{
+    
+    display: block !important;
+}
