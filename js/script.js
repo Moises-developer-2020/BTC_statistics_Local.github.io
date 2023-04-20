@@ -48,10 +48,8 @@ const elements = {
     earnings_today: getElement("#earnings_today"),
     price_invest: getElement("#price_invest"),
     invested_saved: getElement("#invested_saved"),
-    offline_button: getElement("#offline_button"),
     profits: getElement(".profits"),
     center: getElement(".center"),
-    offline: getElement(".offline"),
     statusD: getElement(".status"),
     diferenceH: getElement("#diferenceH"),
     diferenceL: getElement("#diferenceL"),
@@ -78,7 +76,12 @@ async function getRequestData(API){
     if (data == undefined) {
         online_offline = false;
     }
-    AlertOfflinePage();//open or close
+
+    if (online_offline == false) {
+        getAlert('offline_page'); 
+    } else {
+        getAlert('close');
+    }
 }
 
 async function requestPainted() {
@@ -277,9 +280,6 @@ price_invest.onkeyup = function () {
     }
 }
 
-offline_button.onclick = function () {
-    window.location.reload();
-}
 //elapse time
 var investedDate = document.getElementById("investedDate");
 var elapseTim = document.getElementById("elapseTim");

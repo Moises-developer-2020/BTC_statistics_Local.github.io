@@ -1,13 +1,16 @@
-let AlertType=['offline_page','error']
-const AlertsSpace = getElement("#AlertsSpace");
+const AlertSpace = getElement("#AlertSpace");
 
 let Alert_Content={
     offline_page:{
         type:'div',
         text:'',
         get element() {
-            setClass([{e:AlertsSpace,c:'show'}])
-            return `<div class="moises">${this.text}</div>`;
+            return `<div class="offline" style="display:flex;">
+            <div>
+                <span>Upps! <br> Youre offline</span>
+                <span><input type="button" onclick="reloadPage()" class="button-34" value="Reload"></span>
+            </div>
+        </div>`;
         }
     },
     error:{
@@ -19,38 +22,21 @@ let Alert_Content={
     }
  };
 
- function createAlert(alert){
-    let {type, element} = alert;
-    // const newElement = document.createElement(type);
-    // newElement.innerHTML=`${element}`;
-    // AlertsSpace.appendChild(newElement);
-    AlertsSpace.innerHTML=`${element}`;
-};
-
-function getAlert(type, text, option={}){
+function getAlert(type, text="", option={}){
     switch (type) {
         case 'offline_page':
-
-            Alert_Content.offline_page.text=text;
             createAlert(Alert_Content.offline_page);
-
             break;
         case 'error':
-
+                //Alert_Content.offline_page.text=text;
+                // createAlert(Alert_Content.offline_page);
             break;
         case 'close':
-            removeClass([{e:AlertsSpace,c:'show'}])
+            removeClass([{e:AlertSpace,c:'show'}])
             break;
         default:
             break;
     }
+    setClass([{e:AlertSpace,c:'show'}])
 }
 
-function AlertOfflinePage() {
-    if (online_offline == false) {
-        offline.setAttribute('style', 'display:flex;')
-    } else { offline.setAttribute('style', 'display:none;') }
-}
-window.onload=function(){
-    getAlert('offline_page',"hi Aim Moises Alert hahaha");
-}

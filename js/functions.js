@@ -67,9 +67,13 @@ async function fetchBD() {
 }
 
 //send alerts
-function alerts(type, message){
-
-}
+function createAlert(alert){
+    let {type, element} = alert;
+    // const newElement = document.createElement(type);
+    // newElement.innerHTML=`${element}`;
+    // AlertSpace.appendChild(newElement);
+    AlertSpace.innerHTML=`${element}`;
+};
 
 //date format
 function DateformatContacts(dateSave) {
@@ -181,4 +185,8 @@ function validateElapseTime(date) {
     else {
         return "-----";
     }
+}
+
+function reloadPage(){
+    window.location.reload();
 }
