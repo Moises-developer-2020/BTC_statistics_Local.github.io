@@ -1,5 +1,5 @@
 let online_offline;
-const API= "https://production.api.coindesk.com/v2/tb/price/ticker?assets=BTC";
+const API = "https://production.api.coindesk.com/v2/tb/price/ticker?assets=BTC";
 //check if exist
 function checkStorageData(item) {
     return localStorage.getItem(item) !== null;
@@ -11,7 +11,7 @@ function getStorageData(item) {
 }
 
 //set
-function setStorageData(key,name,miObjeto) {
+function setStorageData(key, name, miObjeto) {
     switch (key) {
         case 'json':
             let miObjetoJSON = JSON.stringify(miObjeto);
@@ -46,7 +46,7 @@ function getElement(selector) {
 //GET API
 async function fetchData(url) {
 
-    if(window.navigator.onLine){
+    if (window.navigator.onLine) {
         try {
             const response = await fetch(url);
             const data = await response.json();
@@ -55,97 +55,62 @@ async function fetchData(url) {
         } catch (error) {
             online_offline = false;
         }
-    }else online_offline = false;
+    } else online_offline = false;
 
+    /*if (data == undefined) {
+        online_offline = false;
+    }*/
+
+    if (online_offline == false) {
+        getAlert('offline_page'); 
+    } else {
+        getAlert('close');
+    }
 }
 
+//get local data
+async function fecthLocalData(table, type, obj = { value: {}, id: 0 }) {
+    try {
+        const db = await DB(dbName);
+        const objeto = new MyFunctions(db);
+        switch (type) {
+            case 'add':
 
-//get BD
-//type:'get','set','update','delete'
-// user:ID
-// db: data base
-async function fetchBD(type, user,db) {
+                await objeto.createObjeto(table, obj.value);
+                break;
+            case 'remove':
 
-        const dbName = "notes_db";
-		const dbVersion = 1;
-		const notesStoreName = "notes";
+                await objeto.deleteObjetoPorId(table, obj.id);
+                break;
+            case 'update':
 
-		const inputElement = document.getElementById("input");
-		const addButton = document.getElementById("add-button");
-		const notesList = document.getElementById("notes-list");
+                await objeto.updateObjeto(table, obj.id, obj.value);
+                break;
+            case 'showId':
+                const result = await objeto.searchObjetoById(table, obj.id);
+                return result;
+                
+            case 'showAll':
 
-		let db;
+                const data= await objeto.readAllData(table);
+                return data;
+            default:
+                console.error('type of fecthLocalData no valid');
+                break;
+        }
 
-		// Open the database
-		const request = window.indexedDB.open(dbName, dbVersion);
-
-		request.onerror = function(event) {
-		  console.log("Error opening database.");
-		};
-
-		request.onsuccess = function(event) {
-		  db = event.target.result;
-		  console.log("Database opened successfully.");
-		  readAllNotes();
-		};
-
-		request.onupgradeneeded = function(event) {
-		  db = event.target.result;
-		  console.log("Upgrading database...");
-		  // Create a new object store
-		  const objectStore = db.createObjectStore(notesStoreName, { keyPath: "id", autoIncrement: true });
-		};
-
-		function addNote() {
-		  const text = inputElement.value.trim();
-		  if (text === "") {
-		    return;
-		  }
-		  const note = { text, created: new Date() };
-		  const transaction = db.transaction([notesStoreName], "readwrite");
-		  const objectStore = transaction.objectStore(notesStoreName);
-		  const request = objectStore.add(note);
-		  request.onsuccess = function(event) {
-		    console.log("Note added successfully.");
-		    inputElement.value = "";
-		    readAllNotes();
-		  };
-		  request.onerror = function(event) {
-		    console.log("Error adding note.");
-		  };
-		}
-
-		function readAllNotes() {
-		  const transaction = db.transaction([notesStoreName], "readonly");
-		  const objectStore = transaction.objectStore(notesStoreName);
-		  const request = objectStore.getAll();
-		  
-		  request.onsuccess = function(event) {
-		    console.log("Read all notes successfully.");
-		    const notes = event.target.result;
-		    notesList.innerHTML = "";
-		    for (const note of notes) {
-		      const li = document.createElement("li");
-		      li.textContent = `${note.text} (created on ${note.created})`;
-		      notesList.appendChild(li);
-		    }
-		  };
-		  request.onerror = function(event) {
-		    console.log("Error reading notes.");
-		  };
-		}
-
-		addButton.addEventListener("click", addNote);
-
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 //send alerts
-function createAlert(alert){
-    let {type, element} = alert;
+function createAlert(alert) {
+    let { type, element } = alert;
     // const newElement = document.createElement(type);
     // newElement.innerHTML=`${element}`;
     // AlertSpace.appendChild(newElement);
-    AlertSpace.innerHTML=`${element}`;
+    AlertSpace.innerHTML = `${element}`;
 };
 
 //date format
@@ -260,6 +225,6 @@ function validateElapseTime(date) {
     }
 }
 
-function reloadPage(){
+function reloadPage() {
     window.location.reload();
 }

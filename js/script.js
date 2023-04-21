@@ -73,15 +73,8 @@ async function getRequestData(API){
         online_offline = false;
     }
 
-    if (data == undefined) {
-        online_offline = false;
-    }
-
-    if (online_offline == false) {
-        getAlert('offline_page'); 
-    } else {
-        getAlert('close');
-    }
+    
+    console.log(online_offline);
 }
 
 async function requestPainted() {
@@ -99,6 +92,8 @@ async function requestPainted() {
         //not lose the color of the numbers
         if(firtsLoad == 0){
             getStyleSaved();
+            const df= await fecthLocalData('users', 'showAll');
+            console.log(df);
         }
         if (parseFloat(LastCheck) < parseFloat(critopApi.priceData)) {
             setClass([{e:diferenceH,c:"negative"} , {e:diferenceL,c:"positive"} , {e:priceDifferences,c:"positive"} , {e:indicator,c:"positive"}]);
@@ -142,7 +137,7 @@ async function requestPainted() {
         priceSavdStorage.innerHTML = convertPrice(SavePriceInvert, false, 0); 
         savdDifferen.innerHTML = convertPrice(SavePriceInvert > 0 ? critopApi.priceData : 0, '-', SavePriceInvert);
 
-        if (Math.sign(savdDifferen.innerHTML) == -1 || Math.sign(savdDifferen.innerHTML) == -0) {
+        if (parseFloat(savdDifferen.innerHTML) < 0) {
             setClass([{e:savdDifferen,c:"negative"}]);
         } else {
             removeClass([{e:savdDifferen,c:"negative"}]);
