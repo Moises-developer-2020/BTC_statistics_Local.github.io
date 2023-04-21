@@ -86,7 +86,7 @@ async function getRequestData(API){
 
 async function requestPainted() {
     
-    getRequestData(await fetchData());
+    getRequestData(await fetchData(API));
 
     if (online_offline) {
         LastCheck = checkStorageData("checkPr")?getStorageData("checkPr"):0;

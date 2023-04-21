@@ -7,7 +7,7 @@ let Alert_Content={
         get element() {
             return `<div class="offline" style="display:flex;">
             <div>
-                <span>Upps! <br> Youre offline</span>
+                <span>Upps! <br> You're offline</span>
                 <span><input type="button" onclick="reloadPage()" class="button-34" value="Reload"></span>
             </div>
         </div>`;

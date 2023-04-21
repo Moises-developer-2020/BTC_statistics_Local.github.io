@@ -1,5 +1,5 @@
 let online_offline;
-
+const API= "https://production.api.coindesk.com/v2/tb/price/ticker?assets=BTC";
 //check if exist
 function checkStorageData(item) {
     return localStorage.getItem(item) !== null;
@@ -44,11 +44,11 @@ function getElement(selector) {
     return document.querySelector(selector);
 }
 //GET API
-async function fetchData() {
+async function fetchData(url) {
 
     if(window.navigator.onLine){
         try {
-            const response = await fetch("https://production.api.coindesk.com/v2/tb/price/ticker?assets=BTC");
+            const response = await fetch(url);
             const data = await response.json();
             online_offline = true;
             return data;
@@ -61,8 +61,81 @@ async function fetchData() {
 
 
 //get BD
-async function fetchBD() {
+//type:'get','set','update','delete'
+// user:ID
+// db: data base
+async function fetchBD(type, user,db) {
 
+        const dbName = "notes_db";
+		const dbVersion = 1;
+		const notesStoreName = "notes";
+
+		const inputElement = document.getElementById("input");
+		const addButton = document.getElementById("add-button");
+		const notesList = document.getElementById("notes-list");
+
+		let db;
+
+		// Open the database
+		const request = window.indexedDB.open(dbName, dbVersion);
+
+		request.onerror = function(event) {
+		  console.log("Error opening database.");
+		};
+
+		request.onsuccess = function(event) {
+		  db = event.target.result;
+		  console.log("Database opened successfully.");
+		  readAllNotes();
+		};
+
+		request.onupgradeneeded = function(event) {
+		  db = event.target.result;
+		  console.log("Upgrading database...");
+		  // Create a new object store
+		  const objectStore = db.createObjectStore(notesStoreName, { keyPath: "id", autoIncrement: true });
+		};
+
+		function addNote() {
+		  const text = inputElement.value.trim();
+		  if (text === "") {
+		    return;
+		  }
+		  const note = { text, created: new Date() };
+		  const transaction = db.transaction([notesStoreName], "readwrite");
+		  const objectStore = transaction.objectStore(notesStoreName);
+		  const request = objectStore.add(note);
+		  request.onsuccess = function(event) {
+		    console.log("Note added successfully.");
+		    inputElement.value = "";
+		    readAllNotes();
+		  };
+		  request.onerror = function(event) {
+		    console.log("Error adding note.");
+		  };
+		}
+
+		function readAllNotes() {
+		  const transaction = db.transaction([notesStoreName], "readonly");
+		  const objectStore = transaction.objectStore(notesStoreName);
+		  const request = objectStore.getAll();
+		  
+		  request.onsuccess = function(event) {
+		    console.log("Read all notes successfully.");
+		    const notes = event.target.result;
+		    notesList.innerHTML = "";
+		    for (const note of notes) {
+		      const li = document.createElement("li");
+		      li.textContent = `${note.text} (created on ${note.created})`;
+		      notesList.appendChild(li);
+		    }
+		  };
+		  request.onerror = function(event) {
+		    console.log("Error reading notes.");
+		  };
+		}
+
+		addButton.addEventListener("click", addNote);
 
 }
 
