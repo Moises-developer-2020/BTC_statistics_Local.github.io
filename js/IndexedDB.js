@@ -6,7 +6,12 @@ let sessionUser;
 //tables
 users=[{
     idUser:"",
+    email:"",
     name:"",
+    key:""
+}]
+usersPasswd=[{
+    idUser:"",
     password: ""
 }]
 historySell=[{
@@ -41,8 +46,9 @@ function DB(dbName) {
         request.onupgradeneeded = () => {
             const db = request.result;
             const users = db.createObjectStore('users', { keyPath: 'id', autoIncrement: true });
-            const historySell = db.createObjectStore('historySell', { keyPath: 'id', autoIncrement: true });
-            const criptos = db.createObjectStore('criptos', { keyPath: 'id', autoIncrement: true });
+            const usersPasswd = db.createObjectStore('usersPasswd', { keyPath: 'id', autoIncrement: false });
+            const historySell = db.createObjectStore('historySell', { keyPath: 'id', autoIncrement: false });
+            const criptos = db.createObjectStore('criptos', { keyPath: 'id', autoIncrement: false });
             const coins = db.createObjectStore('coins', { keyPath: 'id', autoIncrement: true });
         };
     });
@@ -59,13 +65,18 @@ class MyFunctions {
         const store = await transaction.objectStore(table);
         const request = await store.add(objeto);
 
-        request.onsuccess = () => {
-            console.log('Objeto creado con éxito');
-        };
-
-        request.onerror = (event) => {
-            console.log('Error al crear el objeto', event);
-        };
+        return new Promise((resolve, reject) => {
+            request.onsuccess = () => {
+                console.log('Objeto creado con éxito');
+                const result = request.result;
+                resolve(result);
+            };
+    
+            request.onerror = (event) => {
+                console.log('Error al crear el objeto', event);
+                reject(request.error);
+            };
+        })
     }
 
     // update object

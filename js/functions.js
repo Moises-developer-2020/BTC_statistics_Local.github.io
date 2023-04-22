@@ -45,22 +45,21 @@ function getElement(selector) {
 }
 //GET API
 async function fetchData(url) {
-
+    let data;
     if (window.navigator.onLine) {
         try {
             const response = await fetch(url);
-            const data = await response.json();
+             data = await response.json();
             online_offline = true;
             return data;
         } catch (error) {
             online_offline = false;
         }
-    } else online_offline = false;
+    } else{online_offline = false;}
 
-    /*if (data == undefined) {
+    if (data === undefined || data === 'undefined') {
         online_offline = false;
-    }*/
-
+    }
     if (online_offline == false) {
         getAlert('offline_page'); 
     } else {
@@ -76,8 +75,8 @@ async function fecthLocalData(table, type, obj = { value: {}, id: 0 }) {
         switch (type) {
             case 'add':
 
-                await objeto.createObjeto(table, obj.value);
-                break;
+            const userId =await objeto.crearObjeto(table,obj.value);
+            return userId;
             case 'remove':
 
                 await objeto.deleteObjetoPorId(table, obj.id);
@@ -227,4 +226,19 @@ function validateElapseTime(date) {
 
 function reloadPage() {
     window.location.reload();
+}
+async function login(type,data={}){
+    const {email, name, password } =data;
+    switch (type) {
+        case 'sinIn':
+                const users= await fecthLocalData('users', 'showAll');
+                console.log(users);
+            break;
+        case 'sinUp':
+                const idUser =await fecthLocalData('users', 'add', { value: { email: email, name:name, key:'password' } });
+                const result =await fecthLocalData('usersPasswd', 'add', { value: { id: idUser, password:password } });
+            return result;
+        default:
+            break;
+    }
 }
