@@ -12,4 +12,14 @@
         padding: 12px;
         width: 120px;
     }
+    .login svg{
+        height: 100%;
+        width: 160vw;
+        margin-right: 60vw;
+    }
+}
+@media screen and (max-width: 420px) {
+.loginContent{
+    transform: scale(0.9);
+}
 }

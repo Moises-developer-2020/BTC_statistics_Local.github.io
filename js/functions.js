@@ -257,6 +257,7 @@ async function login(type,data={}){
                 //valida if password is equals to
                 console.log(password +" == "+ userData.password);
                 if(password === userData.password){
+                    setStorageData('json','usersSession',{id:request.id});
                     return {status:true, data:request.data, message:'Welcome'};
                 }else{
                     return {status:false, message:'Password Incorrect'};

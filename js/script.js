@@ -57,6 +57,7 @@ const elements = {
     indicator: getElement("#indicator"),
     savdDifferen: getElement("#savdDifferen"),
     priceSavdStorage: getElement("#priceSavdStorage"),
+    infoLogin: getElement(".infoLogin"),
     optionTo: getElement(".optionTo"),
     singInButton: getElement("#singInButton"),
     inputName: getElement("#inputName"),
@@ -64,7 +65,8 @@ const elements = {
     inputEmail: getElement("#inputEmail"),
     formLogin: getElement(".login"),
     singInMsg: getElement(".singInMsg"),
-    singUpMsg: getElement(".singUpMsg")
+    inputCenter: getElement(".inputCenter"),
+    inputSingUp: getElement(".inputSingUp")
 };
 Object.assign(window, elements);
 
@@ -331,20 +333,41 @@ function saveStyles() {
 //change type of login
 optionTo.onclick = async function(){
     SingIn_Up=!SingIn_Up;
-    
+    if(!SingIn_Up){
+        setClass([{e:inputSingUp,c:'allow'}]);
+        setClass([{e:infoLogin,c:'sing'}]);
+        removeClass([{e:inputCenter,c:'allow'}]);
+
+    }else{
+        removeClass([{e:inputSingUp,c:'allow'}]);
+        setClass([{e:inputCenter,c:'allow'}]);
+        removeClass([{e:infoLogin,c:'sing'}]);
+
+    }
+    console.log(SingIn_Up);
 }
 
 
 //SingIn or Sing Up
 singInButton.onclick = async function(){
+    console.log('click: '+SingIn_Up);
     if(SingIn_Up){
         const data =await login('singIn',{email:inputEmail.value, password:inputPassword.value});
-        console.log(data+''+1);
+        console.log(data);
         singInMsg.innerHTML=data.message;
+
+        //working with a succesfully session
+        if(data.status){
+            removeClass([{e:formLogin,c:'active'}]);
+        }
     }else{
         const data =await login('singUp',{email:inputEmail.value,name:inputName.value, password:inputPassword.value});
-        console.log(data+''+2);
-        singUpMsg.innerHTML=data.message;
+        console.log(data);
+        singInMsg.innerHTML=data.message;
+        //working with a succesfully session
+        if(data.status){
+            removeClass([{e:formLogin,c:'active'}]);
+        }
     }
 
 }
