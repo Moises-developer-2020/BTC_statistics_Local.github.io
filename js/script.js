@@ -56,7 +56,15 @@ const elements = {
     priceDifferences: getElement("#priceDifferences"),
     indicator: getElement("#indicator"),
     savdDifferen: getElement("#savdDifferen"),
-    priceSavdStorage: getElement("#priceSavdStorage")
+    priceSavdStorage: getElement("#priceSavdStorage"),
+    optionTo: getElement(".optionTo"),
+    singInButton: getElement("#singInButton"),
+    inputName: getElement("#inputName"),
+    inputPassword: getElement("#inputPassword"),
+    inputEmail: getElement("#inputEmail"),
+    formLogin: getElement(".login"),
+    singInMsg: getElement(".singInMsg"),
+    singUpMsg: getElement(".singUpMsg")
 };
 Object.assign(window, elements);
 
@@ -74,10 +82,21 @@ async function getRequestData(API){
     }
 
     
-    console.log(online_offline);
+    //console.log(online_offline);
 }
 
 async function requestPainted() {
+    //not lose the color of the numbers
+    if(firtsLoad == 0){
+        getStyleSaved();
+
+        //validate session and get his data
+        const userStatus=await validateSession();
+        if(!userStatus){
+            //open login
+            setClass([{e:formLogin,c:'active'}]);
+        }
+    }
     
     getRequestData(await fetchData(API));
 
@@ -89,12 +108,7 @@ async function requestPainted() {
         } else {
             removeClass([{e:percent,c:"negative"}]);
         }
-        //not lose the color of the numbers
-        if(firtsLoad == 0){
-            getStyleSaved();
-            const df= await fecthLocalData('users', 'showAll');
-            console.log(df);
-        }
+        
         if (parseFloat(LastCheck) < parseFloat(critopApi.priceData)) {
             setClass([{e:diferenceH,c:"negative"} , {e:diferenceL,c:"positive"} , {e:priceDifferences,c:"positive"} , {e:indicator,c:"positive"}]);
             upDomwIndicator(0,0,price,'class','positive',0);
@@ -313,7 +327,29 @@ function saveStyles() {
 
     }
 }
-  
+
+//change type of login
+optionTo.onclick = async function(){
+    SingIn_Up=!SingIn_Up;
+    
+}
+
+
+//SingIn or Sing Up
+singInButton.onclick = async function(){
+    if(SingIn_Up){
+        const data =await login('singIn',{email:inputEmail.value, password:inputPassword.value});
+        console.log(data+''+1);
+        singInMsg.innerHTML=data.message;
+    }else{
+        const data =await login('singUp',{email:inputEmail.value,name:inputName.value, password:inputPassword.value});
+        console.log(data+''+2);
+        singUpMsg.innerHTML=data.message;
+    }
+
+}
+
+
 //window.addEventListener('beforeunload', saveStyles);
 
 

@@ -4,13 +4,37 @@
     background-color: black;
     width: 100vw;
     height: 100vh;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
+    color: #f0e8e8;
 }
+.login.active{
+    display: flex;
+}
+.sectionLogin{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+.singIn{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 10px 0;
+    
+}
+.singUp{
+    position: relative;
+    overflow: hidden;
+   /* width: 0;*/
+   width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+   padding: 10px 0;
 
-
-
+}
 .login svg{
     height: 100%;
     width: 120vw;
@@ -21,18 +45,203 @@
 .backgroundLogin{
     position: absolute;
     bottom: 5vh;
+    
+}
+.loginContent{
+    height: 500px;
+    background: #0037b34d;
+    background-image: linear-gradient(180deg, #db85ff -52%, #b87cff14 75%);
+
+    backdrop-filter: blur(3px);
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    position: absolute;
+    border-radius: 10px;
+    padding: 20px;
+    border: 2px solid #9965ffab;
+}
+.logoLogin{
+    text-align: center;
+}
+.optionLogin{
+    margin: 40px auto;
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+}
+.infoLogin{
+    font-size: 0.7em;
+}
+.optionTo{
+    cursor: pointer;
+    font-size: 0.4em;
+    color: #ababab;
+}
+
+.singInMsg{
+    font-size: 0.5em;
+    min-height: 40px;
+    color: #ff6354;
+    margin: 6px 14px;
+}
+
+.formGroup{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.formGroup span{
+    background: rgb(255 79 79 / 58%);
+    height: 40px;
+    width: 40px;
+    border-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+.formGroup input{
+    position: relative;
+    z-index: 1;
+    width: 220px;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    font-size: 24px;
+
+    padding: 8px 0px;
+    font-weight: 500;
+    font-family: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+    color: #99a3ba !important;
+    border: none;
+    transition: border 0.3s ease;
+    appearance: none;
+    background: none;
+}
+.formGroup span::after{
+    position: absolute;
+    content:'';
+    height: 50px;
+    width: 100%;
+    border-radius: 60px;
+    left: 0;
+}
+.formGroup span::before{
+    position: absolute;
+    content:'';
+    height: 50px;
+    width: 298px;
+    border-radius: 60px;
+    left: 0;
+}
+.Group1{
+    margin-left: 55px;
+}
+.Group2{
+    margin-right: 55px;
+}
+.Group1 input{
+    margin-right: 8px;
+}
+.Group2 input{
+    margin-left:8px;
+}
+.Group1 span{
+    margin: 0px 3px 0px 3px;
+}
+.Group2 span{
+    margin: 0px 4px 0px 4px;
+}
+
+.Group1 span::before{
+    left:44px;
+    border-radius: 0 60px 60px 0;
+    border: 2px solid #ababab;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+}
+.Group2 span::before{
+    left: 7px;
+    border-radius: 60px 0 0 60px;
+    border: 2px solid #ababab;
+    border-bottom: 0px;
+    border-right: 0px;
+}
+
+.Group1 span::after{
+    left:-20px;
+    border-radius: 0 60px 60px 0;
+    border: 2px solid #ababab;
+    border-bottom: 0px;
+    border-left: 0px;
+    width: 103%;
+}
+
+.Group2 span::after{
+    left: 7px;
+    border-radius: 60px 0 0 60px;
+    border: 2px solid #ababab;
+    border-top: 0px;
+    border-right: 0px;
+    width: 103%;
+}
+
+.submitBottom{
+    width: 100%;
+    height: 167px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.submitRedes{
+    left: 22px;
+    position: relative;
+}
+.submitRedes span{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #99a3ba;
+    border-radius: 50px;
+}
+.submitRedes span:nth-child(1){
+    margin:-63px 0px 0px -62px;
+}
+.submitRedes span:nth-child(2){
+    margin: -46px 0px 0px 12px;
+}
+.submitRedes span:nth-child(3){
+    margin: -63px 0px 0px 85px;
+}
+.submitLocal button{
+    width: 113px;
+    font-size: 0.5em;
+    height: 40px;
+}
+
+/*animate the login to change type of login*/
+.singIn{
+    /*transition: 0.5s;
+    animation: fadding 1s linear forwards;*/
+}
+@keyframes fadding{
+    0%{
+        margin-left: 0px;
+
+    }
+    100%{
+        margin-left: -777px;
+
+    }
 }
 
 
 
-
-
-
-
-
-
 #gradientSvg{
-    /*display: none;*/
+    display: none;
 }
 
 .ld1{
@@ -126,4 +335,86 @@
     100% {
         stroke-dashoffset: 0;
     }
+}
+
+
+
+
+
+
+
+.inputEnd.left span::after {
+    left: -20px;
+    border-radius: 0 60px 60px 0;
+    border: 2px solid #ababab;
+    border-top: 0px;
+    border-left: 0px;
+    width: 103%;
+}
+.inputEnd.right span::after {
+    left: 7px;
+    border-radius: 60px 0 0 60px;
+    border: 2px solid #ababab;
+    border-top: 0px;
+    border-right: 0px;
+    width: 103%;
+}
+
+.inputStart.right span::after {
+    left: 7px;
+    border-radius: 60px 0 0 60px;
+    border: 2px solid #ababab;
+    border-bottom: 0px;
+    border-right: 0px;
+    width: 103%;
+}
+.inputStart.left span::after {
+    left: -20px;
+    border-radius: 0 60px 60px 0;
+    border: 2px solid #ababab;
+    border-bottom: 0px;
+    border-left: 0px;
+    width: 103%;
+}
+/*
+.inputCenter.left.up span::before{
+    left: 7px;
+    border-radius: 60px 0 0 60px;
+    border: 2px solid #ababab;
+    border-top: 0px;
+    border-right: 0px;
+}
+.inputCenter.left.down span::before {
+    left: 7px;
+    border-radius: 60px 0 0 60px;
+    border: 2px solid #ababab;
+    border-bottom: 0px;
+    border-right: 0px;
+}*/
+
+/*.inputCenter.right.up span::before,*/
+.inputStart.left span::before {
+    left: 44px;
+    border-radius: 0 60px 60px 0;
+    border: 2px solid #ababab;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+}
+/*.inputCenter.right.down span::before,*/
+.inputEnd.left span::before {
+    left: 44px;
+    border-radius: 0 60px 60px 0;
+    border: 2px solid #ababab;
+    border-bottom: 0px;
+    border-left: 0px;
+}
+
+.inputCenter.unique.right span::after {
+    left: 8px;
+    border-radius: 60px 0 0 60px;
+    border: 2px solid #ababab;
+    border-right: 0px;
+    width: 34px;
+    height: 47px;
 }

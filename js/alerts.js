@@ -6,18 +6,23 @@ let Alert_Content={
         text:'',
         get element() {
             return `<div class="offline" style="display:flex;">
-            <div>
-                <span>Upps! <br> You're offline</span>
-                <span><input type="button" onclick="reloadPage()" class="button-34" value="Reload"></span>
-            </div>
-        </div>`;
+                        <div>
+                            <span>${this.text}</span>
+                            <span><input type="button" onclick="reloadPage()" class="button-34" value="Reload"></span>
+                        </div>
+                    </div>`;
         }
     },
     error:{
         type:'div',
-        text:'5',
+        text:'',
         get element() {
-            return `<div class="moises">${this.text}</div>`;
+            return `<div class="offline" style="display:flex;">
+                        <div>
+                            <span>${this.text}</span>
+                            <span><input type="button" onclick="reloadPage()" class="button-34" value="Reload"></span>
+                        </div>
+                    </div>`;
         }
     }
  };
@@ -25,11 +30,14 @@ let Alert_Content={
 function getAlert(type, text="", option={}){
     switch (type) {
         case 'offline_page':
+            Alert_Content.offline_page.text=text || `Upps! <br> You're offline`;
             createAlert(Alert_Content.offline_page);
             break;
         case 'error':
-                //Alert_Content.offline_page.text=text;
-                // createAlert(Alert_Content.offline_page);
+
+            Alert_Content.error.text=text || 'Something went wrong';
+            createAlert(Alert_Content.error);
+
             break;
         case 'close':
             removeClass([{e:AlertSpace,c:'show'}])

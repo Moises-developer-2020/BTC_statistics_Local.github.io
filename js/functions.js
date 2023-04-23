@@ -1,5 +1,10 @@
 let online_offline;
+
+//false it's sing In and true sing Up
+let SingIn_Up=true; 
+
 const API = "https://production.api.coindesk.com/v2/tb/price/ticker?assets=BTC";
+
 //check if exist
 function checkStorageData(item) {
     return localStorage.getItem(item) !== null;
@@ -9,9 +14,12 @@ function checkStorageData(item) {
 function getStorageData(item) {
     return localStorage.getItem(item);
 }
-
+//delete
+function deleteStorageData(item){
+    localStorage.removeItem(item);
+}
 //set
-function setStorageData(key, name, miObjeto) {
+function setStorageData(key, name, miObjeto={}) {
     switch (key) {
         case 'json':
             let miObjetoJSON = JSON.stringify(miObjeto);
@@ -75,7 +83,7 @@ async function fecthLocalData(table, type, obj = { value: {}, id: 0 }) {
         switch (type) {
             case 'add':
 
-            const userId =await objeto.crearObjeto(table,obj.value);
+            const userId =await objeto.createObjeto(table,obj.value);
             return userId;
             case 'remove':
 
@@ -227,18 +235,100 @@ function validateElapseTime(date) {
 function reloadPage() {
     window.location.reload();
 }
+//singIn/SingUp
 async function login(type,data={}){
+    //evoid bad request
+    if(user.status){
+        getAlert('error',`Sorry!<br>There's a session open`);
+        return {status:0, message:`There's a session open`};
+
+    }else if(!online_offline){
+        getAlert('offline_page');
+        return {status:0, message:`Yua're offline`};
+    }
+
     const {email, name, password } =data;
     switch (type) {
-        case 'sinIn':
-                const users= await fecthLocalData('users', 'showAll');
-                console.log(users);
-            break;
-        case 'sinUp':
-                const idUser =await fecthLocalData('users', 'add', { value: { email: email, name:name, key:'password' } });
-                const result =await fecthLocalData('usersPasswd', 'add', { value: { id: idUser, password:password } });
-            return result;
+        case 'singIn':
+            
+            const request = await validateIfExist('users','email',email);
+            if(request.status){
+                const userData=await fecthLocalData('usersPasswd', 'showId', { id:request.id });
+                //valida if password is equals to
+                console.log(password +" == "+ userData.password);
+                if(password === userData.password){
+                    return {status:true, data:request.data, message:'Welcome'};
+                }else{
+                    return {status:false, message:'Password Incorrect'};
+                }      
+            }else{
+                return {status:0, message:`User does't exist`};
+            };
+
+        case 'singUp':
+                    
+
+        const database = await validateIfExist('users','email',email);
+        if(!database.status){
+
+            const idUser = await fecthLocalData('users', 'add', { value: { email: email, name:name } });
+            await fecthLocalData('usersPasswd', 'add', { value: { id:idUser, password:password } });
+
+            if(idUser){
+                //save session
+                setStorageData('json','usersSession',{id:idUser});
+                return {status:true, userId:idUser , message:'Welcome'};
+            }else{
+                return {status:false, message:'Something went wrong, please try again'};
+            }
+
+        }else{
+            return {status:0, message:`User already exist`};
+        };
+
         default:
             break;
+    }
+}
+//validate if exist the data
+async function validateIfExist(table, parameter, value){
+    const data= await fecthLocalData(table, 'showAll');
+     var index=data.findIndex(function(element){
+         return element[parameter] === value;
+     });          
+     if(index != -1){  
+        return {status:true, id:data[index].id, position:index, data:data[index]};
+     }
+     return {status:false};
+}
+
+//validate if session variable saved in locaStorage it's valid
+async function validateSession(){
+
+    if(checkStorageData('usersSession')){
+        const idUser= JSON.parse(getStorageData('usersSession'));
+        const id =parseInt(idUser.id);
+
+        //validate user and get user's data
+        const userData=await fecthLocalData('users', 'showId', { id:id });
+
+        if(userData){
+            const historySell=await fecthLocalData('historySell', 'showId', { id:id });
+            const criptos=await fecthLocalData('criptos', 'showId', { id:id });
+
+            user={
+                data:userData,
+                historySell:historySell,
+                criptos:criptos,
+                status:true
+            }
+            //console.log(user);
+            return true
+        }
+        //delete it cuz it is not valid
+        deleteStorageData('usersSession');
+        return false
+    }else{
+        return false
     }
 }

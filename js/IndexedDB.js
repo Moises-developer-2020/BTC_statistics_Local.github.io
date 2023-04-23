@@ -4,7 +4,7 @@ let dbName = "CriptosDB";
 let sessionUser;
 
 //tables
-users=[{
+/*users=[{
     idUser:"",
     email:"",
     name:"",
@@ -26,7 +26,25 @@ criptos=[{
     date:""
         
 }]
+///example  //public to anyone it is the API's data to search
+Coins=[{
+    id:"bitcoin",
+    name: "Bitcoin",
+    api_symbol: "bitcoin",
+    symbol: "BTC",
+    market_cap_rank: 1,
+    thumb: "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png",
+    large: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png"
+            
+}]*/
 
+/*user logueado his data */
+let user={
+    data:[],
+    historySell:[],
+    criptos:[],
+    status:''
+}
 
 //get localBD
 function DB(dbName) {
@@ -161,32 +179,3 @@ class MyFunctions {
         
     }
 }
-
-
-// call update, delete, add functions 
-//examples
-// AddButton.addEventListener("click", async function () {
-//     const text = inputAdd.value.trim();
-//     if (text === "") {
-//         return;
-//     }
-//     await fecthLocalData('users', 'add', { value: { nombre: text } });
-//    
-
-// });
-// DeleteButton.addEventListener("click", async function () {
-//     await fecthLocalData('users', 'remove', { id: idSelected });
-
-// });
-// UpdateButton.addEventListener("click", async function () {
-
-//     await fecthLocalData('users', 'update', { id: idSelected, value: { nombre: inputUpdate.value } });
-//     
-// })
-// SearchButton.addEventListener("click", async function () {
-
-//     const result = await fecthLocalData('users', 'showId', { id: idSelected });
-//     console.log(result)
-
-
-// });
