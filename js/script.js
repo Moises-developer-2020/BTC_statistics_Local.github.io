@@ -102,7 +102,7 @@ async function requestPainted() {
     
     getRequestData(await fetchData(API));
 
-    if (online_offline) {
+    if (online_offline && identified) {
         LastCheck = checkStorageData("checkPr")?getStorageData("checkPr"):0;
 
         if (Math.sign(critopApi.percentData) == -1 || Math.sign(critopApi.percentData) == -0) {
@@ -358,6 +358,7 @@ singInButton.onclick = async function(){
 
         //working with a succesfully session
         if(data.status){
+            requestPainted();
             removeClass([{e:formLogin,c:'active'}]);
         }
     }else{
@@ -366,6 +367,7 @@ singInButton.onclick = async function(){
         singInMsg.innerHTML=data.message;
         //working with a succesfully session
         if(data.status){
+            requestPainted();
             removeClass([{e:formLogin,c:'active'}]);
         }
     }

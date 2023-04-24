@@ -13,19 +13,19 @@ let sessionUser;
 usersPasswd=[{
     idUser:"",
     password: ""
-}]
-historySell=[{
-    idUser:"",
+}]*/
+let historySell=[{
+     //idUser
     savedPrice:"",
     dateSold:""
 }]
-criptos=[{
+let criptos=[{
     idCripto:"",
-    idUser:"",
+    //idUser
     savedPrice:"",
     date:""
         
-}]
+}]/*
 ///example  //public to anyone it is the API's data to search
 Coins=[{
     id:"bitcoin",

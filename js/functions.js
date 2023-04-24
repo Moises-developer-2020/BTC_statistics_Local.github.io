@@ -1,4 +1,5 @@
 let online_offline;
+let identified; //to allow the user use http:// request
 
 //false it's sing In and true sing Up
 let SingIn_Up=true; 
@@ -93,11 +94,11 @@ async function fecthLocalData(table, type, obj = { value: {}, id: 0 }) {
 
                 await objeto.updateObjeto(table, obj.id, obj.value);
                 break;
-            case 'showId':
+            case 'showId'://get by ID
                 const result = await objeto.searchObjetoById(table, obj.id);
                 return result;
                 
-            case 'showAll':
+            case 'showAll'://getAll
 
                 const data= await objeto.readAllData(table);
                 return data;
@@ -258,6 +259,7 @@ async function login(type,data={}){
                 console.log(password +" == "+ userData.password);
                 if(password === userData.password){
                     setStorageData('json','usersSession',{id:request.id});
+                    identified=true;
                     return {status:true, data:request.data, message:'Welcome'};
                 }else{
                     return {status:false, message:'Password Incorrect'};
@@ -270,14 +272,19 @@ async function login(type,data={}){
                     
 
         const database = await validateIfExist('users','email',email);
-        if(!database.status){
+        if(!database.status){//Create new user
 
             const idUser = await fecthLocalData('users', 'add', { value: { email: email, name:name } });
+            //save password in another table with the id of the new user
             await fecthLocalData('usersPasswd', 'add', { value: { id:idUser, password:password } });
+            //create the tables that belong to the new user with the ID, but start empty
+            await fecthLocalData('historySell', 'add', { value: { id:idUser } });
+            await fecthLocalData('criptos', 'add', { value: { id:idUser } });
 
             if(idUser){
                 //save session
                 setStorageData('json','usersSession',{id:idUser});
+                identified=true;
                 return {status:true, userId:idUser , message:'Welcome'};
             }else{
                 return {status:false, message:'Something went wrong, please try again'};
@@ -324,12 +331,15 @@ async function validateSession(){
                 status:true
             }
             //console.log(user);
+            identified=true;
             return true
         }
         //delete it cuz it is not valid
         deleteStorageData('usersSession');
+        identified=false;
         return false
     }else{
+        identified=false;
         return false
     }
 }
