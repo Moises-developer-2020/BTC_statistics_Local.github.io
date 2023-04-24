@@ -1,5 +1,4 @@
 let online_offline;
-let identified; //to allow the user use http:// request
 
 //false it's sing In and true sing Up
 let SingIn_Up=true; 
@@ -239,56 +238,89 @@ function reloadPage() {
 //singIn/SingUp
 async function login(type,data={}){
     //evoid bad request
-    if(user.status){
+    //delete it because while you dont close session this variable not must changes
+    //and login form not must be shows
+    deleteStorageData('usersSession'); 
+    if(user.identified){
         getAlert('error',`Sorry!<br>There's a session open`);
         return {status:0, message:`There's a session open`};
 
-    }else if(!online_offline){
+    }/*else if(!online_offline){
         getAlert('offline_page');
         return {status:0, message:`Yua're offline`};
-    }
+    }*/
 
     const {email, name, password } =data;
     switch (type) {
         case 'singIn':
-            
+            user.identified=false;
+
             const request = await validateIfExist('users','email',email);
             if(request.status){
                 const userData=await fecthLocalData('usersPasswd', 'showId', { id:request.id });
-                //valida if password is equals to
-                console.log(password +" == "+ userData.password);
-                if(password === userData.password){
-                    setStorageData('json','usersSession',{id:request.id});
-                    identified=true;
-                    return {status:true, data:request.data, message:'Welcome'};
+                //decript the password encripted
+                const passwordDecript= await decryptValue(userData.password, password);
+
+                if(passwordDecript.status){
+                    //validate if password is equals to
+                    if(password === passwordDecript.value){
+                        const sessionEncript=await encryptValue(request.id,keySecret);
+                        if(sessionEncript.status){
+                            
+                            setStorageData('json','usersSession',sessionEncript.value);
+                            user.identified=true;
+                            
+                            
+                            return {status:true, data:request.data, message:'Welcome'};
+                        }else{
+                            return {status:false, message:'Session cannot be save'};
+                        }
+
+                    }else{
+                        return {status:false, message:'Password Incorrect'};
+                    }  
                 }else{
                     return {status:false, message:'Password Incorrect'};
-                }      
+                }   
             }else{
                 return {status:0, message:`User does't exist`};
             };
 
         case 'singUp':
                     
+        user.identified=false;
 
         const database = await validateIfExist('users','email',email);
         if(!database.status){//Create new user
 
-            const idUser = await fecthLocalData('users', 'add', { value: { email: email, name:name } });
-            //save password in another table with the id of the new user
-            await fecthLocalData('usersPasswd', 'add', { value: { id:idUser, password:password } });
-            //create the tables that belong to the new user with the ID, but start empty
-            await fecthLocalData('historySell', 'add', { value: { id:idUser } });
-            await fecthLocalData('criptos', 'add', { value: { id:idUser } });
+            //encript password of user
+            const encripted = await encryptValue(password,password);
+           if(encripted.status){
+                const idUser = await fecthLocalData('users', 'add', { value: { email: email, name:name } });
+                //save password in another table with the id of the new user
+                await fecthLocalData('usersPasswd', 'add', { value: { id:idUser, password:encripted.value } });
+                //create the tables that belong to the new user with the ID, but start empty
+                await fecthLocalData('historySell', 'add', { value: { id:idUser } });
+                await fecthLocalData('criptos', 'add', { value: { id:idUser } });
 
-            if(idUser){
-                //save session
-                setStorageData('json','usersSession',{id:idUser});
-                identified=true;
-                return {status:true, userId:idUser , message:'Welcome'};
-            }else{
-                return {status:false, message:'Something went wrong, please try again'};
-            }
+                if(idUser){
+                    //to save session encripted
+                    const sessionEncript=await encryptValue(idUser,keySecret);
+                    if(sessionEncript.status){
+                            
+                        setStorageData('json','usersSession',sessionEncript.value);
+                        user.identified=true;
+                        return {status:true, userId:idUser , message:'Welcome'};
+                    }else{
+                        return {status:false, message:'Session cannot be save'};
+                    }
+                    
+                }else{
+                    return {status:false, message:'Something went wrong, please try again'};
+                }
+           }else{
+            getAlert('error',`Sorry!<br>Something went wrong`);
+           }
 
         }else{
             return {status:0, message:`User already exist`};
@@ -312,34 +344,41 @@ async function validateIfExist(table, parameter, value){
 
 //validate if session variable saved in locaStorage it's valid
 async function validateSession(){
-
+    user.identified=false;
     if(checkStorageData('usersSession')){
-        const idUser= JSON.parse(getStorageData('usersSession'));
-        const id =parseInt(idUser.id);
+        //get only the value whithout  this ""
+        const encriptID = getStorageData('usersSession').split('"')[1];
+        const decriptId= await decryptValue(encriptID,keySecret);
 
-        //validate user and get user's data
-        const userData=await fecthLocalData('users', 'showId', { id:id });
+        if(decriptId.status){
+            const idUser= decriptId.value;
+            const id =parseInt(idUser);
 
-        if(userData){
-            const historySell=await fecthLocalData('historySell', 'showId', { id:id });
-            const criptos=await fecthLocalData('criptos', 'showId', { id:id });
+            //validate user and get user's data
+            const userData=await fecthLocalData('users', 'showId', { id:id });
 
-            user={
-                data:userData,
-                historySell:historySell,
-                criptos:criptos,
-                status:true
+            if(userData){
+                const historySell=await fecthLocalData('historySell', 'showId', { id:id });
+                const criptos=await fecthLocalData('criptos', 'showId', { id:id });
+
+                user={
+                    data:userData,
+                    historySell:historySell,
+                    criptos:criptos,
+                    identified:true
+                }
+                //console.log(user);
+                return true
             }
-            //console.log(user);
-            identified=true;
-            return true
+            //delete it cuz it is not valid
+            deleteStorageData('usersSession');
+            return false
+        }else{
+            //delete it cuz it is not valid
+            deleteStorageData('usersSession');
+            return false
         }
-        //delete it cuz it is not valid
-        deleteStorageData('usersSession');
-        identified=false;
-        return false
     }else{
-        identified=false;
         return false
     }
 }

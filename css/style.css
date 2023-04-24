@@ -169,7 +169,9 @@ body {
     min-width: 280px;
 
 }
-
+.center.disabled{
+    display: none;
+}
 .statusAnimation {
     animation-name: smoth;
     animation-duration: 0.5s;

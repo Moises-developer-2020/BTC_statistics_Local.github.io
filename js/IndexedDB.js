@@ -1,7 +1,9 @@
 // variables
 let idSelected;
 let dbName = "CriptosDB";
-let sessionUser;
+
+//show encript/decript user session
+const keySecret='mySecretKey'; 
 
 //tables
 /*users=[{
@@ -40,10 +42,10 @@ Coins=[{
 
 /*user logueado his data */
 let user={
-    data:[],
+    data:{},
     historySell:[],
     criptos:[],
-    status:''
+    identified:''
 }
 
 //get localBD

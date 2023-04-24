@@ -97,12 +97,14 @@ async function requestPainted() {
         if(!userStatus){
             //open login
             setClass([{e:formLogin,c:'active'}]);
+            //hide all the main content
+            setClass([{e:center,c:'disabled'}]);
         }
     }
     
     getRequestData(await fetchData(API));
 
-    if (online_offline && identified) {
+    if (online_offline && user.identified) {
         LastCheck = checkStorageData("checkPr")?getStorageData("checkPr"):0;
 
         if (Math.sign(critopApi.percentData) == -1 || Math.sign(critopApi.percentData) == -0) {
@@ -332,7 +334,7 @@ function saveStyles() {
 
 //change type of login
 optionTo.onclick = async function(){
-    SingIn_Up=!SingIn_Up;
+    SingIn_Up=!SingIn_Up; //choose if sing In or Sing Up
     if(!SingIn_Up){
         setClass([{e:inputSingUp,c:'allow'}]);
         setClass([{e:infoLogin,c:'sing'}]);
@@ -344,34 +346,27 @@ optionTo.onclick = async function(){
         removeClass([{e:infoLogin,c:'sing'}]);
 
     }
-    console.log(SingIn_Up);
 }
 
 
 //SingIn or Sing Up
 singInButton.onclick = async function(){
-    console.log('click: '+SingIn_Up);
+    let data;
     if(SingIn_Up){
-        const data =await login('singIn',{email:inputEmail.value, password:inputPassword.value});
-        console.log(data);
+        data =await login('singIn',{email:inputEmail.value, password:inputPassword.value});
         singInMsg.innerHTML=data.message;
 
-        //working with a succesfully session
-        if(data.status){
-            requestPainted();
-            removeClass([{e:formLogin,c:'active'}]);
-        }
     }else{
-        const data =await login('singUp',{email:inputEmail.value,name:inputName.value, password:inputPassword.value});
-        console.log(data);
-        singInMsg.innerHTML=data.message;
-        //working with a succesfully session
-        if(data.status){
-            requestPainted();
-            removeClass([{e:formLogin,c:'active'}]);
-        }
+        data =await login('singUp',{email:inputEmail.value,name:inputName.value, password:inputPassword.value});
+        singInMsg.innerHTML=data.message; 
     }
 
+    //working with a succesfully session
+    if(data.status){
+        requestPainted();
+        removeClass([{e:formLogin,c:'active'}]);
+        removeClass([{e:center,c:'disabled'}]);
+    }
 }
 
 
