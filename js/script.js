@@ -88,7 +88,7 @@ async function getRequestData(API){
 }
 
 async function requestPainted() {
-    //not lose the color of the numbers
+    //first load of the page
     if(firtsLoad == 0){
         getStyleSaved();
 
@@ -358,7 +358,7 @@ singInButton.onclick = async function(){
 
     }else{
         data =await login('singUp',{email:inputEmail.value,name:inputName.value, password:inputPassword.value});
-        singInMsg.innerHTML=`<span>${data.message}</span>`; 
+        singInMsg.innerHTML=`<span class="msm">${data.message}</span>`; 
     }
 
     //working with a succesfully session
