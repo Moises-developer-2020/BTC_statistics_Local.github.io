@@ -245,10 +245,10 @@ async function login(type,data={}){
         getAlert('error',`Sorry!<br>There's a session open`);
         return {status:0, message:`There's a session open`};
 
-    }/*else if(!online_offline){
+    }else if(!online_offline){
         getAlert('offline_page');
         return {status:0, message:`Yua're offline`};
-    }*/
+    }
 
     const {email, name, password } =data;
     switch (type) {

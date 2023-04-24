@@ -101,9 +101,37 @@
 
 .singInMsg{
     font-size: 0.5em;
-    min-height: 40px;
+    min-height: 27px;
     color: #ff6354;
-    margin: 6px 14px;
+    margin: 15px 14px;
+    position: relative;
+    overflow: hidden;
+    max-height: 27px;
+
+}
+.singInMsg span{
+    position: relative;
+    display: block;
+    color: #ff6354;
+    position: relative;
+    overflow: hidden;
+    word-wrap: none;
+    word-break: break-all;
+}
+/* .singInMsg span::after{
+    position: absolute;
+    content: '_';
+    right: 0;
+}  */
+.singInMsg span.msm{
+    animation: text 1s linear forwards ;
+}
+@keyframes text {
+    0%{
+        width: 0px ;
+    }100%{
+        width: 320px;
+    }
 }
 
 .formGroup{
@@ -166,15 +194,16 @@
     align-items: center;
 }
 .submitRedes{
-    left: 26px;
+    left: 51px;
     position: relative;
 }
 .submitRedes span{
     position: absolute;
     width: 40px;
     height: 40px;
-    background-color: #99a3ba;
     border-radius: 50px;
+    background: #0037b300;
+    background-image: linear-gradient(180deg, #2300af -52%, #00000000 75%);
 }
 .submitRedes span:nth-child(1){
     margin:-63px 0px 0px -62px;
@@ -186,9 +215,9 @@
     margin: -63px 0px 0px 85px;
 }
 .submitLocal button{
-    width: 113px;
+    width: 162px;
     font-size: 0.5em;
-    height: 40px;
+    height: 53px;
 }
 
 

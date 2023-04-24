@@ -354,11 +354,11 @@ singInButton.onclick = async function(){
     let data;
     if(SingIn_Up){
         data =await login('singIn',{email:inputEmail.value, password:inputPassword.value});
-        singInMsg.innerHTML=data.message;
+        singInMsg.innerHTML=`<span class="msm">${data.message}</span>`;
 
     }else{
         data =await login('singUp',{email:inputEmail.value,name:inputName.value, password:inputPassword.value});
-        singInMsg.innerHTML=data.message; 
+        singInMsg.innerHTML=`<span>${data.message}</span>`; 
     }
 
     //working with a succesfully session
