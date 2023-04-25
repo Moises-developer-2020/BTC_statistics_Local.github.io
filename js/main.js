@@ -41,10 +41,10 @@ const elements = {
     Hight: getElement("#Hight"),
     Low: getElement("#Low"),
     percent: getElement("#percent"),
-    submit: getElement("#submit"),
-    saveSubmit: getElement("#saveSubmit"),
+    btnReload: getElement("#btnReload"),
+    btnBuy: getElement("#btnBuy"),
     investInput: getElement("#investInput"),
-    cancelSubmit: getElement("#cancelSubmit"),
+    btnCancelBuy: getElement("#btnCancelBuy"),
     earnings_today: getElement("#earnings_today"),
     price_invest: getElement("#price_invest"),
     invested_saved: getElement("#invested_saved"),
@@ -86,7 +86,7 @@ async function getRequestData(API){
     
     //console.log(online_offline);
 }
-
+//to see data just call user.
 async function requestPainted() {
     //first load of the page
     if(firtsLoad == 0){
@@ -251,9 +251,8 @@ setInterval(() => {
     submitGet();
 }, 15000); //15000, 10000
 
-submit.onclick = function () {
+btnReload.onclick = function () {
     submitGet();
-
 };
 
 function checkToSAvedPrice() {
@@ -265,7 +264,7 @@ function checkToSAvedPrice() {
 };
 
 
-saveSubmit.onclick = function () {
+btnBuy.onclick = function () {
     localStorage.setItem('PriceSaved', Saveinvertion);
     localStorage.setItem("price_invested", BTCjson.price_to_invest);
     localStorage.setItem('date', new Date());
@@ -280,7 +279,7 @@ investInput.onclick = function () {
     profits.setAttribute('style', 'height:98%;');
     price_invest.focus();
 }
-cancelSubmit.onclick = function () {
+btnCancelBuy.onclick = function () {
     //close the invest window
     profits.setAttribute('style', 'height:0%;');
 }

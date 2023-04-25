@@ -48,7 +48,10 @@ function removeClass(d = [{ e: null, c: '' }]) {
 }
 
 //get element
-function getElement(selector) {
+function getElement(selector, all='') {
+    if(all == 'all'){
+        return document.querySelectorAll(selector);
+    }
     return document.querySelector(selector);
 }
 //GET API
@@ -300,8 +303,8 @@ async function login(type,data={}){
                 //save password in another table with the id of the new user
                 await fecthLocalData('usersPasswd', 'add', { value: { id:idUser, password:encripted.value } });
                 //create the tables that belong to the new user with the ID, but start empty
-                await fecthLocalData('historySell', 'add', { value: { id:idUser } });
-                await fecthLocalData('criptos', 'add', { value: { id:idUser } });
+                await fecthLocalData('historySell', 'add', { value: { id:idUser,data:'' } });
+                await fecthLocalData('criptos', 'add', { value: { id:idUser,data:'' } });
 
                 if(idUser){
                     //to save session encripted
@@ -361,10 +364,27 @@ async function validateSession(){
                 const historySell=await fecthLocalData('historySell', 'showId', { id:id });
                 const criptos=await fecthLocalData('criptos', 'showId', { id:id });
 
+                let dataHistorySell;
+                let dataCriptos;
+
+                //validate the first time on see this data
+                
+                try {
+                    dataHistorySell=JSON.parse(historySell.data)
+                } catch (error) {
+                    dataHistorySell=[historySell.data]
+                }
+                try {
+                    dataCriptos=JSON.parse(criptos.data);
+                } catch (error) {
+                    dataCriptos=[criptos.data];
+                }      
+
+                // put the data in global user variable
                 user={
                     data:userData,
-                    historySell:historySell,
-                    criptos:criptos,
+                    historySell:dataHistorySell,
+                    criptos:dataCriptos,
                     identified:true
                 }
                 //console.log(user);
@@ -382,3 +402,112 @@ async function validateSession(){
         return false
     }
 }
+//use to saved all sells, buys, and history records of buys from the user 
+//this method is only use it in main.js
+async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'', coinID, index}){
+    const userID=user.data.id;
+
+    switch (method) {
+        case 'buy':
+            //if already exist mean, it is a buy again to the same coin, increase the price buy it before
+            if(user.criptos[data.index]){
+                let investedPrice={
+                    price:data.investedPrice,
+                    date:new Date(),
+                    coinPrice:data.coinPrice  
+                }
+                user.criptos[data.index].investedPrice.push(investedPrice);
+
+                await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
+            }else{
+                //new buy or the firt buy
+                criptos={
+                    idCripto:data.coinID,
+                    investedPrice:[{
+                        price:data.investedPrice,
+                        date:new Date(),
+                        coinPrice:data.coinPrice  
+                    }],
+                    checkPrice:data.coinPrice 
+                }
+            
+                //to the first time on save this data cuz it is JSON not Array
+                if(Array.isArray(user.criptos)){
+                    //delete the firt element created cuz it is empty
+                    if(user.criptos[0].idCripto === undefined){
+                        user.criptos.splice(0,1)
+                    }
+                    user.criptos.push(criptos)
+                }else{
+                    user.criptos=criptos
+                }
+
+                await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
+            }
+
+
+            break;
+        case 'sell'://disabled when there is not any buy
+
+            //add history sell
+            historySell={
+                idCripto:data.coinID,
+                investedPrice:user.criptos[data.index].investedPrice,
+                dateSold:new Date(),
+                dateInvested:user.criptos[data.index].date,
+                earned:data.earned,
+                coinPrice:data.coinPrice
+            }
+            //to the first time on save this data cuz it is JSON not Array
+            if(Array.isArray(user.historySell)){
+                //delete the firt element created cuz it is empty
+                if(user.historySell[0].idCripto === undefined){
+                    user.historySell.splice(0,1)
+                }
+                user.historySell.push(historySell)
+            }else{
+                user.historySell=historySell
+            }
+            
+            await fecthLocalData('historySell','update',{value:user.historySell,id:userID});
+
+            
+            //to the first time on save this data cuz is JSON not Array
+            if(Array.isArray(user.criptos)){
+                //delete the sold cripto from the array
+                user.criptos.splice(data.index,1);
+                
+            }
+
+            await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
+
+            break;
+
+        //this value saved in criptos's tables, it is use to detect increase and decrease
+        // of the current price of the coin invested
+        case 'UpdateCheckPrice':
+                //each time the current price change, it is update in the database
+
+                user.criptos[data.index].checkPrice=data.coinPrice;
+                await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
+
+
+                break;
+        default:
+            break;
+    }
+}
+
+(async ()=>{
+
+   setTimeout(() => {
+    //transaction('UpdateCheckPrice',{coinPrice:120,earned:0, coinID:'moi2',index:1});//, {BTCjson.status.c,BTCjson.earnings})
+
+    // transaction('buy',{coinPrice:0,earned:0, coinID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
+    // transaction('buy',{coinPrice:0,earned:0, coinID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
+    // transaction('buy',{coinPrice:0,earned:0, coinID:'moi2',index:1});//, {BTCjson.status.c,BTCjson.earnings})
+    //console.log(user);
+   }, 1500);
+    
+})();
+

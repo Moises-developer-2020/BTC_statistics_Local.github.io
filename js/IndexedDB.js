@@ -16,18 +16,24 @@ usersPasswd=[{
     idUser:"",
     password: ""
 }]*/
-let historySell=[{
+let historySell={ //history sells and buys
+    idCripto:'',
      //idUser
-    savedPrice:"",
-    dateSold:""
-}]
-let criptos=[{
+    investedPrice:"",
+    dateSold:"",
+    dateInvested:'',
+    earned:'',
+    coinPrice:''
+}
+let criptos={
     idCripto:"",
     //idUser
-    savedPrice:"",
-    date:""
+    investedPrice:"",
+    date:"",
+    checkPrice:'',
+    coinPrice:''
         
-}]/*
+}/*
 ///example  //public to anyone it is the API's data to search
 Coins=[{
     id:"bitcoin",
@@ -111,9 +117,8 @@ class MyFunctions {
         getRequest.onsuccess = () => {
             // update object
             let updatedObj = getRequest.result;
-            updatedObj.nombre = objeto.nombre;
-            //updatedObj.propiedad2 = objeto.propiedad2;
-
+            updatedObj.data=JSON.stringify(objeto)
+           
             let request = store.put(updatedObj);
 
             request.onsuccess = () => {
