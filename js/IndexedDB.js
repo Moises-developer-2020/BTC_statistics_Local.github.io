@@ -30,7 +30,12 @@ let criptos={
     //idUser
     investedPrice:"",
     date:"",
-    checkPrice:'',
+    coinPrice:''
+        
+}
+let checkPrice={
+    idCripto:"",
+    //idUser
     coinPrice:''
         
 }/*
@@ -51,6 +56,7 @@ let user={
     data:{},
     historySell:[],
     criptos:[],
+    checkPrice:[],
     identified:''
 }
 
@@ -75,6 +81,7 @@ function DB(dbName) {
             const usersPasswd = db.createObjectStore('usersPasswd', { keyPath: 'id', autoIncrement: false });
             const historySell = db.createObjectStore('historySell', { keyPath: 'id', autoIncrement: false });
             const criptos = db.createObjectStore('criptos', { keyPath: 'id', autoIncrement: false });
+            const checkPrice = db.createObjectStore('checkPrice', { keyPath: 'id', autoIncrement: false });
             const coins = db.createObjectStore('coins', { keyPath: 'id', autoIncrement: true });
         };
     });
@@ -107,32 +114,37 @@ class MyFunctions {
 
     // update object
     async updateObjeto(table, id, objeto) {
-        const transaction = this.db.transaction([table], 'readwrite');
-        const store = transaction.objectStore(table);
+        const transaction = await this.db.transaction([table], 'readwrite');
+        const store = await transaction.objectStore(table);
 
 
         // get object by ID
         let getRequest = store.get(id);
+        return new Promise((resolve, reject)=>{
+            getRequest.onsuccess =async () => {
+                // update object
+                let updatedObj = getRequest.result;
+                updatedObj.data=JSON.stringify(objeto)
+            
+                let request = await store.put(updatedObj);
 
-        getRequest.onsuccess = () => {
-            // update object
-            let updatedObj = getRequest.result;
-            updatedObj.data=JSON.stringify(objeto)
-           
-            let request = store.put(updatedObj);
+                request.onsuccess = () => {
+                    console.log('Update successful');
+                    resolve({status:true, message:'Update successful'});
+                };
 
-            request.onsuccess = () => {
-                console.log('Update successful');
-            };
+                request.onerror = (event) => {
+                    console.log('Error to update object:', event);
+                    reject({status:false, message:'Error to update objec'});
+                };
 
-            request.onerror = (event) => {
-                console.log('Error to update object:', event);
-            };
-
-            getRequest.onerror = (event) => {
-                console.log('Error to get object: ', event);
-            };
-        }
+                getRequest.onerror = (event) => {
+                    console.log('Error to get object: ', event);
+                    reject({status:false, message:'Error to get object'});
+                };
+                
+            }
+        });
     }
 
     // search by ID

@@ -94,8 +94,9 @@ async function fecthLocalData(table, type, obj = { value: {}, id: 0 }) {
                 break;
             case 'update':
 
-                await objeto.updateObjeto(table, obj.id, obj.value);
-                break;
+                const request=await objeto.updateObjeto(table, obj.id, obj.value);
+                
+                return request;
             case 'showId'://get by ID
                 const result = await objeto.searchObjetoById(table, obj.id);
                 return result;
@@ -125,114 +126,109 @@ function createAlert(alert) {
 
 //date format
 function DateformatContacts(dateSave) {
-    if (dateSave) {
-        function dateInHours() {
-            // Set the date we're counting down to
-            var getDateSave = new Date(dateSave).getTime();
+    function dateInHours() {
+        // Set the date we're counting down to
+        var getDateSave = new Date(dateSave).getTime();
 
-            // Get todays date and time
-            var now = new Date().getTime();
+        // Get todays date and time
+        var now = new Date().getTime();
 
-            // Find the distance between now an the count down date
-            var distance = now - getDateSave;
+        // Find the distance between now an the count down date
+        var distance = now - getDateSave;
 
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            return JSON.parse(`{
-            "dateFormat":{
-                "days":${days},
-                "hours":${hours},
-                "minutes":${minutes},
-                "seconds":${seconds}
-            }}`);
-        };
+        return JSON.parse(`{
+        "dateFormat":{
+            "days":${days},
+            "hours":${hours},
+            "minutes":${minutes},
+            "seconds":${seconds}
+        }}`);
+    };
 
-        var date = new Date(dateSave);
-        let timestampSave = date.toLocaleTimeString('en-US');
+    var date = new Date(dateSave);
+    let timestampSave = date.toLocaleTimeString('en-US');
 
-        var formatHour = timestampSave.split(':');
-        //without seconds
-        var hour = formatHour[0] + ':' + formatHour[1] + ' ' + formatHour[2].split(' ')[1];
+    var formatHour = timestampSave.split(':');
+    //without seconds
+    var hour = formatHour[0] + ':' + formatHour[1] + ' ' + formatHour[2].split(' ')[1];
 
-        var days = date.toDateString().split(' ')[0];
-        var monts = date.toDateString().split(' ')[1];
-        var days_number = date.toDateString().split(' ')[2];
-        var year = date.toDateString().split(' ')[3];
+    var days = date.toDateString().split(' ')[0];
+    var monts = date.toDateString().split(' ')[1];
+    var days_number = date.toDateString().split(' ')[2];
+    var year = date.toDateString().split(' ')[3];
 
-        var dateSaveFormat = days + ', ' + monts + ' ' + days_number + ', ' + year.slice(2, 4) + '&nbsp &nbsp ' + hour;
-        var endData = {
-            dateSaved: dateSaveFormat,
-            elapseTimes: dateInHours().dateFormat
-        }
-        return endData;
-
+    var dateSaveFormat = days + ', ' + monts + ' ' + days_number + ', ' + year.slice(2, 4) + '&nbsp &nbsp ' + hour;
+    var endData = {
+        dateSaved: dateSaveFormat,
+        elapseTimes: dateInHours().dateFormat
     }
+    return endData;
+
+
 }
 
 //validate way to chow the elapse time
 function validateElapseTime(date) {
-    if (checkStorageData(date)) {
-        var elapseTime = DateformatContacts(getStorageData(date));
-        elapseTime = elapseTime.elapseTimes;
+    var elapseTime = DateformatContacts(date);
+    elapseTime = elapseTime.elapseTimes;
 
-        var validated = "";
-        if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes <= 1) {
-            validated = elapseTime.seconds + " seconds ago.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes == 1) {
-            validated = elapseTime.minutes + " min. ";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes > 1) {
-            validated = elapseTime.minutes + " mins. ";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes == 0) {
-            validated = elapseTime.hours + " hour ago.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes > 1) {
-            validated = elapseTime.hours + " hour " + elapseTime.minutes + " mins.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes == 1) {
-            validated = elapseTime.hours + " hour " + elapseTime.minutes + " min.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes == 0) {
-            validated = elapseTime.hours + " hours ago.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes == 1) {
-            validated = elapseTime.hours + " hours " + elapseTime.minutes + " min.";
-        }
-        if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes > 1) {
-            validated = elapseTime.hours + " hours " + elapseTime.minutes + " mins.";
-        }
-
-        if (elapseTime.days == 1 && elapseTime.hours == 0) {
-            validated = elapseTime.days + " day ago.";
-        }
-        if (elapseTime.days > 1 && elapseTime.hours == 0) {
-            validated = elapseTime.days + " days ago. ";
-        }
-        if (elapseTime.days == 1 && elapseTime.hours == 1) {
-            validated = elapseTime.days + " day " + elapseTime.hours + " hour";
-        }
-        if (elapseTime.days == 1 && elapseTime.hours > 1) {
-            validated = elapseTime.days + " day " + elapseTime.hours + " hours";
-        }
-        if (elapseTime.days > 1 && elapseTime.hours == 1) {
-            validated = elapseTime.days + " days " + elapseTime.hours + " hour";
-        }
-        if (elapseTime.days > 1 && elapseTime.hours > 1) {
-            validated = elapseTime.days + " days " + elapseTime.hours + " hours";
-        }
-
-
-        return validated;
+    var validated = "";
+    if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes <= 1) {
+        validated = elapseTime.seconds + " seconds ago.";
     }
-    else {
-        return "-----";
+    if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes == 1) {
+        validated = elapseTime.minutes + " min. ";
     }
+    if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes > 1) {
+        validated = elapseTime.minutes + " mins. ";
+    }
+    if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes == 0) {
+        validated = elapseTime.hours + " hour ago.";
+    }
+    if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes > 1) {
+        validated = elapseTime.hours + " hour " + elapseTime.minutes + " mins.";
+    }
+    if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes == 1) {
+        validated = elapseTime.hours + " hour " + elapseTime.minutes + " min.";
+    }
+    if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes == 0) {
+        validated = elapseTime.hours + " hours ago.";
+    }
+    if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes == 1) {
+        validated = elapseTime.hours + " hours " + elapseTime.minutes + " min.";
+    }
+    if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes > 1) {
+        validated = elapseTime.hours + " hours " + elapseTime.minutes + " mins.";
+    }
+
+    if (elapseTime.days == 1 && elapseTime.hours == 0) {
+        validated = elapseTime.days + " day ago.";
+    }
+    if (elapseTime.days > 1 && elapseTime.hours == 0) {
+        validated = elapseTime.days + " days ago. ";
+    }
+    if (elapseTime.days == 1 && elapseTime.hours == 1) {
+        validated = elapseTime.days + " day " + elapseTime.hours + " hour";
+    }
+    if (elapseTime.days == 1 && elapseTime.hours > 1) {
+        validated = elapseTime.days + " day " + elapseTime.hours + " hours";
+    }
+    if (elapseTime.days > 1 && elapseTime.hours == 1) {
+        validated = elapseTime.days + " days " + elapseTime.hours + " hour";
+    }
+    if (elapseTime.days > 1 && elapseTime.hours > 1) {
+        validated = elapseTime.days + " days " + elapseTime.hours + " hours";
+    }
+
+
+    return validated;
+
 }
 
 function reloadPage() {
@@ -305,6 +301,7 @@ async function login(type,data={}){
                 //create the tables that belong to the new user with the ID, but start empty
                 await fecthLocalData('historySell', 'add', { value: { id:idUser,data:'' } });
                 await fecthLocalData('criptos', 'add', { value: { id:idUser,data:'' } });
+                await fecthLocalData('checkPrice', 'add', { value: { id:idUser,data:'' } });
 
                 if(idUser){
                     //to save session encripted
@@ -363,10 +360,11 @@ async function validateSession(){
             if(userData){
                 const historySell=await fecthLocalData('historySell', 'showId', { id:id });
                 const criptos=await fecthLocalData('criptos', 'showId', { id:id });
+                const checkPrice=await fecthLocalData('checkPrice', 'showId', { id:id });
 
                 let dataHistorySell;
                 let dataCriptos;
-
+                let dataCheckPrice;
                 //validate the first time on see this data
                 
                 try {
@@ -378,6 +376,11 @@ async function validateSession(){
                     dataCriptos=JSON.parse(criptos.data);
                 } catch (error) {
                     dataCriptos=[criptos.data];
+                }  
+                try {
+                    dataCheckPrice=JSON.parse(checkPrice.data);
+                } catch (error) {
+                    dataCheckPrice=[checkPrice.data];
                 }      
 
                 // put the data in global user variable
@@ -385,6 +388,7 @@ async function validateSession(){
                     data:userData,
                     historySell:dataHistorySell,
                     criptos:dataCriptos,
+                    checkPrice:dataCheckPrice,
                     identified:true
                 }
                 //console.log(user);
@@ -404,11 +408,12 @@ async function validateSession(){
 }
 //use to saved all sells, buys, and history records of buys from the user 
 //this method is only use it in main.js
-async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'', coinID, index}){
+async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'', criptoID, index}){
     const userID=user.data.id;
 
     switch (method) {
         case 'buy':
+            let request;
             //if already exist mean, it is a buy again to the same coin, increase the price buy it before
             if(user.criptos[data.index]){
                 let investedPrice={
@@ -418,17 +423,16 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
                 }
                 user.criptos[data.index].investedPrice.push(investedPrice);
 
-                await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
+                request = await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
             }else{
                 //new buy or the firt buy
                 criptos={
-                    idCripto:data.coinID,
+                    idCripto:data.criptoID,
                     investedPrice:[{
                         price:data.investedPrice,
                         date:new Date(),
                         coinPrice:data.coinPrice  
-                    }],
-                    checkPrice:data.coinPrice 
+                    }]
                 }
             
                 //to the first time on save this data cuz it is JSON not Array
@@ -437,24 +441,26 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
                     if(user.criptos[0].idCripto === undefined){
                         user.criptos.splice(0,1)
                     }
+                    
                     user.criptos.push(criptos)
+                    console.log(1);
                 }else{
+                    console.log(2);
                     user.criptos=criptos
                 }
 
-                await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
+                request = await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
             }
 
+            return request;
 
-            break;
         case 'sell'://disabled when there is not any buy
 
             //add history sell
             historySell={
-                idCripto:data.coinID,
+                idCripto:data.criptoID,
                 investedPrice:user.criptos[data.index].investedPrice,
                 dateSold:new Date(),
-                dateInvested:user.criptos[data.index].date,
                 earned:data.earned,
                 coinPrice:data.coinPrice
             }
@@ -469,30 +475,45 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
                 user.historySell=historySell
             }
             
-            await fecthLocalData('historySell','update',{value:user.historySell,id:userID});
+            const requestSell = await fecthLocalData('historySell','update',{value:user.historySell,id:userID});
 
-            
-            //to the first time on save this data cuz is JSON not Array
-            if(Array.isArray(user.criptos)){
-                //delete the sold cripto from the array
-                user.criptos.splice(data.index,1);
+            if(requestSell.status){
                 
+                //to the first time on save this data cuz is JSON not Array
+                if(Array.isArray(user.criptos)){
+                    //delete the sold cripto from the array
+                    user.criptos.splice(data.index,1);
+                    
+                }
+                user.criptos[data.index]="";
+                const requestCriptos =await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
+                
+                if(requestCriptos.status){
+                    return requestCriptos;
+                }
+
+            }else{
+                return requestSell;
             }
-
-            await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
-
-            break;
+            
 
         //this value saved in criptos's tables, it is use to detect increase and decrease
         // of the current price of the coin invested
         case 'UpdateCheckPrice':
                 //each time the current price change, it is update in the database
-
-                user.criptos[data.index].checkPrice=data.coinPrice;
-                await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
-
-
-                break;
+                checkPrice={
+                    idCripto:data.criptoID,
+                    coinPrice:data.coinPrice
+                        
+                }
+                if(!user.checkPrice[data.index].idCripto != data.criptoID){
+                    user.checkPrice[data.index]=checkPrice;
+                }else{
+                    user.checkPrice.push(checkPrice);
+                }
+                const checkPriceRequest =await fecthLocalData('checkPrice','update',{value:user.checkPrice,id:userID});
+        
+                return checkPriceRequest;
         default:
             break;
     }
@@ -500,12 +521,12 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
 
 (async ()=>{
 
-   setTimeout(() => {
-    //transaction('UpdateCheckPrice',{coinPrice:120,earned:0, coinID:'moi2',index:1});//, {BTCjson.status.c,BTCjson.earnings})
-
-    // transaction('buy',{coinPrice:0,earned:0, coinID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
-    // transaction('buy',{coinPrice:0,earned:0, coinID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
-    // transaction('buy',{coinPrice:0,earned:0, coinID:'moi2',index:1});//, {BTCjson.status.c,BTCjson.earnings})
+   setTimeout(async() => {
+    //const re= await transaction('UpdateCheckPrice',{coinPrice:1220,earned:0, criptoID:'moi2',index:0});//, {BTCjson.status.c,BTCjson.earnings})
+    //console.log(re);
+    // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
+    // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
+    // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi2',index:1});//, {BTCjson.status.c,BTCjson.earnings})
     //console.log(user);
    }, 1500);
     

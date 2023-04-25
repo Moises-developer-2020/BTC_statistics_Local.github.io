@@ -30,7 +30,7 @@ let Alert_Content={
 function getAlert(type, text="", option={}){
     switch (type) {
         case 'offline_page':
-            Alert_Content.offline_page.text=text || `Upps! <br> You're offline`;
+            Alert_Content.offline_page.text=text || `Ups! <br> You're offline`;
             createAlert(Alert_Content.offline_page);
             break;
         case 'error':

@@ -5,6 +5,9 @@ var price_invested_saved;
 var DifferIndicator;
 var firtsLoad=0;
 
+const criptoID='BTC'; //only test before to implement more services
+const indexCripto=0; //it is the position on the table, only test before to implement more services
+
 
 //Api`s data
 let critopApi={
@@ -88,6 +91,7 @@ async function getRequestData(API){
 }
 //to see data just call user.
 async function requestPainted() {
+    
     //first load of the page
     if(firtsLoad == 0){
         getStyleSaved();
@@ -101,11 +105,11 @@ async function requestPainted() {
             setClass([{e:center,c:'disabled'}]);
         }
     }
-    
+    console.log(user);
     getRequestData(await fetchData(API));
 
     if (online_offline && user.identified) {
-        LastCheck = checkStorageData("checkPr")?getStorageData("checkPr"):0;
+        LastCheck = user.checkPrice[indexCripto]?user.checkPrice[indexCripto].coinPrice:0;
 
         if (Math.sign(critopApi.percentData) == -1 || Math.sign(critopApi.percentData) == -0) {
             setClass([{e:percent,c:"negative"}]);
@@ -130,9 +134,9 @@ async function requestPainted() {
             
         }
 
-        SavePriceInvert = localStorage.getItem("PriceSaved") != undefined ? localStorage.getItem("PriceSaved") : 0;
+        SavePriceInvert = user.criptos[indexCripto]?user.criptos[indexCripto].investedPrice[0].coinPrice:0;
         Saveinvertion = critopApi.priceData;
-        BTCjson.price_invested = localStorage.getItem('price_invested') != undefined ? localStorage.getItem("price_invested") : 0;
+        BTCjson.price_invested = user.criptos[indexCripto]?user.criptos[indexCripto].investedPrice[0].price:0;
         invested_saved.innerHTML = BTCjson.price_invested;
         BTCjson.status.h = convertPrice(critopApi.priceHight, false, 0);
         BTCjson.status.l = convertPrice(critopApi.pricelow, false, 0);
@@ -173,6 +177,8 @@ async function requestPainted() {
         
         CalcularGanancia(parseFloat(BTCjson.price_invested), parseFloat(priceSavdStorage.innerHTML.replace(",", "")), parseFloat(price.innerHTML.replace(",", "")));
         firtsLoad=1;
+        //display the time that has passed since invested
+        showDate();
     }
 };
  
@@ -242,7 +248,6 @@ function submitGet() {
     setClass([{e:center,c:'animation'} , {e:statusD,c:'statusAnimation'}]);
 
     requestPainted();
-    showDate();
 }
 requestPainted();
 
@@ -255,19 +260,27 @@ btnReload.onclick = function () {
     submitGet();
 };
 
-function checkToSAvedPrice() {
+async function checkToSAvedPrice() {
     if (parseFloat(LastCheck) != parseFloat(critopApi.priceData)) {
         //diferent;
-        localStorage.setItem("checkPr", critopApi.priceData);
+        await transaction('UpdateCheckPrice',{criptoID:criptoID, coinPrice:critopApi.priceData,index:indexCripto});
+
         saveStyles();
     }//else{ no diferent};
 };
 
 
-btnBuy.onclick = function () {
-    localStorage.setItem('PriceSaved', Saveinvertion);
-    localStorage.setItem("price_invested", BTCjson.price_to_invest);
-    localStorage.setItem('date', new Date());
+btnBuy.onclick = async function () {
+
+    let data={
+        coinPrice:Saveinvertion,
+        investedPrice:BTCjson.price_to_invest,
+        criptoID:criptoID,
+        index:indexCripto
+    }
+    const re= await transaction('buy',data);
+    console.log(re);
+
     submitGet();
 
     //close the invest window
@@ -298,25 +311,33 @@ var elapseTim = document.getElementById("elapseTim");
 
 //show date on window
 function showDate() {
-    investedDate.innerHTML = checkStorageData('date')? DateformatContacts(getStorageData("date")).dateSaved : "---, ---, --, -- &nbsp &nbsp &nbsp --:-- --";
-    elapseTim.innerHTML = validateElapseTime('date');
+    investedDate.innerHTML = user.criptos[indexCripto]? DateformatContacts(user.criptos[indexCripto].investedPrice[0].date).dateSaved : "---, ---, --, -- &nbsp &nbsp &nbsp --:-- --";
+    elapseTim.innerHTML = user.criptos[indexCripto]? validateElapseTime(user.criptos[indexCripto].investedPrice[0].date): "-- --- ---";
 }
 
 
 var sellSubmit = document.getElementById("sellSubmit");
-sellSubmit.onclick = function () {
-    localStorage.removeItem("PriceSaved");
-    localStorage.removeItem("price_invested");
-    localStorage.removeItem("date");
+sellSubmit.onclick = async function () {
+    let data={
+        coinPrice:Saveinvertion,
+        investedPrice:BTCjson.price_to_invest,
+        criptoID:criptoID,
+        index:indexCripto,
+        earned:BTCjson.earnings
+    }
+    const re= await transaction('sell',data);
+    console.log(re);
     submitGet();
 }
-showDate();
+
 
 function getStyleSaved(){
     let savedStyle = checkStorageData('saveStyle')? getStorageData('saveStyle'):'';
     if(savedStyle != ''){
         let savedStyleParse = JSON.parse(savedStyle);
-        setClass([{e:diferenceH,c:savedStyleParse.diferenceH} , {e:diferenceL,c:savedStyleParse.diferenceL} , {e:priceDifferences,c:savedStyleParse.priceDifferences} , {e:indicator,c:savedStyleParse.indicator}]);
+        if(savedStyleParse.indicator != ""){
+            setClass([{e:diferenceH,c:savedStyleParse.diferenceH} , {e:diferenceL,c:savedStyleParse.diferenceL} , {e:priceDifferences,c:savedStyleParse.priceDifferences} , {e:indicator,c:savedStyleParse.indicator}]);
+        }
     }
 }
 function saveStyles() {
