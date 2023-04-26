@@ -1,6 +1,9 @@
 @media screen and (min-width: 550px) {
-    .center{
+    /* .center{
         transform: scale(1.5);
+    } */
+    .menu-bars{
+        display: none;
     }
 }
 @media screen and (max-width: 550px) {
@@ -17,6 +20,93 @@
         width: 160vw;
         margin-right: 60vw;
     }
+    /*style menu*/
+    .menu{
+        display: block;
+        background-color: #000000f0;
+        height: 100vh;
+        width: 100vw;
+        right: 0;
+        font-size: 1.5em;
+        overflow: hidden;
+        transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .menu.hidde{
+        width: 0px;
+        padding: 0px;
+    }
+    .menu-bars{
+        height: 50px;
+        cursor: pointer;
+        width: 50px;
+        position: fixed;
+        right: 26px;
+        top: 18px;
+        z-index: 1;
+    }
+    .menu-bars::after{
+        position: absolute;
+        content: "";
+        width: 40px;
+        height: 5px;
+        right: 12%;
+        top: 20%;
+        border-radius: 5px;
+        transform: rotate(0deg);
+        background-color: white;
+    }
+    .menu-bars.hidde::after{
+        transform: rotate(30deg);
+    }
+    .menu-bars.hidde::before{
+        transform: rotate(-30deg);
+    }
+    .menu-bars::before{
+        position: absolute;
+        content: "";
+        width: 40px;
+        height: 5px;
+        right: 12%;
+        top: 60%;
+        border-radius: 5px;
+        transform: rotate(0deg);
+        background-color: white;
+    }
+    .menu-user-content{
+        position: absolute;
+        top: 100px;
+        right: 50px;
+        
+    }
+    .user-image{
+        font-size: 2em;
+        width: 150px;
+        height: 150px;
+        border-radius: 180px;
+        position: absolute;
+    }
+    .user-content-name{
+        top: 110px;
+    }
+    .menu-search{
+        position: absolute;
+        right: 50px;
+        top: 50%;
+    }
+    .mainSection.hidde{
+        position: absolute;
+        left: -416px;
+        height: 100%;
+        width: 100%;
+        background: black;
+        border-radius: 106px;
+        box-shadow: -1px -1px 20px 7px #0000007a;
+    }
+    .mainSection{
+        height: 100%;
+        top: 0px;
+    }
+    /*end style menu*/
 }
 @media screen and (max-width: 420px) {
 .loginContent{

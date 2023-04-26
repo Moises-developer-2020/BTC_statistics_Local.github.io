@@ -40,36 +40,36 @@ let saveStyle={
 }
 
 const elements = {
-    price: getElement("#price"),
-    Hight: getElement("#Hight"),
-    Low: getElement("#Low"),
-    percent: getElement("#percent"),
-    btnReload: getElement("#btnReload"),
-    btnBuy: getElement("#btnBuy"),
-    investInput: getElement("#investInput"),
-    btnCancelBuy: getElement("#btnCancelBuy"),
-    earnings_today: getElement("#earnings_today"),
-    price_invest: getElement("#price_invest"),
-    invested_saved: getElement("#invested_saved"),
-    profits: getElement(".profits"),
-    center: getElement(".center"),
-    statusD: getElement(".status"),
-    diferenceH: getElement("#diferenceH"),
-    diferenceL: getElement("#diferenceL"),
-    priceDifferences: getElement("#priceDifferences"),
-    indicator: getElement("#indicator"),
-    savdDifferen: getElement("#savdDifferen"),
-    priceSavdStorage: getElement("#priceSavdStorage"),
-    infoLogin: getElement(".infoLogin"),
-    optionTo: getElement(".optionTo"),
-    singInButton: getElement("#singInButton"),
-    inputName: getElement("#inputName"),
-    inputPassword: getElement("#inputPassword"),
-    inputEmail: getElement("#inputEmail"),
-    formLogin: getElement(".login"),
-    singInMsg: getElement(".singInMsg"),
-    inputCenter: getElement(".inputCenter"),
-    inputSingUp: getElement(".inputSingUp")
+    price: $("#price"),
+    Hight: $("#Hight"),
+    Low: $("#Low"),
+    percent: $("#percent"),
+    btnReload: $("#btnReload"),
+    btnBuy: $("#btnBuy"),
+    investInput: $("#investInput"),
+    btnCancelBuy: $("#btnCancelBuy"),
+    earnings_today: $("#earnings_today"),
+    price_invest: $("#price_invest"),
+    invested_saved: $("#invested_saved"),
+    profits: $(".profits"),
+    center: $(".center"),
+    statusD: $(".status"),
+    diferenceH: $("#diferenceH"),
+    diferenceL: $("#diferenceL"),
+    priceDifferences: $("#priceDifferences"),
+    indicator: $("#indicator"),
+    savdDifferen: $("#savdDifferen"),
+    priceSavdStorage: $("#priceSavdStorage"),
+    infoLogin: $(".infoLogin"),
+    optionTo: $(".optionTo"),
+    singInButton: $("#singInButton"),
+    inputName: $("#inputName"),
+    inputPassword: $("#inputPassword"),
+    inputEmail: $("#inputEmail"),
+    formLogin: $(".login"),
+    singInMsg: $(".singInMsg"),
+    inputCenter: $(".inputCenter"),
+    inputSingUp: $(".inputSingUp")
 };
 Object.assign(window, elements);
 
@@ -106,7 +106,7 @@ async function requestPainted() {
         }
     }
     console.log(user);
-    getRequestData(await fetchData(API));
+    //getRequestData(await fetchData(API));
 
     if (online_offline && user.identified) {
         LastCheck = user.checkPrice[indexCripto]?user.checkPrice[indexCripto].coinPrice:0;

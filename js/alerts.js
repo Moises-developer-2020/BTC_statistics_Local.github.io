@@ -1,4 +1,4 @@
-const AlertSpace = getElement("#AlertSpace");
+const AlertSpace = $("#AlertSpace");
 
 let Alert_Content={
     offline_page:{

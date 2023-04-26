@@ -48,7 +48,7 @@ function removeClass(d = [{ e: null, c: '' }]) {
 }
 
 //get element
-function getElement(selector, all='') {
+function $(selector, all='') {
     if(all == 'all'){
         return document.querySelectorAll(selector);
     }

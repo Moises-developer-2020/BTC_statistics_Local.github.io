@@ -1,0 +1,66 @@
+.imgg{
+    position: fixed;
+   top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+  
+}
+.mainSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 60px);
+    top: 60px;
+}
+.section1{
+    width: 70%;
+    background: rgba(128, 128, 128, 0.281);
+    height: 100%;
+}
+.chartSection{
+    height: 46%;
+    background-color: rgba(255, 0, 0, 0.281);
+    width: 100%;
+}
+.expenseSection{
+height: 14%;
+background-color: rgba(255, 255, 0, 0.253);
+max-height: 124.17px;
+min-height: 124.17px;
+}
+.CriptoSection{
+    height: 40%;
+    background-color: rgba(255, 0, 212, 0.192);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.section2{
+    width: 30%;
+    background: rgba(8, 65, 0, 0.541);
+    height: 100%;
+}
+.statusSection{
+    height: 50%;
+    background-color: rgba(255, 153, 0, 0.767);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.statusContent{
+    position: relative;
+    width: 90%;
+    height: 90%;
+    background-color: rgb(112, 112, 112);
+    border-radius: 15px;
+}
+.historySection{
+    height: 50%;
+    background-color: rgba(0, 225, 255, 0.459);
+}
