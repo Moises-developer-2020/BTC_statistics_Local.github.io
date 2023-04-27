@@ -106,7 +106,7 @@ async function requestPainted() {
         }
     }
     console.log(user);
-    //getRequestData(await fetchData(API));
+    getRequestData(await fetchData(API));
 
     if (online_offline && user.identified) {
         LastCheck = user.checkPrice[indexCripto]?user.checkPrice[indexCripto].coinPrice:0;
@@ -389,7 +389,19 @@ singInButton.onclick = async function(){
     }
 }
 
+//add to my wallets
+setMyWallets=()=>{
+    let criptos= $('.criptoRanking','all');
+    criptos.forEach(element => {
+        element.onclick= async ()=>{
+            let index = element.id;
+            let data=searchResult[index];
 
+            const re= await transaction('saveCoin',{},data);
+            console.log(re);
+        }
+    });
+}
 //window.addEventListener('beforeunload', saveStyles);
 
 

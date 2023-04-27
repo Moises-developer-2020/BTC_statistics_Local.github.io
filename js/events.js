@@ -10,6 +10,7 @@ $('.menu-bars').onclick=()=>{
 };
 
 //searh place open
+let searchResult;
 $('#coinSearch').onsubmit = async (event, e) => {
     event.preventDefault();
     
@@ -20,13 +21,13 @@ $('#coinSearch').onsubmit = async (event, e) => {
     $('.rankingContent').innerHTML = '';
     let search = event.target[0].value;
   
-    let searchResult = await fetchData(searchAPI + `?query=${search}`);
+    searchResult = await fetchData(searchAPI + `?query=${search}`);
     searchResult = searchResult.coins;
     console.log(searchResult);
   
     for (let i = 0; i < searchResult.length; i++) {
       let element = `
-        <div class="criptoRanking" id="${searchResult[i].id}">
+        <div class="criptoRanking" id="${i}" >
           <div class="imgCripto">
             <span>
               <img id="coinImage${i}" alt="">
@@ -52,9 +53,13 @@ $('#coinSearch').onsubmit = async (event, e) => {
         };
       });
     }
-  
+    
+    //add to my wallets
+    setMyWallets();
   
 }
+
+
 
 //searh place close
 $('.closeSearch').onclick=()=>{

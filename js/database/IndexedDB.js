@@ -39,7 +39,6 @@ let checkPrice={
     coinPrice:''
         
 }/*
-///example  //public to anyone it is the API's data to search
 Coins=[{
     id:"bitcoin",
     name: "Bitcoin",
@@ -82,7 +81,7 @@ function DB(dbName) {
             const historySell = db.createObjectStore('historySell', { keyPath: 'id', autoIncrement: false });
             const criptos = db.createObjectStore('criptos', { keyPath: 'id', autoIncrement: false });
             const checkPrice = db.createObjectStore('checkPrice', { keyPath: 'id', autoIncrement: false });
-            const coins = db.createObjectStore('coins', { keyPath: 'id', autoIncrement: true });
+            const coins = db.createObjectStore('coins', { keyPath: 'id', autoIncrement: false });
         };
     });
 }

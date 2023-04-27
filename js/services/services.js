@@ -59,13 +59,13 @@ function $(selector, all='') {
 async function fetchData(url) {
     let data;
     if (window.navigator.onLine) {
-        try {
+        try {/*
             const headers = {
                 'Content-Type': 'application/json',
-                'SameSite': 'Lax' //'Strict' o 'Lax'
-            };
+                'SameSite': 'Strict' //'Strict' o 'Lax'
+            };*/
 
-            const response = await fetch(url,{headers});
+            const response = await fetch(url);
              data = await response.json();
             online_offline = true;
             return data;
@@ -308,6 +308,7 @@ async function login(type,data={}){
                 await fecthLocalData('historySell', 'add', { value: { id:idUser,data:'' } });
                 await fecthLocalData('criptos', 'add', { value: { id:idUser,data:'' } });
                 await fecthLocalData('checkPrice', 'add', { value: { id:idUser,data:'' } });
+                await fecthLocalData('coins', 'add', { value: { id:idUser,data:'' } });
 
                 if(idUser){
                     //to save session encripted
@@ -367,10 +368,12 @@ async function validateSession(){
                 const historySell=await fecthLocalData('historySell', 'showId', { id:id });
                 const criptos=await fecthLocalData('criptos', 'showId', { id:id });
                 const checkPrice=await fecthLocalData('checkPrice', 'showId', { id:id });
+                const coins=await fecthLocalData('coins', 'showId', { id:id });
 
                 let dataHistorySell;
                 let dataCriptos;
                 let dataCheckPrice;
+                let dataCoins;
                 //validate the first time on see this data
                 
                 try {
@@ -387,7 +390,12 @@ async function validateSession(){
                     dataCheckPrice=JSON.parse(checkPrice.data);
                 } catch (error) {
                     dataCheckPrice=[checkPrice.data];
-                }      
+                }
+                try {
+                    dataCoins=JSON.parse(coins.data);
+                } catch (error) {
+                    dataCoins=[coins.data];
+                }     
 
                 // put the data in global user variable
                 user={
@@ -395,6 +403,7 @@ async function validateSession(){
                     historySell:dataHistorySell,
                     criptos:dataCriptos,
                     checkPrice:dataCheckPrice,
+                    coins:dataCoins,
                     identified:true
                 }
                 //console.log(user);
@@ -414,7 +423,7 @@ async function validateSession(){
 }
 //use to saved all sells, buys, and history records of buys from the user 
 //this method is only use it in main.js
-async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'', criptoID, index}){
+async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'', criptoID, index},coin={}){
     const userID=user.data.id;
 
     switch (method) {
@@ -520,8 +529,29 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
                 const checkPriceRequest =await fecthLocalData('checkPrice','update',{value:user.checkPrice,id:userID});
         
                 return checkPriceRequest;
+
+        case 'saveCoin':
+                   
+                //to the first time on save this data cuz it is JSON not Array
+                if(Array.isArray(user.coins)){
+                    //delete the firt element created cuz it is empty
+                    if(user.coins[0].id === undefined){
+                        user.coins.splice(0,1)
+                    }
+                    
+                    user.coins.push(coin)
+                }else{
+                    user.coins=coin
+                }
+                const requestCoins = await fecthLocalData('coins','update',{value:user.coins,id:userID});
+                
+    
+                return requestCoins;
+        
+                
         default:
             break;
+        
     }
 }
 
