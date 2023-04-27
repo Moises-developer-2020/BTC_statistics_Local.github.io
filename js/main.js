@@ -106,7 +106,7 @@ async function requestPainted() {
         }
     }
     console.log(user);
-    getRequestData(await fetchData(API));
+    //getRequestData(await fetchData(API));
 
     if (online_offline && user.identified) {
         LastCheck = user.checkPrice[indexCripto]?user.checkPrice[indexCripto].coinPrice:0;
@@ -402,6 +402,5 @@ setMyWallets=()=>{
         }
     });
 }
-//window.addEventListener('beforeunload', saveStyles);
 
 

@@ -555,16 +555,61 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
     }
 }
 
-(async ()=>{
+// (async ()=>{
 
-   setTimeout(async() => {
-    //const re= await transaction('UpdateCheckPrice',{coinPrice:1220,earned:0, criptoID:'moi2',index:0});//, {BTCjson.status.c,BTCjson.earnings})
-    //console.log(re);
-    // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
-    // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
-    // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi2',index:1});//, {BTCjson.status.c,BTCjson.earnings})
-    //console.log(user);
-   }, 1500);
+//    setTimeout(async() => {
+//     //const re= await transaction('UpdateCheckPrice',{coinPrice:1220,earned:0, criptoID:'moi2',index:0});//, {BTCjson.status.c,BTCjson.earnings})
+//     //console.log(re);
+//     // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
+//     // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi1',index:0});//, {BTCjson.status.c,BTCjson.earnings})
+//     // transaction('buy',{coinPrice:0,earned:0, criptoID:'moi2',index:1});//, {BTCjson.status.c,BTCjson.earnings})
+//     //console.log(user);
+//    }, 1500);
     
-})();
+// })();
 
+//cache services
+cacheService = async (urlImage)=>{
+    // Definir la URL de la imagen que deseas guardar en caché
+    const imageUrl = urlImage;
+
+    // Abrir la caché utilizando la API Cache
+    caches.open('my-cache').then(function(cache) {
+
+        // Comprobar si la imagen ya está en caché
+        cache.match(imageUrl).then(async function(response) {
+
+            // Si la imagen ya está en caché, usarla
+            if (response) {
+                console.log('si esta en cache');
+            return imageUrl;
+            }
+
+            // De lo contrario, descargar la imagen y guardarla en caché
+            await fetch(imageUrl).then(function(response) {
+                cache.put(imageUrl, response);
+            });
+
+            console.log('no esta en cache');
+            //para usar la img desde internet
+            return imageUrl
+        });
+
+    });
+}
+
+//get all my saved wallets ID to use it on API
+getWalletSymbols=()=>{
+    let coins="";
+    for(let i=0; i< user.coins.length;  i++){
+        let element;
+        if(i == user.coins.length-1){
+            element = user.coins[i].symbol;
+        }else{
+            element = user.coins[i].symbol+",";
+        }
+
+        coins += element;
+    } 
+    return coins;
+}
