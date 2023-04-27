@@ -3,7 +3,7 @@
    top: 0;
     height: 100%;
     width: 100%;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     z-index: -1;
@@ -17,50 +17,273 @@
     width: 100%;
     height: calc(100% - 60px);
     top: 60px;
+    overflow: hidden;
 }
 .section1{
     width: 70%;
-    background: rgba(128, 128, 128, 0.281);
     height: 100%;
 }
 .chartSection{
-    height: 46%;
-    background-color: rgba(255, 0, 0, 0.281);
+    height: 45%;
+    width: 100%;
+    transition: 0.5s;
+}
+.chartInfo{
+    height: 50px;
     width: 100%;
 }
-.expenseSection{
-height: 14%;
-background-color: rgba(255, 255, 0, 0.253);
-max-height: 124.17px;
-min-height: 124.17px;
+.chartContent{
+
+    height: calc(100% - 50px);
+    width: 100%;
+    background-color: rgba(105, 107, 105, 0.219);
+    overflow: hidden;
+    
 }
-.CriptoSection{
-    height: 40%;
-    background-color: rgba(255, 0, 212, 0.192);
+.chartSection.hidde{
+    height: 50px ;
+}
+.expenseSection{
+    position: relative;
+    height: 15%;
+    max-height: 140px;
+    min-height: 140px;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.5s;
+}
+.expenseSection.searchPlace{
+    display: inline-block;
+    height: calc(60% - 60px);
+    text-align: left;
+    max-height: none;
+    width: 100%;
+}
+.expenseSection.hidde.searchPlace{
+    display: inline-block;
+    height: calc(60% - 22%);
+    text-align: left;
+    max-height: none;
+    width: 100%;
+}
+.expenseSection.hidde{
+    height: 0px ;
+    max-height: 0;
+    min-height: 0;
+}
+ .CriptoSection.expenseHidde{
+    height: calc(37% + 140px) !important;
+}
+.expenseSection.hidde.searchPlace .rankingContent,
+.expenseSection.searchPlace .rankingContent{
+    overflow: auto;
+}
+.rankingContent{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    overflow: hidden;
+}
+.criptoRanking{
+    position: relative;
+    margin: 15px;
+    border-radius: 10px;
+    
+    height: 90px;
+    min-width: 90px;
+    min-height: 90px;
+    text-align: center;
+    display: inline-block;
+    
+    background: rgb(20 20 20 / 54%);
+    padding: 10px;
+    transition: 0.5s;
+}
+.criptoRanking.own::after{
+    position: absolute;
+    content:'✔';
+    width: 25px;
+    height: 25px;
+    border-radius: 40px;
+    background: rgba(0, 255, 0, 0.637);
+    left: 0;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: aliceblue;
+    font-size: 15px;
+}
+.criptoRanking:hover,
+.myCriptos:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    background: rgba(46, 46, 46, 0.54);
+}
+.expOption{
+    position: absolute;
+    right: 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+.expenseSection .hiddenExp{
+    display: block;
+}
+.expenseSection.searchPlace .hiddenExp{
+    display: none;
+}
+.expenseSection .closeSearch{
+    display: none;
+}
+.expenseSection.searchPlace .closeSearch{
+    display: block;
+}
+.imgCripto{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 80px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imgCripto span:nth-child(1){
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.criptoRanking:hover .imgCripto span:nth-child(1) img {
+	-webkit-transform: rotate(15deg) scale(1.2);
+	transform: rotate(15deg) scale(1.2); 
+} 
+
+.imgCripto span:nth-child(1) img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    -webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.imgCripto span:nth-child(2){
+    position: relative;
+    right: -16px;
+    top: -23px;
+    background: #d8ff002e;
+    padding: 2px;
+    font-size: 15px;
+    border-radius: 100px;
+}
+.ranking{
+margin-top: 5px;
+}
+.CriptoSection{
+    position: relative;
+    height: 37%;
+    text-align: center;
+    overflow: hidden;
+}
+.criptoContent{
+    
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    max-width: 94%;
+    height: calc(100% - 40px);
+    text-align: center;
+}
+.CriptoSection:after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 0px;
+    bottom: 0px;
+    left: 0;
+    box-shadow: 0px 8px 73px 55px rgb(0 0 0 / 92%);
+}
+.titleSecion{
+    height: 40px;
+    width: 100%;
+    font-size: 0.6em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.titleSecion span:nth-child(1){
+    margin: 10px;
+}
+.myCriptos{
+    display: inline-block;
+    background: rgb(20 20 20 / 54%);
+    height:200px ;
+    width: 280px;
+    min-width: 280px;
+    font-size: 0.5em;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 14px;
+    transition: 0.5s;
+}
+.infoCripto{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.cristoIMG{
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    background: #201f1f;
+    margin-right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.criptoData{
+    display: flex;
+    font-size: 0.8em;
+}
+.criptoData div span{
+    display: block;
+}
+.percentCripto{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0041ff33;
+    border-radius: 5px;
+    padding: 3px 8px 3px 10px;
+    font-size: 0.9em;
+}
+.chartCrito span{
+display: block;
+}
+.chartCritoContent{
+    height: 103px;
 }
 .section2{
     width: 30%;
-    background: rgba(8, 65, 0, 0.541);
     height: 100%;
 }
-.statusSection{
+.statusSection,
+.historySection{
     height: 50%;
-    background-color: rgba(255, 153, 0, 0.767);
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.statusContent{
+.statusContent,
+.historyContent{
     position: relative;
     width: 90%;
     height: 90%;
-    background-color: rgb(112, 112, 112);
+    background-color: rgba(105, 107, 105, 0.219);
     border-radius: 15px;
-}
-.historySection{
-    height: 50%;
-    background-color: rgba(0, 225, 255, 0.459);
 }

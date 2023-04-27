@@ -4,6 +4,7 @@ let online_offline;
 let SingIn_Up=true; 
 
 const API = "https://production.api.coindesk.com/v2/tb/price/ticker?assets=BTC";
+const searchAPI = "https://api.coingecko.com/api/v3/search";
 
 //check if exist
 function checkStorageData(item) {
@@ -59,7 +60,12 @@ async function fetchData(url) {
     let data;
     if (window.navigator.onLine) {
         try {
-            const response = await fetch(url);
+            const headers = {
+                'Content-Type': 'application/json',
+                'SameSite': 'Lax' //'Strict' o 'Lax'
+            };
+
+            const response = await fetch(url,{headers});
              data = await response.json();
             online_offline = true;
             return data;

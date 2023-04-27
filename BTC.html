@@ -22,8 +22,10 @@
             <div class="menu hidde">
                 <div class="menu-search">
                     <div>
-                        <input type="text" placeholder="Search">
-                        <span></span>
+                        <form action="#" method="get" id="coinSearch">
+                            <input type="text" name="coins" placeholder="Search coins">
+                            <span></span>
+                        </form>
                     </div>
                 </div>
                 <div class="menu-user-content">
@@ -33,87 +35,213 @@
             </div>
             <div class="mainSection">
                 <div class="section1">
-                    <div class="chartSection"></div>
-                    <div class="expenseSection"></div>
+                    <div class="chartSection">
+                        <div class="chartInfo"></div>
+                        <div class="chartContent">
+
+                        </div>
+                    </div>
+                    <div class="expenseSection">
+                        <div class="expOption">
+                            <span class="closeSearch">X</span>
+                            <span class="hiddenExp">ojo</span>
+                        </div>
+                        <div class="rankingContent">
+                            <div class="criptoRanking">
+                                <div class="imgCripto">
+                                    <span>img</span>
+                                    <span title="ranking">20</span>
+                                </div>
+                                <div class="ranking">123</div>
+                            </div>
+                            <div class="criptoRanking">
+                                <div class="imgCripto">img</div>
+                                <div class="ranking">123</div>
+                            </div>
+                            <div class="criptoRanking own">
+                                <div class="imgCripto">img</div>
+                                <div class="ranking">123</div>
+                            </div>
+                            <div class="criptoRanking">
+                                <div class="imgCripto">img</div>
+                                <div class="ranking">123</div>
+                            </div>
+                            <div class="criptoRanking">
+                                <div class="imgCripto">img</div>
+                                <div class="ranking">123</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="CriptoSection">
-                        <div class="center">
-                        <div class="elapseTimeInfo">
+                        <div class="titleSecion">
+                            <span>Wallets</span>
+                            <span>
+                                <span>...</span>
+                                <span style="display: none;">grid</span>
+                                <span style="display: none;">list</span>
+                            </span>
+
+                        </div>
+                        <div class="criptoContent">
                             
-                            <span id="elapseTim"></span>
-                        </div>
-                        <div class="priceSavd">
-                            <span id="priceSavdStorage"></span>
-                            <span id="priceStatus"><span>&#8800</span> <span id="indicator"></span><span id="savdDifferen" class="positive"></span></span>
-                        </div>
-                        <div class="earnings">
-                            <span>Earnings</span>
-                            <span class="earningStatus">$<span id="invested_saved"></span> <span>&#8800</span> <span id="earnings_today" class="positive">0</span></span>
-                        </div>
-                        <div class="investeInfo">
-                            <span>Invested since: </span>
-                            <span id="investedDate"></span>
-                        </div>
-                        <div class="status">
-                            <div id="statusTextH">
-                                <div>
-                                    <span>H: </span>
-                                    <span id="Hight"></span>
+                                <div class="myCriptos">
+                                    <div class="infoCripto">
+                                        <div class="criptoData">
+                                            <span class="cristoIMG">img</span>
+                                            <div>
+                                                <span class="critoName">Bitcoin</span>
+                                                <span id="criptoID">BTC</span>
+                                            </div>
+                                        </div>
+                                        <div class="percentCripto">
+                                            <span id="indicator"></span>
+                                            <span>5.33%</span>
+                                        </div>
+                                    </div>
+                                    <div class="chartCrito">
+                                        <span>$30,401.50</span>
+                                        <span class="chartCritoContent"></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span>&#8800: </span>
-                                    <span id="diferenceH" >00000</span>
+                                <div class="myCriptos">
+                                    <div class="infoCripto">
+                                        <div class="criptoData">
+                                            <span class="cristoIMG">img</span>
+                                            <div>
+                                                <span class="critoName">Bitcoin</span>
+                                                <span id="criptoID">BTC</span>
+                                            </div>
+                                        </div>
+                                        <div class="percentCripto">
+                                            <span id="indicator"></span>
+                                            <span>5.33%</span>
+                                        </div>
+                                    </div>
+                                    <div class="chartCrito">
+                                        <span>$30,401.50</span>
+                                        <span class="chartCritoContent"></span>
+                                    </div>
                                 </div>
-                                
-                            </div>
-                            <div id="statusTextL">
-                                <div>
-                                    <span>L: </span>
-                                    <span id="Low"></span>
+                                <div class="myCriptos">
+                                    <div class="infoCripto">
+                                        <div class="criptoData">
+                                            <span class="cristoIMG">img</span>
+                                            <div>
+                                                <span class="critoName">Bitcoin</span>
+                                                <span id="criptoID">BTC</span>
+                                            </div>
+                                        </div>
+                                        <div class="percentCripto">
+                                            <span id="indicator"></span>
+                                            <span>5.33%</span>
+                                        </div>
+                                    </div>
+                                    <div class="chartCrito">
+                                        <span>$30,401.50</span>
+                                        <span class="chartCritoContent"></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span>&#8800: </span>
-                                    <span id="diferenceL" >00000</span>
+                                <div class="myCriptos">
+                                    <div class="infoCripto">
+                                        <div class="criptoData">
+                                            <span class="cristoIMG">img</span>
+                                            <div>
+                                                <span class="critoName">Bitcoin</span>
+                                                <span id="criptoID">BTC</span>
+                                            </div>
+                                        </div>
+                                        <div class="percentCripto">
+                                            <span id="indicator"></span>
+                                            <span>5.33%</span>
+                                        </div>
+                                    </div>
+                                    <div class="chartCrito">
+                                        <span>$30,401.50</span>
+                                        <span class="chartCritoContent"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                        </div>
-        
-                        <div class="dataH1"><span>Price:</span> <span id="price"></span></div>
-                        <div class="priceDiffer">&#8800: <span id="priceDifferences"></span></div>
-                        <div class="dataH2"><span>Percent:</span> <span id="percent" class="positive"></span></div>
-                        <div class="reload"> 
-                            <div>
-                                <button class="button-34" id="sellSubmit" role="button">Sell</button>
-                            </div>
-                            <div>
-                                <button class="button-34" id="investInput" role="button">Buy</button>
-                                <button class="button-34" id="btnReload" role="button">Reload</button>
-                            </div>
-                        </div>
-                        
-                        <div class="profits">
-                            <span>Money to Invest</span>
-                            <div class="profits_content">
-                                <div class="form-group">
-                                    <span>$</span>
-                                    <input class="form-field" id="price_invest" type="number" placeholder="000.00">
-                                </div>
-                                <div class="profits_bottom">
-                                    <button class="button-34" id="btnCancelBuy" role="button">Cancel</button>
-                                    <button class="button-34" id="btnBuy" role="button">Buy</button>
-                                </div>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </div>
                 <div class="section2">
                     <div class="statusSection">
                         <div class="statusContent">
+                            <div class="center">
+                                <div class="elapseTimeInfo">
+                                    
+                                    <span id="elapseTim"></span>
+                                </div>
+                                <div class="priceSavd">
+                                    <span id="priceSavdStorage"></span>
+                                    <span id="priceStatus"><span>&#8800</span> <span id="indicator"></span><span id="savdDifferen" class="positive"></span></span>
+                                </div>
+                                <div class="earnings">
+                                    <span>Earnings</span>
+                                    <span class="earningStatus">$<span id="invested_saved"></span> <span>&#8800</span> <span id="earnings_today" class="positive">0</span></span>
+                                </div>
+                                <div class="investeInfo">
+                                    <span>Invested since: </span>
+                                    <span id="investedDate"></span>
+                                </div>
+                                <div class="status">
+                                    <div id="statusTextH">
+                                        <div>
+                                            <span>H: </span>
+                                            <span id="Hight"></span>
+                                        </div>
+                                        <div>
+                                            <span>&#8800: </span>
+                                            <span id="diferenceH" >00000</span>
+                                        </div>
+                                        
+                                    </div>
+                                    <div id="statusTextL">
+                                        <div>
+                                            <span>L: </span>
+                                            <span id="Low"></span>
+                                        </div>
+                                        <div>
+                                            <span>&#8800: </span>
+                                            <span id="diferenceL" >00000</span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                
+                                <div class="dataH1"><span>Price:</span> <span id="price"></span></div>
+                                <div class="priceDiffer">&#8800: <span id="priceDifferences"></span></div>
+                                <div class="dataH2"><span>Percent:</span> <span id="percent" class="positive"></span></div>
+                                <div class="reload"> 
+                                    <div>
+                                        <button class="button-34" id="sellSubmit" role="button">Sell</button>
+                                    </div>
+                                    <div>
+                                        <button class="button-34" id="investInput" role="button">Buy</button>
+                                        <button class="button-34" id="btnReload" role="button">Reload</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="profits">
+                                    <span>Money to Invest</span>
+                                    <div class="profits_content">
+                                        <div class="form-group">
+                                            <span>$</span>
+                                            <input class="form-field" id="price_invest" type="number" placeholder="000.00">
+                                        </div>
+                                        <div class="profits_bottom">
+                                            <button class="button-34" id="btnCancelBuy" role="button">Cancel</button>
+                                            <button class="button-34" id="btnBuy" role="button">Buy</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="historySection">
+                        <div class="historyContent">
                             
                         </div>
                     </div>
-                    <div class="historySection"></div>
                 </div>
                 
             </div>

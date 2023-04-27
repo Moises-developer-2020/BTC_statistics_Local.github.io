@@ -99,12 +99,13 @@
         height: 100%;
         width: 100%;
         background: black;
-        border-radius: 106px;
+        border-radius: 0px 100px 100px 0px;
         box-shadow: -1px -1px 20px 7px #0000007a;
     }
     .mainSection{
         height: 100%;
         top: 0px;
+        transition: 0s;
     }
     /*end style menu*/
 }

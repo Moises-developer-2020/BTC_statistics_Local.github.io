@@ -8,3 +8,61 @@ $('.menu-bars').onclick=()=>{
     removeClass([{e:$('.mainSection'),c:'hidde'}]);
     setClass([{e:$('.menu'),c:'hidde'}]);
 };
+
+//searh place open
+$('#coinSearch').onsubmit = async (event, e) => {
+    event.preventDefault();
+    
+    //hidde elements necesary to show search place
+    setClass([{e:$('.chartSection'),c:'hidde'}]);
+    setClass([{e:$('.expenseSection'),c:'searchPlace'}]);
+
+    $('.rankingContent').innerHTML = '';
+    let search = event.target[0].value;
+  
+    let searchResult = await fetchData(searchAPI + `?query=${search}`);
+    searchResult = searchResult.coins;
+    console.log(searchResult);
+  
+    for (let i = 0; i < searchResult.length; i++) {
+      let element = `
+        <div class="criptoRanking" id="${searchResult[i].id}">
+          <div class="imgCripto">
+            <span>
+              <img id="coinImage${i}" alt="">
+            </span>
+            <span title="ranking">${searchResult[i].market_cap_rank}</span>
+          </div>
+          <div class="ranking">${searchResult[i].name}</div>
+        </div>
+      `;
+  
+      $('.rankingContent').innerHTML += element;
+  
+      // Crear una nueva instancia de Image y establecer el src en la URL de la imagen.
+      const img = new Image();
+      img.src = searchResult[i].large;
+  
+      // Esperar a que la imagen se cargue antes de agregarla al HTML.
+      await new Promise(resolve => {
+        img.onload = () => {
+          const coinImage = document.getElementById(`coinImage${i}`);
+          coinImage.src = searchResult[i].large;
+          resolve();
+        };
+      });
+    }
+  
+  
+}
+
+//searh place close
+$('.closeSearch').onclick=()=>{
+    removeClass([{e:$('.chartSection'),c:'hidde'}]);
+    removeClass([{e:$('.expenseSection'),c:'searchPlace'}]);
+}
+//do not show search place
+$('.hiddenExp').onclick=()=>{
+    setClass([{e:$('.CriptoSection'),c:'expenseHidde'}]);
+    setClass([{e:$('.expenseSection'),c:'hidde'}]);
+}
