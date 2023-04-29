@@ -1,5 +1,5 @@
 //open and close menu
-$('.menu-bars').onclick=()=>{
+$('.menu-bars').onclick=function(){
     if($('.menu').classList.contains('hidde')){
         removeClass([{e:$('.menu'),c:'hidde'}]);
         setClass([{e:$('.mainSection'),c:'hidde'}]);

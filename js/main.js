@@ -73,14 +73,27 @@ const elements = {
 };
 Object.assign(window, elements);
 
-async function getRequestData(API){
+async function getRequestData(API,parameter="BTC"){
     try {
         var data =API;
+        //console.log(data.data[parameter]);
+        
+        // critopApi.priceData = data.data.BTC.ohlc.c;
+        // critopApi.percentData = data.data.BTC.change.percent;
+        // critopApi.pricelow = data.data.BTC.ohlc.l;
+        // critopApi.priceHight = data.data.BTC.ohlc.h;
 
-        critopApi.priceData = data.data.BTC.ohlc.c;
-        critopApi.percentData = data.data.BTC.change.percent;
-        critopApi.pricelow = data.data.BTC.ohlc.l;
-        critopApi.priceHight = data.data.BTC.ohlc.h;
+        //save data of API on variable with the Symbol of cripto
+        for (let i = 0; i < user.coins.length; i++) {
+            critopApi[user.coins[i].symbol]={
+                priceData : data.data[user.coins[i].symbol].ohlc.c,
+                percentData : data.data[user.coins[i].symbol].change.percent,
+                pricelow : data.data[user.coins[i].symbol].ohlc.l,
+                priceHight : data.data[user.coins[i].symbol].ohlc.h
+            }
+            
+        }
+        console.log(critopApi);
 
     } catch (error) {
         online_offline = false;
@@ -104,12 +117,16 @@ async function requestPainted() {
             //hide all the main content
             setClass([{e:center,c:'disabled'}]);
         }
+        paintWallets();
     }
+    
     console.log(user);
-    getRequestData(await fetchData(API+`${getWalletSymbols()}`));
+    getRequestData(await fetchData(API+`${getWalletSymbols()}`));//getWalletSymbols() "BTC"
     
     if (online_offline && user.identified) {
         LastCheck = user.checkPrice[indexCripto]?user.checkPrice[indexCripto].coinPrice:0;
+
+        
 
         if (Math.sign(critopApi.percentData) == -1 || Math.sign(critopApi.percentData) == -0) {
             setClass([{e:percent,c:"negative"}]);
@@ -409,3 +426,57 @@ setMyWallets=()=>{
 }
 
 
+function paintWallets(){
+    $('.criptoContent').innerHTML='';
+    for (let index = 0; index < user.coins.length; index++) {
+        $('.criptoContent').innerHTML+=`<div class="myCriptos">
+                    <div class="infoCripto">
+                        <div class="criptoData">
+                            <span class="cristoIMG">img</span>
+                            <div>
+                                <span class="critoName">${user.coins[index].name}</span>
+                                <span id="criptoID">${user.coins[index].symbol}</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                        <span class="price">$30,401.50</span>
+                            <div class="percentCripto">
+                            
+                                <span id="indicator"></span>
+                                <span>5.33%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status">
+                                    <div id="statusTextH">
+                                        <div>
+                                            <span>H: </span>
+                                            <span id="Hight"></span>
+                                        </div>
+                                        <div>
+                                            <span>&#8800: </span>
+                                            <span id="diferenceH" >00000</span>
+                                        </div>
+                                        
+                                    </div>
+                                    <div id="statusTextL">
+                                        <div>
+                                            <span>L: </span>
+                                            <span id="Low"></span>
+                                        </div>
+                                        <div>
+                                            <span>&#8800: </span>
+                                            <span id="diferenceL" >00000</span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                    <div class="chartCrito">
+                        
+                        <span class="chartCritoContent"></span>
+                    </div>
+                </div>`;
+        
+    }
+}

@@ -201,7 +201,7 @@ margin-top: 5px;
     display: inline-block;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: auto;
     max-width: 94%;
     height: calc(100% - 40px);
     text-align: center;
@@ -243,9 +243,6 @@ margin-top: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
 }
 .cristoIMG{
     width: 50px;

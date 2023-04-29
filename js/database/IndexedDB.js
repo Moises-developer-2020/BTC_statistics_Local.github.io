@@ -54,6 +54,7 @@ Coins=[{
 let user={
     data:{},
     historySell:[],
+    coins:[],
     criptos:[],
     checkPrice:[],
     identified:''
