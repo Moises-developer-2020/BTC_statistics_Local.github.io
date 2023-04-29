@@ -84,6 +84,9 @@
         height: 150px;
         border-radius: 180px;
         position: absolute;
+        top: -55px;
+        right: 66px;
+
     }
     .user-content-name{
         top: 110px;
@@ -105,7 +108,6 @@
     .mainSection{
         height: 100%;
         top: 0px;
-        transition: 0s;
     }
     /*end style menu*/
 }

@@ -9,6 +9,7 @@ $('.menu-bars').onclick=()=>{
     setClass([{e:$('.menu'),c:'hidde'}]);
 };
 
+
 //searh place open
 let searchResult;
 $('#coinSearch').onsubmit = async (event, e) => {
@@ -23,11 +24,27 @@ $('#coinSearch').onsubmit = async (event, e) => {
   
     searchResult = await fetchData(searchAPI + `?query=${search}`);
     searchResult = searchResult.coins;
-    console.log(searchResult);
-  
+
+    //convert my crypto names to array
+    let MyCoinsArray=getWalletSymbols().split(",");
+
+
+    //detect which one it is not valid by the API coindesk
     for (let i = 0; i < searchResult.length; i++) {
+      if (!ValidCoins.includes(searchResult[i].symbol)) {
+        searchResult[i].symbol="invalid";
+      }
+    }
+
+    //detect which one already it is saved
+    for (let i = 0; i < searchResult.length; i++) {
+      if (MyCoinsArray.includes(searchResult[i].symbol)) {
+        searchResult[i].symbol="own";
+      }
+    }
+  for (let i = 0; i < searchResult.length; i++) {
       let element = `
-        <div class="criptoRanking" id="${i}" >
+        <div class="criptoRanking ${searchResult[i].symbol}" id="${i}" >
           <div class="imgCripto">
             <span>
               <img id="coinImage${i}" alt="">

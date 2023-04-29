@@ -18,6 +18,8 @@
     height: calc(100% - 60px);
     top: 60px;
     overflow: hidden;
+    left: 0;
+    transition: 0.5s;
 }
 .section1{
     width: 70%;
@@ -100,6 +102,14 @@
     padding: 10px;
     transition: 0.5s;
 }
+.criptoRanking.invalid{
+    cursor:not-allowed !important;
+    background: rgba(204, 2, 2, 0.54);
+}
+.criptoRanking.own{
+    cursor:not-allowed !important;
+    background: rgba(76, 204, 2, 0.54) !important;
+}
 .criptoRanking.own::after{
     position: absolute;
     content:'✔';
@@ -114,6 +124,7 @@
     align-items: center;
     color: aliceblue;
     font-size: 15px;
+    
 }
 .criptoRanking:hover,
 .myCriptos:hover{

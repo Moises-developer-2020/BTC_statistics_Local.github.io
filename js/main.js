@@ -106,8 +106,8 @@ async function requestPainted() {
         }
     }
     console.log(user);
-    //getRequestData(await fetchData(API));
-
+    getRequestData(await fetchData(API+`${getWalletSymbols()}`));
+    
     if (online_offline && user.identified) {
         LastCheck = user.checkPrice[indexCripto]?user.checkPrice[indexCripto].coinPrice:0;
 
@@ -397,8 +397,13 @@ setMyWallets=()=>{
             let index = element.id;
             let data=searchResult[index];
 
-            const re= await transaction('saveCoin',{},data);
-            console.log(re);
+            //save only valid coins
+            if(!element.classList.contains("own") && !element.classList.contains("invalid")){
+                const re= await transaction('saveCoin',{},data);
+                console.log("valid");
+            }else{
+                console.log("no valid");
+            }
         }
     });
 }
