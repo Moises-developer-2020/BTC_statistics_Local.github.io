@@ -99,17 +99,18 @@ body {
     font-size: 0.7em;
 }
 
-#indicator{
+.indicator{
     width: 0px;
     height: 0px;
     transition: 0.3s;
     opacity: 1;
+    margin-right: 10px;
     border-left: 5px solid #ffffff;
     border-right: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-top: 5px solid transparent;
 }
-#indicator.positive{
+.indicator.positive{
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 8px solid green;
@@ -117,7 +118,7 @@ body {
 
     
 }
-#indicator.negative{
+.indicator.negative{
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 8px solid red;
@@ -136,21 +137,22 @@ body {
     align-items: center;
 }
 
-#price {
+.price {
     color: #d3eaff ;
     transition: 0.7s;
 }
-#price.positive {
+.price.positive {
     color: #1cd306;
 }
 
-#price.negative {
+.price.negative {
     color: #d50000 ;
 }
 
 
-#percent {
-    text-shadow: 1px 0px 0px lightblue;
+.percent {
+    /* text-shadow: 1px 0px 0px lightblue; */
+    
 }
 
 .elapseTimeInfo {
@@ -245,7 +247,7 @@ body {
     align-items: center;
     justify-content: space-between;
     color: 7c7bf;
-    font-size: 0.4em;
+    font-size: 0.7em;
     margin: 10px 0px 10px 0px;
     border-top: 5px solid #7c7bff99;
     border-bottom: 5px solid #7c7bff99;

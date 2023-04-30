@@ -252,7 +252,7 @@ async function login(type,data={}){
         getAlert('error',`Sorry!<br>There's a session open`);
         return {status:0, message:`There's a session open`};
 
-    }else if(!online_offline){
+    }else if(!window.navigator.onLine){
         getAlert('offline_page');
         return {status:0, message:`Yua're offline`};
     }
@@ -523,11 +523,34 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
                     coinPrice:data.coinPrice
                         
                 }
-                if(!user.checkPrice[data.index].idCripto != data.criptoID){
-                    user.checkPrice[data.index]=checkPrice;
-                }else{
-                    user.checkPrice.push(checkPrice);
+
+                let exists = false;
+
+                if (Array.isArray(user.checkPrice)) {
+                    // Check if the idCripto exists in the array
+                    for (let i = 0; i < user.checkPrice.length; i++) {
+                        if(!user.checkPrice[0].idCripto){
+                            user.checkPrice.splice(0,1)
+                        }
+                        if(user.checkPrice[i]){
+                            if (user.checkPrice[i].idCripto === checkPrice.idCripto) {
+                                // If the idCripto exists, update the value and set exists to true
+                                user.checkPrice[i] = checkPrice;
+                                exists = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    // If the idCripto doesn't exist, push the new object
+                    if (!exists) {
+                        user.checkPrice.push(checkPrice);
+                    }
+                } else {
+                // If the checkPrice property is not an array, create a new one with the checkPrice object
+                    user.checkPrice = [checkPrice];
                 }
+
                 const checkPriceRequest =await fecthLocalData('checkPrice','update',{value:user.checkPrice,id:userID});
         
                 return checkPriceRequest;

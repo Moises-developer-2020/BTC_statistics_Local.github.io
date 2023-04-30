@@ -254,16 +254,20 @@ margin-top: 5px;
     justify-content: center;
     align-items: center;
 }
+.cristoIMG img{
+    width: 100%;
+}
 .criptoData{
     display: flex;
     font-size: 0.8em;
+    text-align: left;
 }
 .criptoData div span{
     display: block;
 }
 .percentCripto{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background: #0041ff33;
     border-radius: 5px;
