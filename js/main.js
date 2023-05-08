@@ -1,36 +1,32 @@
 var LastCheck;
 var SavePriceInvert;
-var Saveinvertion;
 var price_invested_saved;
 var DifferIndicator;
 var firtsLoad=0;
-
-const criptoID='BTC'; //only test before to implement more services
-const indexCripto=0; //it is the position on the table, only test before to implement more services
 
 
 //Api`s data
 let critopApi={}
 
 //Api`s data modifed to show them
-let BTCjson = {}
+let BTCjson = {
+    coinSelected:{
+        index:0, //position ex. 0 to 100
+        id:'' //'BTC', 'ETH'
+    }
+}
 
 let saveStyle={}
 
 const elements = {
     btnReload: $("#btnReload"),
     btnBuy: $("#btnBuy"),
-    investInput: $("#investInput"),
-    btnCancelBuy: $("#btnCancelBuy"),
     earnings_today: $("#earnings_today"),
     price_invest: $("#price_invest"),
     invested_saved: $("#invested_saved"),
-    profits: $(".profits"),
     center: $(".center"),
     statusD: $(".status"),
     priceDifferences: $("#priceDifferences"),
-    savdDifferen: $("#savdDifferen"),
-    priceSavdStorage: $("#priceSavdStorage"),
     infoLogin: $(".infoLogin"),
     optionTo: $(".optionTo"),
     singInButton: $("#singInButton"),
@@ -73,7 +69,8 @@ async function getRequestData(API,parameter="BTC"){
                 percent: 0,
                 earnings: 0,
                 price_invested: 0,
-                price_to_invest: 0
+                price_to_invest: 0,
+                coinPrice:0
             }
         }
     } catch (error) {
@@ -97,7 +94,7 @@ async function requestPainted() {
             //hide all the main content
             setClass([{e:center,c:'disabled'}]);
         }
-        if(user.coins[0] != ""){
+        if(user.coins[0] !== undefined && user.coins[0] !== ""){
             paintWallets();
         }
 
@@ -111,8 +108,9 @@ async function requestPainted() {
         }
     }
     console.log(user);
-    //take a peek if there is wallets saved
+    //take a peek if there is saved wallets
     if(user.coins[0] !== undefined && user.coins[0] !== ""){
+        //get data of saved wallets
         getRequestData(await fetchData(API+`${getWalletSymbols()}`));
     }
     
@@ -129,6 +127,10 @@ async function requestPainted() {
             let Low= $(".Low",'all');
             let Hight= $(".Hight",'all');
             let diferenceH= $(".diferenceH",'all');
+            let priceSavdStorage= $(".priceSavdStorage",'all');
+            let savdDifferen= $(".savdDifferen",'all');
+            const myCriptos= $('.myCriptos','all');
+            let storagePrice;
 
             if (Math.sign(critopApi[coin].percentData) == -1 || Math.sign(critopApi[coin].percentData) == -0) {
                 setClass([{e:percent[i],c:"negative"}]);
@@ -139,7 +141,8 @@ async function requestPainted() {
             if (parseFloat(LastCheck) < parseFloat(critopApi[coin].priceData)) {
                 setClass([{e:diferenceH[i],c:"negative"} , {e:diferenceL[i],c:"positive"} , {e:priceDifferences,c:"positive"} , {e:indicator[i],c:"positive"}]);
                 upDomwIndicator(0,0,price[i],'class','positive',0);
-
+                
+                upDomwIndicator(0,0,myCriptos[i],'class','positive',0);
             } else if (parseFloat(LastCheck) != parseFloat(critopApi[coin].priceData)) {
                 removeClass([{e:diferenceH[i],c:"negative"},{e:diferenceL[i],c:"positive"},{e:priceDifferences,c:"positive"},{e:indicator[i],c:"positive"}]);
         
@@ -148,13 +151,39 @@ async function requestPainted() {
                 setClass([{e:diferenceH[i],c:"positive"} , {e:diferenceL[i],c:"negative"} , {e:priceDifferences,c:"negative"} , {e:indicator[i],c:"negative"}]);
                 upDomwIndicator(0,0,price[i],'class','negative',0);
 
+                upDomwIndicator(0,0,myCriptos[i],'class','negative',0);
+
             } else if (parseFloat(LastCheck) != parseFloat(critopApi[coin].priceData)) {
                 removeClass([{e:diferenceH[i],c:"positive"},{e:diferenceL[i],c:"negative"},{e:priceDifferences,c:"negative"},{e:indicator[i],c:"negative"}]);
                 
             }
 
-            SavePriceInvert = user.criptos[i]?user.criptos[i].investedPrice[0].coinPrice:0;
-            Saveinvertion = critopApi[coin].priceData;
+            //detect which wallets I invested
+            for (let j = 0; j < user.criptos.length; j++) {
+                const idCripto = user.criptos[j].idCripto;
+                if (coin === idCripto) {
+                    storagePrice=user.criptos[j].investedPrice[0].coinPrice;
+                    //remove class not_buys
+                    removeClass([{e:myCriptos[i],c:"not_buys"}]);
+                    
+                    //display the time that has passed since invested
+                    showDate(i, j);
+
+                    //save price to show chat of the invested coin
+                    if (parseFloat(LastCheck) != parseFloat(critopApi[coin].priceData)) {
+                        save_price_to_chart(coin,critopApi[coin].priceData);
+
+                    }
+
+                    break
+                }else{
+                    storagePrice=0;
+                }
+                
+            }
+            
+            SavePriceInvert = storagePrice;
+            BTCjson[coin].coinPrice = critopApi[coin].priceData;
             BTCjson[coin].price_invested = user.criptos[i]?user.criptos[i].investedPrice[0].price:0;
             invested_saved.innerHTML = BTCjson[coin].price_invested;
             BTCjson[coin].status.h = convertPrice(critopApi[coin].priceHight, false, 0);
@@ -175,13 +204,13 @@ async function requestPainted() {
             upDomwIndicator(DifferIndicator,priceDifferences.innerHTML,indicator[i],'style','opacity:0;','opacity:1;');
             
 
-            priceSavdStorage.innerHTML = convertPrice(SavePriceInvert, false, 0); 
-            savdDifferen.innerHTML = convertPrice(SavePriceInvert > 0 ? critopApi[coin].priceData : 0, '-', SavePriceInvert);
+            priceSavdStorage[i].innerHTML = convertPrice(SavePriceInvert, false, 0); 
+            savdDifferen[i].innerHTML = convertPrice(SavePriceInvert > 0 ? critopApi[coin].priceData : 0, '-', SavePriceInvert);
 
-            if (parseFloat(savdDifferen.innerHTML) < 0) {
-                setClass([{e:savdDifferen,c:"negative"}]);
+            if (parseFloat(savdDifferen[i].innerHTML) < 0) {
+                setClass([{e:savdDifferen[i],c:"negative"}]);
             } else {
-                removeClass([{e:savdDifferen,c:"negative"}]);
+                removeClass([{e:savdDifferen[i],c:"negative"}]);
             }
 
 
@@ -194,10 +223,9 @@ async function requestPainted() {
             //check out the last change of the price to save it if it`s diferent
             checkToSAvedPrice(coin, i);
             
-            CalcularGanancia(parseFloat(BTCjson[coin].price_invested), parseFloat(priceSavdStorage.innerHTML.replace(",", "")), parseFloat(price[i].innerHTML.replace(",", "")),coin);
+            CalcularGanancia(parseFloat(BTCjson[coin].price_invested), parseFloat(priceSavdStorage[i].innerHTML.replace(",", "")), parseFloat(price[i].innerHTML.replace(",", "")),coin);
             firtsLoad=1;
-            //display the time that has passed since invested
-            showDate(i);
+            
         }
     }
 };
@@ -229,7 +257,7 @@ function upDomwIndicator(variable,compare,element,option,initStyle,endStyle){
             setClass([{e:element,c:initStyle}]);
             setTimeout(() => {
                 removeClass([{e:element,c:initStyle}]);
-            }, 300);
+            }, 700);
             break;
         default:
             break;
@@ -288,69 +316,74 @@ async function checkToSAvedPrice(coin,id) {
 
         saveStyles(coin,id);
     }//else{ no diferent};
+
 };
 
 
 btnBuy.onclick = async function () {
+    let indexCripto =BTCjson.coinSelected.index;
+    let idCripto =BTCjson.coinSelected.id;
 
     let data={
-        coinPrice:Saveinvertion,
-        investedPrice:BTCjson[coin].price_to_invest,
-        criptoID:criptoID,
+        coinPrice:BTCjson[idCripto].coinPrice,
+        investedPrice:BTCjson[idCripto].price_to_invest,
+        criptoID:idCripto,
         index:indexCripto
     }
     const re= await transaction('buy',data);
     console.log(re);
 
     submitGet();
+    closeBuySpace();
 
-    //close the invest window
-    profits.setAttribute('style', 'height:0%;');
 }
 
-investInput.onclick = function () {
-    //open the invest window
-    profits.setAttribute('style', 'height:98%;');
-    price_invest.focus();
-}
-btnCancelBuy.onclick = function () {
-    //close the invest window
-    profits.setAttribute('style', 'height:0%;');
-}
 
 price_invest.onkeyup = function () {
+    let idCripto =BTCjson.coinSelected.id;
+
     if (price_invest.value != 0 || price_invest.value != '') {
-        BTCjson[coin].price_to_invest = price_invest.value;
+        BTCjson[idCripto].price_to_invest = price_invest.value;
     } else {
-        BTCjson[coin].price_to_invest = 0;
+        BTCjson[idCripto].price_to_invest = 0;
     }
 }
 
 //elapse time
 var investedDate = document.getElementById("investedDate");
-var elapseTim = document.getElementById("elapseTim");
 
 //show date on window
-function showDate(index) {
-    investedDate.innerHTML = user.criptos[index]? DateformatContacts(user.criptos[index].investedPrice[0].date).dateSaved : "---, ---, --, -- &nbsp &nbsp &nbsp --:-- --";
-    elapseTim.innerHTML = user.criptos[index]? validateElapseTime(user.criptos[index].investedPrice[0].date): "-- --- ---";
+function showDate(index, indexCripto) {
+    let elapseTim =$('.elapseTim','all');
+    investedDate.innerHTML = user.criptos[indexCripto]? DateformatContacts(user.criptos[indexCripto].investedPrice[0].date).dateSaved : "---, ---, --, -- &nbsp &nbsp &nbsp --:-- --";
+    elapseTim[index].innerHTML = user.criptos[indexCripto]? validateElapseTime(user.criptos[indexCripto].investedPrice[0].date): "-- --- ---";
 }
 
 
 var sellSubmit = document.getElementById("sellSubmit");
 sellSubmit.onclick = async function () {
+    let indexCripto =BTCjson.coinSelected.index;
+    let idCripto =BTCjson.coinSelected.id;
+
     let data={
-        coinPrice:Saveinvertion,
-        investedPrice:BTCjson[coin].price_to_invest,
-        criptoID:criptoID,
+        coinPrice:BTCjson[idCripto].coinPrice,
+        investedPrice:BTCjson[idCripto].price_to_invest,
+        criptoID:idCripto,
         index:indexCripto,
-        earned:BTCjson[coin].earnings
+        earned:BTCjson[idCripto].earnings
     }
     const re= await transaction('sell',data);
     console.log(re);
     submitGet();
 }
 
+save_price_to_chart = async (criptoID, coinPrice)=>{
+    let data={
+        criptoID,
+        coinPrice
+    }
+    const re= await transaction('saveChart',data);
+}
 
 function getStyleSaved(coin,id){
     let savedStyle = checkStorageData('saveStyle')? getStorageData('saveStyle'):'';
@@ -362,7 +395,7 @@ function getStyleSaved(coin,id){
             let diferenceL= $(".diferenceL",'all');
             let indicator= $(".indicator",'all');
 
-            if(savedStyleParse[coin]){
+            if(savedStyleParse[coin] && savedStyleParse[coin].diferenceH !=""){
                 setClass([{e:diferenceH[id],c:savedStyleParse[coin].diferenceH} , {e:diferenceL[id],c:savedStyleParse[coin].diferenceL} , {e:priceDifferences,c:savedStyleParse[coin].priceDifferences} , {e:indicator[id],c:savedStyleParse[coin].indicator}]);
             }
         }
@@ -375,10 +408,10 @@ function saveStyles(coin,id) {
     if(priceDifferences.classList.value !== undefined && diferenceH[id].className != null){
         
         saveStyle[coin]={
-            diferenceH:diferenceH[id].classList.item(0).value,
-            diferenceL:diferenceL[id].classList.item(0).value,
-            priceDifferences:priceDifferences.classList.item(0).value,
-            indicator:indicator[id].classList.item(0).value
+            diferenceH:diferenceH[id].classList.item(1),
+            diferenceL:diferenceL[id].classList.item(1),
+            priceDifferences:priceDifferences.classList.item(1),
+            indicator:indicator[id].classList.item(1)
         }
         setStorageData('json','saveStyle',saveStyle);
 
@@ -450,13 +483,13 @@ setMyWallets=()=>{
 function paintWallets(){
     $('.criptoContent').innerHTML='';
     for (let index = 0; index < user.coins.length; index++) {
-        $('.criptoContent').innerHTML+=`<div class="myCriptos">
+        $('.criptoContent').innerHTML+=`<div class="myCriptos not_buys">
                     <div class="infoCripto">
                         <div class="criptoData">
                             <span class="cristoIMG"> <img src="${user.coins[index].large}" alt=""></span>
                             <div>
                                 <span class="critoName">${user.coins[index].name}</span>
-                                <span id="criptoID">${user.coins[index].symbol}</span>
+                                <span class="criptoID">${user.coins[index].symbol}</span>
                             </div>
                         </div>
                         
@@ -494,10 +527,17 @@ function paintWallets(){
                                     
                                 </div>
                     <div class="chartCrito">
-                        
-                        <span class="chartCritoContent"></span>
+                        <div>
+                            <span>Invested since</span>
+                            <span class="elapseTim">-----</span>
+                        </div>
+                        <div class="detailsCritoContent">
+                            <span class="priceSavdStorage">---</span>
+                            <span class="savdDifferen">----</span>
+                        </div>
                     </div>
                 </div>`;
         
     }
+    openBuySection();
 }

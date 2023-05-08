@@ -88,3 +88,63 @@ $('.hiddenExp').onclick=()=>{
     setClass([{e:$('.CriptoSection'),c:'expenseHidde'}]);
     setClass([{e:$('.expenseSection'),c:'hidde'}]);
 }
+
+
+//open buy section
+openBuySection=()=>{
+  let myCriptos= $('.myCriptos','all');
+  myCriptos.forEach((element,index) => {
+        element.onclick= async ()=>{
+          //saved id of element to close after 
+          setClass([{e:element,c:'buy'}]);
+          setClass([{e:$('.buySpace'),c:'active'}]);
+
+          let marginTop =$('.buySpace_card').offsetTop;
+          let marginleft=$('.buySpace_card').offsetLeft + $('.main').offsetLeft;
+          let invested_saved_coin =$('#invested_saved_coin');
+
+          element.setAttribute('style',`margin-top:${marginTop}px; margin-left:${marginleft}px;`);
+
+          //get ID of cripto
+          let id=$('.criptoID','all')[index].innerHTML;
+          //let id=element.children.item(0).children.item(0).children.item(1).children.item(1).innerHTML;
+          //save data on variable
+          BTCjson.coinSelected={
+            index:index,
+            id:id
+          }
+
+          //detect which wallets I selected and show the prices I invested
+          for (let j = 0; j < user.criptos.length; j++) {
+            const idCripto = user.criptos[j].idCripto;
+            if (id === idCripto) {
+                //add invested price
+                invested_saved_coin.innerHTML="invested: ";
+                for (let o = 0; o < user.criptos[j].investedPrice.length; o++) {
+                  console.log(user.criptos[j].investedPrice[o].date);
+                  invested_saved_coin.innerHTML+=`<div>${validateElapseTime(user.criptos[j].investedPrice[o].date)} = &nbsp $<span>${user.criptos[j].investedPrice[o].price}</span></div>`;
+
+                }
+        
+                break
+            }else{
+                invested_saved_coin.innerHTML="";
+            }
+        }
+        //   //add invested price if exist
+        //   $('#invested_saved_coin').innerHTML="invested: "+user.criptos[index].investedPrice[0].price;
+        }
+  });
+}
+$('.btnCancelBuy').onclick=()=>{
+  closeBuySpace();
+}
+closeBuySpace=()=>{
+   //remove all atrubutes sets it when i was open
+   let myCripto = $('.myCriptos','all');
+   let myCriptoID =BTCjson.coinSelected.index;
+ 
+   myCripto[myCriptoID].removeAttribute('style');
+   removeClass([{e:myCripto[myCriptoID],c:'buy'}]);
+   removeClass([{e:$('.buySpace'),c:'active'}]);
+}

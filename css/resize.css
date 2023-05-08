@@ -110,9 +110,25 @@
         top: 0px;
     }
     /*end style menu*/
+    
 }
 @media screen and (max-width: 420px) {
 .loginContent{
     transform: scale(0.9);
 }
+}
+
+@media screen and (max-width: 717px) {
+    /*begin buySpace*/
+    .buySpace_content_flex{
+        display: inline-block;
+        transform: scale(1.5);
+    }
+    .buySpace_content{
+        position: absolute;
+        display: block;
+        overflow: auto;
+        height: 100%;
+        
+    }
 }

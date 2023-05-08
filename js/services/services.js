@@ -68,8 +68,9 @@ async function fetchData(url) {
             };*/
 
             const response = await fetch(url);
-             data = await response.json();
-            online_offline = true;
+            data = await response.json();
+            online_offline = true; 
+
             return data;
         } catch (error) {
             online_offline = false;
@@ -295,45 +296,48 @@ async function login(type,data={}){
 
         case 'singUp':
                     
-        user.identified=false;
+            user.identified=false;
 
-        const database = await validateIfExist('users','email',email);
-        if(!database.status){//Create new user
+            const database = await validateIfExist('users','email',email);
+            if(!database.status){//Create new user
 
-            //encript password of user
-            const encripted = await encryptValue(password,password);
-           if(encripted.status){
-                const idUser = await fecthLocalData('users', 'add', { value: { email: email, name:name } });
-                //save password in another table with the id of the new user
-                await fecthLocalData('usersPasswd', 'add', { value: { id:idUser, password:encripted.value } });
-                //create the tables that belong to the new user with the ID, but start empty
-                await fecthLocalData('historySell', 'add', { value: { id:idUser,data:'' } });
-                await fecthLocalData('criptos', 'add', { value: { id:idUser,data:'' } });
-                await fecthLocalData('checkPrice', 'add', { value: { id:idUser,data:'' } });
-                await fecthLocalData('coins', 'add', { value: { id:idUser,data:'' } });
+                //encript password of user
+                const encripted = await encryptValue(password,password);
+                if(encripted.status){
+                    const idUser = await fecthLocalData('users', 'add', { value: { email: email, name:name } });
 
-                if(idUser){
-                    //to save session encripted
-                    const sessionEncript=await encryptValue(idUser,keySecret);
-                    if(sessionEncript.status){
-                            
-                        setStorageData('json','usersSession',sessionEncript.value);
-                        user.identified=true;
-                        return {status:true, userId:idUser , message:'Welcome'};
+                    //save password in another table with the id of the new user
+                    await fecthLocalData('usersPasswd', 'add', { value: { id:idUser, password:encripted.value } });
+
+                    //create the tables that belong to the new user with the ID, but start empty
+                    await fecthLocalData('historySell', 'add', { value: { id:idUser,data:'' } });
+                    await fecthLocalData('criptos', 'add', { value: { id:idUser,data:'' } });
+                    await fecthLocalData('checkPrice', 'add', { value: { id:idUser,data:'' } });
+                    await fecthLocalData('coins', 'add', { value: { id:idUser,data:'' } });
+
+                    if(idUser){
+                        //to save session encripted
+                        const sessionEncript=await encryptValue(idUser,keySecret);
+                        if(sessionEncript.status){
+                                
+                            setStorageData('json','usersSession',sessionEncript.value);
+                            user.identified=true;
+                            return {status:true, userId:idUser , message:'Welcome'};
+                        }else{
+                            return {status:false, message:'Session cannot be save'};
+                        }
+                        
                     }else{
-                        return {status:false, message:'Session cannot be save'};
+                        return {status:false, message:'Something went wrong, please try again'};
                     }
-                    
                 }else{
-                    return {status:false, message:'Something went wrong, please try again'};
+                    //getAlert('error',`Sorry!<br>Something went wrong`);
+                    getAlert('error',`${encripted.value}`);
                 }
-           }else{
-            getAlert('error',`Sorry!<br>Something went wrong`);
-           }
 
-        }else{
-            return {status:0, message:`User already exist`};
-        };
+            }else{
+                return {status:0, message:`User already exist`};
+            };
 
         default:
             break;
@@ -431,14 +435,18 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
     switch (method) {
         case 'buy':
             let request;
-            //if already exist mean, it is a buy again to the same coin, increase the price buy it before
-            if(user.criptos[data.index]){
+            //detect which one already it is saved
+            var index=user.criptos.findIndex(function(element){
+                return element.idCripto === data.criptoID;
+            });  
+            //if already exist mean, it is a buy again to the same coin, increase the price purchased  before
+            if(index != -1){
                 let investedPrice={
                     price:data.investedPrice,
                     date:new Date(),
                     coinPrice:data.coinPrice  
                 }
-                user.criptos[data.index].investedPrice.push(investedPrice);
+                user.criptos[index].investedPrice.push(investedPrice);
 
                 request = await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
             }else{
@@ -449,7 +457,9 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
                         price:data.investedPrice,
                         date:new Date(),
                         coinPrice:data.coinPrice  
-                    }]
+                    }],
+                    chart:[data.coinPrice]
+                    
                 }
             
                 //to the first time on save this data cuz it is JSON not Array
@@ -573,7 +583,24 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
     
                 return requestCoins;
         
-                
+        case 'saveChart':
+            let charRequest;
+            //detect which one already it is saved
+            var index=user.criptos.findIndex(function(element){
+                return element.idCripto === data.criptoID;
+            });  
+
+            if(index != -1){
+
+                let coinPrice = data.coinPrice  
+                //since I buy chart parameter it become to array, so it`s not necesary to verify
+                user.criptos[index].chart.push(coinPrice);
+
+                charRequest = await fecthLocalData('criptos','update',{value:user.criptos,id:userID});
+            }
+
+            return charRequest;
+
         default:
             break;
         

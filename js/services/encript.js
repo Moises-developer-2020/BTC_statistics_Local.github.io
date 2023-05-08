@@ -1,6 +1,7 @@
 async function encryptValue(value, key) {
     try {
         const keys = await createKey(key)
+
         // Convert value to a Uint8Array
         const encoder = new TextEncoder();
         const data = encoder.encode(value);
@@ -10,10 +11,7 @@ async function encryptValue(value, key) {
     
         // Encrypt the data with the key and IV using AES-CBC
         const ciphertext = await window.crypto.subtle.encrypt(
-        { name: 'AES-CBC', iv },
-        keys,
-        data
-        );
+        { name: 'AES-CBC', iv },keys,data);
     
         // Combine the IV and ciphertext into a single array
         const encryptedData = new Uint8Array(iv.length + ciphertext.byteLength);
@@ -23,7 +21,7 @@ async function encryptValue(value, key) {
         // Convert the encrypted data to a base64-encoded string
         return {status:true,value:btoa(String.fromCharCode(...encryptedData))};
     } catch (error) {
-        return {status:false}
+        return {status:false,value:error}
     }
   }
   
@@ -55,31 +53,16 @@ async function encryptValue(value, key) {
   
   async function createKey(value) {
     // Convert value to a Uint8Array
+    
     const encoder = new TextEncoder();
     const data = encoder.encode(value);
-  
+    
     // Use SHA-256 hash of the data as the seed for the key generation
     const hash = await window.crypto.subtle.digest('SHA-256', data);
   
     // Generate the key from the hash
-    const key = await window.crypto.subtle.importKey(
-      'raw',
-      hash.slice(0, 32),
-      { name: 'AES-CBC', length: 256 },
-      false,
-      ['encrypt', 'decrypt']
-    );
+    const key = await window.crypto.subtle.importKey('raw', hash.slice(0, 32),{ name: 'AES-CBC', length: 256 },false,['encrypt', 'decrypt']);
     return key;
+    
   }
-  
-//   (async () => {
-//     const value = 'secret message';
-//     const encryptedValue = await encryptValue(value, 'my secret key');
-//     console.log('Encrypted value:', encryptedValue);
-  
-
-//     const decryptedValue = await decryptValue(encryptedValue.value, 'my secret key');
-//     console.log('Decrypted value:', decryptedValue);
-   
-//   })();
   

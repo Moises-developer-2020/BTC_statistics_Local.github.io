@@ -89,9 +89,12 @@ body {
     align-items: center;
 
 }
-#savdDifferen{
-    
+.savdDifferen{
+    color: green ;
     margin: 0px 0px 0px 5px;
+}
+.priceSavdStorage{
+    margin: 0px 5px 0px 0px;
 }
 .priceSavd span:nth-child(2) span:nth-child(1) {
     color: #7c7bff;
@@ -136,7 +139,15 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-
+.investex2{
+    overflow: auto;
+    background-color: red;
+    height: 80px;
+}
+.investex2.disabled{
+    height: 0;
+    overflow: hidden;
+}
 .price {
     color: #d3eaff ;
     transition: 0.7s;
@@ -161,16 +172,7 @@ body {
 
 }
 
-.center .priceDiffer {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    font-size: 0.4em;
-}
 
-.center .priceDiffer span {
-    color: #d3eaff;
-}
 
 .center {
     position: relative;
@@ -183,6 +185,33 @@ body {
 }
 .center.disabled{
     display: none;
+}
+.invest_status{
+    display: flex;
+    text-align: center;
+}
+.invest_status_img{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    border-radius: 80px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(20 20 20 / 54%);
+    overflow: hidden;
+
+}
+.invest_status_img img{
+    width: 100%;
+    height: 100%;
+}
+.invest_status_info{
+    text-align: center;
+    width: 100%;
 }
 .statusAnimation {
     animation-name: smoth;
@@ -232,13 +261,13 @@ body {
 
 @keyframes smoth {
     0% {
-        border-top: 5px solid #7c7bff99;
-        border-bottom: 5px solid #7c7bff99;
+        border-top: 2px solid #7c7bff99;
+        border-bottom: 2px solid #7c7bff99;
     }
 
     100% {
-        border-top: 5px solid #7b7bff31;
-        border-bottom: 5px solid #7b7bff31;
+        border-top: 2px solid #7b7bff31;
+        border-bottom: 2px solid #7b7bff31;
     }
 }
 
@@ -265,13 +294,43 @@ body {
     justify-content: space-between;
     text-align: center;
 }
+.main_status{
+    font-size: 0.4em;
+    border-top: 2px solid #7c7bff99;
+    border-bottom: 2px solid #7c7bff99;
+}
 
-.dataH1,
-.dataH2 {
-    font-size: 0.7em;
+.dataH1  {
+    font-size: 0.5em;
     display: flex;
     justify-content: space-between;
-    text-align: center;
+    align-items: center;
+}
+.dataH1_data{
+    width: 100%;
+    
+}
+.dataH1 div span{
+    display: block;
+}
+.dataH1_img{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    border-radius: 80px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(20 20 20 / 54%);
+    overflow: hidden;
+
+}
+.dataH1_img img{
+    width: 100%;
+    height: 100%;
 }
 
 .reload {
@@ -302,61 +361,19 @@ body {
     background: #0000cb38;
 }
 
-.profits {
-    position: absolute;
-    top: 11px;
-    height: 0%;
-    width: 100%;
-    left: 0;
-    border-radius: 15px;
+
+.reloadData{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    transition: 0.5s;
 }
-
-.profits:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    z-index: 0;
-    height: 100%;
-    background: #000000c7;
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(4px);
-}
-
-.profits_bottom {
-
-    margin-top: 30px;
-}
-
-.profits_content {
-    text-align: center;
-    z-index: 1;
-}
-
-.profits>span {
-    font-size: 0.5em;
-    position: absolute;
-    top: 45px;
-    border-bottom: 5px solid #7c7bff99;
-    width: 84%;
-    text-align: center;
-    padding: 0px 0 6px 0px;
-    z-index: 1;
-
-}
-
-.profits_bottom button:nth-child(2) {
-    width: 80px;
-}
-
-.profits_bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.reloadData button{
+    height: 60px;
+    width: 60px;
 }
 
 :root {
@@ -495,3 +512,27 @@ body {
     background: #f05d5d;
     box-shadow: #f05d5d 0 10px 20px -10px;
 } 
+
+::-webkit-scrollbar {
+    height: 1rem;
+    width: 0.5rem;
+}
+.dark ::-webkit-scrollbar-thumb {
+    --tw-bg-opacity: 1;
+    background-color: rgba(86,88,105,var(--tw-bg-opacity));
+}
+::-webkit-scrollbar-thumb {
+    --tw-border-opacity: 1;
+    background-color: rgba(217, 217, 227, 0);
+    border-color: rgba(255,255,255,var(--tw-border-opacity));
+    border-radius: 9999px;
+    border-width: 1px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 9999px;
+}
+.criptoContent:hover::-webkit-scrollbar-thumb{
+    background-color: rgba(217,217,227,.8);
+
+}
