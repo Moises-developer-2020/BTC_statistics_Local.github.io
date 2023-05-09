@@ -1,21 +1,4 @@
-
-async function get_api_chart_data(chart,idCripto="BTC", style){
-    await fetch(`https://api.binance.com/api/v3/klines?symbol=${idCripto}USDT&interval=5m&limit=100`)
-    .then(response => response.arrayBuffer())
-    .then(buffer => {
-        const data = new Uint8Array(buffer);
-        const decoder = new TextDecoder();
-        const json = decoder.decode(data);
-        const array = JSON.parse(json);
-
-        paintChart(chart, array, style)
-    })
-    .catch(error => console.error(error));
-}
-
-//paintChart(1,testData,1);
-
-function paintChart(typeChart, chartData, style){
+function paintChart(typeChart, chartData, style, user={invested:29460, criptoName:"Bitcoin"}){
 
         //crear chart every call
         document.getElementById("graphic_chart").innerHTML='';
@@ -56,9 +39,9 @@ function paintChart(typeChart, chartData, style){
 
         chart.plot(0).yGrid().stroke('grey 0.2');
 
-            chart.title("Bitcoin");
+            chart.title(user.criptoName);
             var marker = chart.plot(0).lineMarker();
-            marker.value(29460);
+            marker.value(user.invested);
             marker.stroke({
             thickness: 2,
             color: "grey",
@@ -74,25 +57,25 @@ function paintChart(typeChart, chartData, style){
 
         var plot = chart.plot();
 
-        plot.baseline(29460);
+        plot.baseline(user.invested);
 
         // set plot baseline value
-        plot.baseline(29460);
+        plot.baseline(user.invested);
 
         //create line and text markers for baseline
-        plot.lineMarker(0).value(29460).scaleRangeMode('consider');
+        plot.lineMarker(0).value(user.invested).scaleRangeMode('consider');
         plot
         .textMarker(0)
-        .value(29460)
+        .value(user.invested)
         .align('left')
         .anchor('left-bottom')
         .offsetX(5)
-        .text('29,460')
+        .text(user.invested.toString())
          
 
         //set positive and negative stroke
-        series.normal().stroke('4 #2FA85A');
-        series.normal().negativeStroke('3 #EE4237');
+        series.normal().stroke('2 #2FA85A');
+        series.normal().negativeStroke('2 #EE4237');
     }
 
     if(style ==3 ){
@@ -129,16 +112,16 @@ function paintChart(typeChart, chartData, style){
 
         // set series stroke settings using color scale
         series.stroke(function () {
-            return anychart.color.setThickness(this.scaledColor, 3);
+            return anychart.color.setThickness(this.scaledColor, 2);
         });
 
 
     }
     if(style==4){
         // set rising/falling and normal stroke settings
-        series.risingStroke('#2FA85A', 3, null, 'round', 'round');
-        series.fallingStroke('#EE4237', 3, null, 'round', 'round');
-        series.stroke('#2FA85A', 3, null, 'round', 'round');
+        series.risingStroke('#2FA85A', 2, null, 'round', 'round');
+        series.fallingStroke('#EE4237', 2, null, 'round', 'round');
+        series.stroke('#2FA85A', 2, null, 'round', 'round');
     }
 
 

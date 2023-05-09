@@ -163,7 +163,7 @@ $('#typeChart').onclick=()=>{
     set_style_chart(typeChart,1);
 
   }
-  console.log(typeChart);
+
   typeChart++;
 }
 //paint chart style
@@ -172,7 +172,7 @@ $('#chartStyle').onclick=()=>{
   
   paintChart(1,testData,chartStyle);
   set_style_chart(1,chartStyle);
-console.log(chartStyle);
+
   typeChart=0;
   chartStyle++;
 }
@@ -186,26 +186,21 @@ set_style_chart=(a,b)=>{
   setStorageData('json','chartStyle',saveChartStyle);
 }
 //get style saved of chart
-function get_style_chart(){
+function get_style_chart(data){
   let saveChartStyle=checkStorageData('chartStyle')?getStorageData('chartStyle'):0;
   saveChartStyle=JSON.parse(saveChartStyle);
 
   if(saveChartStyle != 0){
     typeChart=saveChartStyle.typeChart;
     chartStyle=saveChartStyle.chartStyle;
-    paintChart(typeChart,testData,chartStyle);
+    paintChart(typeChart,data,chartStyle);
 
     //to pass to the next style when I made click on the buttons
     typeChart++;
     chartStyle++;
   }else{
     //start with the default style
-    paintChart(1,testData,1);
+    paintChart(1,data,1);
   }
 
-  
-  
 }
-setTimeout(() => {
-  get_style_chart();
-}, 100);

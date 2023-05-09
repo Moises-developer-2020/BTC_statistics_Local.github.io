@@ -74,6 +74,8 @@
     background: rgb(173 0 159 / 82%);
     background-image: linear-gradient(246deg, #0328dfd6, transparent);
     transition: 0.5s;
+    color: #7c7bff;
+    font-weight: bold;
 }
 .chart_options_buttom button:hover,
 .chart_options_style span:hover{
@@ -95,6 +97,10 @@
     margin:0px 5px 0px 5px;
     background: rgb(173 0 159 / 82%);
     background-image: linear-gradient(246deg, #0328dfd6, transparent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
 }
 .chartSection.hidde{
     height: 50px ;

@@ -7,6 +7,10 @@ var firtsLoad=0;
 
 let typeChart=0; //between 0 to 1
 let chartStyle=2; //between 1 to 4
+let dataChart={
+    data:'',
+    date:''
+}
 
 //Api`s data
 let critopApi={}
@@ -116,6 +120,7 @@ async function requestPainted() {
     if(user.coins[0] !== undefined && user.coins[0] !== ""){
         //get data of saved wallets
         getRequestData(await fetchData(API+`${getWalletSymbols()}`));
+        getChart()
     }
     
     if (online_offline && user.identified && user.coins[0] != "") {
@@ -544,4 +549,35 @@ function paintWallets(){
         
     }
     openBuySection();
+}
+
+getChart=async (idCripto, limit)=>{
+
+    //validate if doesn't exist data 
+    if(dataChart.data == ''){
+
+        //let data= await get_api_chart_data(idCripto, limit);
+        dataChart={
+            data:testData,
+            date:new Date() //to validate 5 min. of the API
+        }
+        //paint chart
+        get_style_chart(testData);
+
+    }else{
+
+        var elapseTime = DateformatContacts(dataChart.date);
+        elapseTime = elapseTime.elapseTimes;
+
+        //request to the API again
+        if(elapseTime.minutes >= 5 && elapseTime.seconds >= 30){
+            //let data= await get_api_chart_data(idCripto, limit);
+            dataChart={
+                data:testData,
+                date:new Date() //to validate 5 min. of the API
+            }
+            //paint chart
+            get_style_chart(testData);
+        }
+    }
 }

@@ -665,3 +665,16 @@ getWalletSymbols=()=>{
     } 
     return coins;
 }
+
+async function get_api_chart_data(idCripto="BTC", limit=100){
+    const response=await fetch(`https://api.binance.com/api/v3/klines?symbol=${idCripto}USDT&interval=5m&limit=${limit}`)
+    const buffer= await response.arrayBuffer()
+    
+    const data = new Uint8Array(buffer);
+    const decoder = new TextDecoder();
+    const json = decoder.decode(data);
+    const array = JSON.parse(json);
+
+    return array;
+    
+}
