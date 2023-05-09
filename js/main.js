@@ -548,7 +548,7 @@ function paintWallets(){
                 </div>`;
         
     }
-    openBuySection();
+    openCriptoDetails();
 }
 
 getChart=async (idCripto, limit)=>{
