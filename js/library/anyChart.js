@@ -13,7 +13,7 @@ async function get_api_chart_data(chart,idCripto="BTC", style){
     .catch(error => console.error(error));
 }
 
-paintChart(1,testData,1);
+//paintChart(1,testData,1);
 
 function paintChart(typeChart, chartData, style){
 

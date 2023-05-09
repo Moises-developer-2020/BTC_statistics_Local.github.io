@@ -5,6 +5,9 @@ var DifferIndicator;
 var firtsLoad=0;
 
 
+let typeChart=0; //between 0 to 1
+let chartStyle=2; //between 1 to 4
+
 //Api`s data
 let critopApi={}
 

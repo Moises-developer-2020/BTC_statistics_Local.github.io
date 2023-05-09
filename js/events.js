@@ -150,16 +150,20 @@ closeBuySpace=()=>{
 }
 
 //paint type of chart
-let typeChart=0; //between 0 to 1
-let chartStyle=2; //between 1 to 4
-
 $('#typeChart').onclick=()=>{
   if(typeChart == 2) typeChart=0;
 
-  if(typeChart == 1) paintChart(typeChart,testData,chartStyle-1);//keep chartStyle
-  if(typeChart == 0) paintChart(typeChart,testData,1);
-  set_style_chart();
-  
+  if(typeChart == 1){
+    paintChart(typeChart,testData,chartStyle-1);//keep chartStyle
+    set_style_chart(typeChart,chartStyle-1);
+
+  } 
+  if(typeChart == 0){
+    paintChart(typeChart,testData,1);
+    set_style_chart(typeChart,1);
+
+  }
+  console.log(typeChart);
   typeChart++;
 }
 //paint chart style
@@ -167,17 +171,41 @@ $('#chartStyle').onclick=()=>{
   if(chartStyle == 5) chartStyle=1;
   
   paintChart(1,testData,chartStyle);
-  set_style_chart();
-
-  chartStyle++;
+  set_style_chart(1,chartStyle);
+console.log(chartStyle);
   typeChart=0;
+  chartStyle++;
 }
 
 //save style of chart
-set_style_chart=()=>{
+set_style_chart=(a,b)=>{
   let saveChartStyle={
-    typeChart,
-    chartStyle
+    typeChart:a,
+    chartStyle:b
   }
   setStorageData('json','chartStyle',saveChartStyle);
 }
+//get style saved of chart
+function get_style_chart(){
+  let saveChartStyle=checkStorageData('chartStyle')?getStorageData('chartStyle'):0;
+  saveChartStyle=JSON.parse(saveChartStyle);
+
+  if(saveChartStyle != 0){
+    typeChart=saveChartStyle.typeChart;
+    chartStyle=saveChartStyle.chartStyle;
+    paintChart(typeChart,testData,chartStyle);
+
+    //to pass to the next style when I made click on the buttons
+    typeChart++;
+    chartStyle++;
+  }else{
+    //start with the default style
+    paintChart(1,testData,1);
+  }
+
+  
+  
+}
+setTimeout(() => {
+  get_style_chart();
+}, 100);
