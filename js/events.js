@@ -148,3 +148,36 @@ closeBuySpace=()=>{
    removeClass([{e:myCripto[myCriptoID],c:'buy'}]);
    removeClass([{e:$('.buySpace'),c:'active'}]);
 }
+
+//paint type of chart
+let typeChart=0; //between 0 to 1
+let chartStyle=2; //between 1 to 4
+
+$('#typeChart').onclick=()=>{
+  if(typeChart == 2) typeChart=0;
+
+  if(typeChart == 1) paintChart(typeChart,testData,chartStyle-1);//keep chartStyle
+  if(typeChart == 0) paintChart(typeChart,testData,1);
+  set_style_chart();
+  
+  typeChart++;
+}
+//paint chart style
+$('#chartStyle').onclick=()=>{
+  if(chartStyle == 5) chartStyle=1;
+  
+  paintChart(1,testData,chartStyle);
+  set_style_chart();
+
+  chartStyle++;
+  typeChart=0;
+}
+
+//save style of chart
+set_style_chart=()=>{
+  let saveChartStyle={
+    typeChart,
+    chartStyle
+  }
+  setStorageData('json','chartStyle',saveChartStyle);
+}

@@ -1,0 +1,12 @@
+#graphic_chart {
+    width: 104%;
+    margin-left: -62px;
+  }
+
+  #graphic_chart div:nth-child(1) {
+    width: 105% !important;
+  }
+
+  #graphic_chart label {
+    display: none;
+  }

@@ -73,6 +73,7 @@ async function getRequestData(API,parameter="BTC"){
                 coinPrice:0
             }
         }
+        online_offline = true;
     } catch (error) {
         online_offline = false;
     }
@@ -169,7 +170,7 @@ async function requestPainted() {
                     //display the time that has passed since invested
                     showDate(i, j);
 
-                    //save price to show chat of the invested coin
+                    //save price to show chat of the invested coin only when it is different
                     if (parseFloat(LastCheck) != parseFloat(critopApi[coin].priceData)) {
                         save_price_to_chart(coin,critopApi[coin].priceData);
 

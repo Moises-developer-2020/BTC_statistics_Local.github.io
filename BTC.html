@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="css/alerts.css">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/sectionStyle.css">
+    <link rel="stylesheet" href="css/graphic.css">
+    
 
     <link rel="stylesheet" href="css/resize.css">
 </head>
@@ -51,7 +53,20 @@
                             </div>
                         </div>
                         <div class="chartContent">
-
+                            <div class="graphic_chart" id="graphic_chart"></div>
+                            <div class="chart_options">
+                                <div class="chart_options_buttom">
+                                    <button>1H</button>
+                                    <button>1D</button>
+                                    <button>1W</button>
+                                    <button>1M</button>
+                                    <button>1Y</button>
+                                </div>
+                                <div class="chart_options_style">
+                                    <span id="chartStyle"></span>
+                                    <span id="typeChart"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="expenseSection">
@@ -476,6 +491,11 @@
     <script src="js/main.js"></script>
     <script src="js/animation.js"></script>
     <script src="js/events.js"></script>
+
+    <script src="js/library/anychart-core.min.js"></script>
+    <script src="js/library/anychart-stock.min.js"></script>
+    <script src="js/library/test.js"></script>
+    <script src="js/library/anyChart.js"></script>
 </body>
 
 </html>
