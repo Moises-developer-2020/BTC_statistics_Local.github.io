@@ -141,12 +141,28 @@ body {
 }
 .investex2{
     overflow: auto;
-    background-color: red;
-    height: 80px;
+    max-height: 90px;
+    margin-top: 5px;
+
 }
 .investex2.disabled{
     height: 0;
     overflow: hidden;
+}
+.investex2 .investex2_details{
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.3em;
+    margin-bottom: 5px;
+
+}
+.priceSavdStorage2{
+    color: #d3eaff ;
+}
+.elapseTime2{
+    font-size: 0.8em;
 }
 .price {
     color: #d3eaff ;
@@ -179,7 +195,6 @@ body {
     border-radius: 15px;
     box-shadow: #5e5df0 0 0px 67px -5px;
     padding: 25px;
-    background: rgb(24 24 24 / 0%);
     min-width: 280px;
 
 }
@@ -189,6 +204,7 @@ body {
 .invest_status{
     display: flex;
     text-align: center;
+    margin-bottom: 10px;
 }
 .invest_status_img{
     position: relative;

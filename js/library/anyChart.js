@@ -1,59 +1,62 @@
 function paintChart(typeChart, chartData, style, user={invested:29460, criptoName:"Bitcoin"}){
 
-        //crear chart every call
-        document.getElementById("graphic_chart").innerHTML='';
+    //crear chart every call
+    document.getElementById("graphic_chart").innerHTML='';
 
-        anychart.onDocumentReady(function () {
-        
-        isAsync = false;
-        
-        var dataTable = anychart.data.table();
-        chartData=chartData.concat(chartData)
-        dataTable.addData(chartData);
+    anychart.onDocumentReady(function () {
+    
+    isAsync = false;
+    
+    var dataTable = anychart.data.table();
+    chartData=chartData.concat(chartData)
+    dataTable.addData(chartData);
 
-        var chart = anychart.stock();
+    var chart = anychart.stock();
+    //velas
+    if(typeChart==0){
+
+        var mapping2 = dataTable.mapAs({ 'open': 1, 'high': 2, 'low': 3, 'close': 4 });
         //velas
-        if(typeChart==0){
+        chart.plot(0).candlestick(mapping2);
 
-            var mapping2 = dataTable.mapAs({ 'open': 1, 'high': 2, 'low': 3, 'close': 4 });
-            //velas
-            chart.plot(0).candlestick(mapping2);
+    }else if(typeChart==1 && style == 4){  
 
-        }else if(typeChart==1 && style == 4){  
+        //lineal whithout fill
 
-            //lineal whithout fill
+        var mapping = dataTable.mapAs({value: 1});
+        var series= chart.plot().area(mapping).fill(['0.1 transparent', '1 transparent'], 90, false).stroke('transparent');
 
-            var mapping = dataTable.mapAs({value: 1});
-            var series= chart.plot().area(mapping).fill(['0.1 transparent', '1 transparent'], 90, false).stroke('transparent');
+    }else if(typeChart==1){  
 
-        }else if(typeChart==1){  
+        //lineal
+        //https://docs.anychart.com/Graphics/Fill_Settings
 
-            //lineal
-            //https://docs.anychart.com/Graphics/Fill_Settings
-
-            var mapping = dataTable.mapAs({value: 1});
-            var series= chart.plot().area(mapping).fill(['0.1 black', '1 blue'], 90, true).stroke('transparent');
-        }
+        var mapping = dataTable.mapAs({value: 1});
+        var series= chart.plot().area(mapping).fill(['0.1 black', '1 blue'], 90, true).stroke('transparent');
+    }
 
        
 
+    //validated if it is investion
+    if(user.invested > 0){
         chart.plot(0).yGrid().stroke('grey 0.2');
 
-            chart.title(user.criptoName);
-            var marker = chart.plot(0).lineMarker();
-            marker.value(user.invested);
-            marker.stroke({
+        chart.title(user.criptoName);
+        var marker = chart.plot(0).lineMarker();
+        marker.value(user.invested);
+        marker.stroke({
             thickness: 2,
             color: "grey",
             dash: "3",
         }); 
+    }
 
 
     if(style ==1 ){
     // create scroller series with mapped data
     
     }
-    if(style ==2 ){
+    if(style ==2 && user.invested > 0){
 
         var plot = chart.plot();
 

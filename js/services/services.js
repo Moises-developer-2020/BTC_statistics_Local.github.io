@@ -189,7 +189,7 @@ function validateElapseTime(date) {
 
     var validated = "";
     if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes <= 1) {
-        validated = elapseTime.seconds + " seconds ago.";
+        validated = elapseTime.seconds + " secs ago.";
     }
     if (elapseTime.days == 0 && elapseTime.hours == 0 && elapseTime.minutes == 1) {
         validated = elapseTime.minutes + " min. ";
@@ -198,22 +198,22 @@ function validateElapseTime(date) {
         validated = elapseTime.minutes + " mins. ";
     }
     if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes == 0) {
-        validated = elapseTime.hours + " hour ago.";
+        validated = elapseTime.hours + " hr ago.";
     }
     if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes > 1) {
-        validated = elapseTime.hours + " hour " + elapseTime.minutes + " mins.";
+        validated = elapseTime.hours + " hr " + elapseTime.minutes + " mins.";
     }
     if (elapseTime.days == 0 && elapseTime.hours == 1 && elapseTime.minutes == 1) {
-        validated = elapseTime.hours + " hour " + elapseTime.minutes + " min.";
+        validated = elapseTime.hours + " hr " + elapseTime.minutes + " min.";
     }
     if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes == 0) {
-        validated = elapseTime.hours + " hours ago.";
+        validated = elapseTime.hours + " hrs ago.";
     }
     if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes == 1) {
-        validated = elapseTime.hours + " hours " + elapseTime.minutes + " min.";
+        validated = elapseTime.hours + " hrs " + elapseTime.minutes + " min.";
     }
     if (elapseTime.days == 0 && elapseTime.hours > 1 && elapseTime.minutes > 1) {
-        validated = elapseTime.hours + " hours " + elapseTime.minutes + " mins.";
+        validated = elapseTime.hours + " hrs " + elapseTime.minutes + " mins.";
     }
 
     if (elapseTime.days == 1 && elapseTime.hours == 0) {
@@ -223,16 +223,16 @@ function validateElapseTime(date) {
         validated = elapseTime.days + " days ago. ";
     }
     if (elapseTime.days == 1 && elapseTime.hours == 1) {
-        validated = elapseTime.days + " day " + elapseTime.hours + " hour";
+        validated = elapseTime.days + " day " + elapseTime.hours + " hr";
     }
     if (elapseTime.days == 1 && elapseTime.hours > 1) {
-        validated = elapseTime.days + " day " + elapseTime.hours + " hours";
+        validated = elapseTime.days + " day " + elapseTime.hours + " hrs";
     }
     if (elapseTime.days > 1 && elapseTime.hours == 1) {
-        validated = elapseTime.days + " days " + elapseTime.hours + " hour";
+        validated = elapseTime.days + " days " + elapseTime.hours + " hr";
     }
     if (elapseTime.days > 1 && elapseTime.hours > 1) {
-        validated = elapseTime.days + " days " + elapseTime.hours + " hours";
+        validated = elapseTime.days + " days " + elapseTime.hours + " hrs";
     }
 
 

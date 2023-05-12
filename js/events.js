@@ -90,21 +90,30 @@ $('.hiddenExp').onclick=()=>{
 }
 
 
-//open buy section
+//open buy section function
 openCriptoDetails=()=>{
   let myCriptos= $('.myCriptos','all');
   myCriptos.forEach((element,index) => {
         element.onclick= async ()=>{
           let id=$('.criptoID','all')[index].innerHTML;
+          
+          //save coin selected in variable to use it on buys
           BTCjson.coinSelected={
             index:index,
             id:id
           }
+
+          //save on localStorage the coin selected
+          setStorageData('json','coinSelected',BTCjson.coinSelected);
+
+          loadCriptoSelected();
+
       }
   });
 };
 
-////open buy section
+
+////open buy section by click
 $('#investInput').onclick=()=>{
 
   let myCriptos= $('.myCriptos','all');
@@ -124,14 +133,13 @@ $('#investInput').onclick=()=>{
   let id=$('.criptoID','all')[index].innerHTML;
 
 
-  //detect which wallets I selected and show the prices I invested
+  //detect which wallets I selected and show the invested prices
   for (let j = 0; j < user.criptos.length; j++) {
     const idCripto = user.criptos[j].idCripto;
     if (id === idCripto) {
         //add invested price
         invested_saved_coin.innerHTML="invested: ";
         for (let o = 0; o < user.criptos[j].investedPrice.length; o++) {
-          console.log(user.criptos[j].investedPrice[o].date);
           invested_saved_coin.innerHTML+=`<div>${validateElapseTime(user.criptos[j].investedPrice[o].date)} = &nbsp $<span>${user.criptos[j].investedPrice[o].price}</span></div>`;
 
         }

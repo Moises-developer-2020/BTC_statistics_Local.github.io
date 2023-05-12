@@ -3,7 +3,7 @@
     "short_name": "Bitcoin",
     "icons": [
       {
-        "src": "/logo.ico",
+        "src": "/logo.png",
         "sizes": "256x256",
         "type": "image/png"
       }

@@ -28,9 +28,7 @@ let saveStyle={}
 const elements = {
     btnReload: $("#btnReload"),
     btnBuy: $("#btnBuy"),
-    earnings_today: $("#earnings_today"),
     price_invest: $("#price_invest"),
-    invested_saved: $("#invested_saved"),
     center: $(".center"),
     statusD: $(".status"),
     priceDifferences: $("#priceDifferences"),
@@ -74,8 +72,8 @@ async function getRequestData(API,parameter="BTC"){
                     difL: 0 //different with the Low price
                 },
                 percent: 0,
-                earnings: 0,
-                price_invested: 0,
+                earnings: [],
+                price_invested: [],
                 price_to_invest: 0,
                 coinPrice:0
             }
@@ -193,8 +191,6 @@ async function requestPainted() {
             
             SavePriceInvert = storagePrice;
             BTCjson[coin].coinPrice = critopApi[coin].priceData;
-            BTCjson[coin].price_invested = user.criptos[i]?user.criptos[i].investedPrice[0].price:0;
-            invested_saved.innerHTML = BTCjson[coin].price_invested;
             BTCjson[coin].status.h = convertPrice(critopApi[coin].priceHight, false, 0);
             BTCjson[coin].status.l = convertPrice(critopApi[coin].pricelow, false, 0);
             BTCjson[coin].status.difH = convertPrice(critopApi[coin].priceHight,'-' , critopApi[coin].priceData); 
@@ -232,11 +228,13 @@ async function requestPainted() {
             //check out the last change of the price to save it if it`s diferent
             checkToSAvedPrice(coin, i);
             
-            CalcularGanancia(parseFloat(BTCjson[coin].price_invested), parseFloat(priceSavdStorage[i].innerHTML.replace(",", "")), parseFloat(price[i].innerHTML.replace(",", "")),coin);
             firtsLoad=1;
             
         }
+        loadCriptoSelected();
     }
+
+    
 };
  
 //cconvert the price of API`s data to show them
@@ -272,7 +270,7 @@ function upDomwIndicator(variable,compare,element,option,initStyle,endStyle){
             break;
     }
 }
-function CalcularGanancia(invested_money, Saved_price, Price_actual,coin) {
+function CalcularGanancia(invested_money, Saved_price, Price_actual) {
     // Definimos la cantidad de dólares invertidos
     const dolaresInvertidos = invested_money;
 
@@ -285,15 +283,12 @@ function CalcularGanancia(invested_money, Saved_price, Price_actual,coin) {
     // Suponiendo que la tasa de cambio subió a 65000 dólares por bitcoin, calculamos la ganancia en dólares
     const gananciaDolares = bitcoinsComprados * (Price_actual - tasaCambio);
 
-    // Imprimimos el resultado en la consola
-    BTCjson[coin].earnings = new Intl.NumberFormat('es-MX').format(parseFloat(gananciaDolares).toFixed(2));
-    earnings_today.innerHTML = BTCjson[coin].earnings != 'NaN' ? BTCjson[coin].earnings : 0;
-
-    if (Math.sign(earnings_today.innerHTML) == -1 || Math.sign(earnings_today.innerHTML) == -0) {
-        setClass([{e:earnings_today,c:"negative"}]);
-    } else {
-        removeClass([{e:earnings_today,c:"negative"}]);
-    }
+    //devolvemos el resultado
+    return moneyFormat(gananciaDolares);
+   
+}
+function moneyFormat(money){
+    return new Intl.NumberFormat('es-MX').format(parseFloat(money).toFixed(2));
 }
 //animation to buy or reload
 function submitGet() {
@@ -343,6 +338,8 @@ btnBuy.onclick = async function () {
     console.log(re);
 
     submitGet();
+
+    loadCriptoSelected();
     closeBuySpace();
 
 }
@@ -376,10 +373,9 @@ sellSubmit.onclick = async function () {
 
     let data={
         coinPrice:BTCjson[idCripto].coinPrice,
-        investedPrice:BTCjson[idCripto].price_to_invest,
+        investedPrice:BTCjson[idCripto].price_invested,
         criptoID:idCripto,
         index:indexCripto,
-        earned:BTCjson[idCripto].earnings
     }
     const re= await transaction('sell',data);
     console.log(re);
@@ -495,7 +491,7 @@ function paintWallets(){
         $('.criptoContent').innerHTML+=`<div class="myCriptos not_buys">
                     <div class="infoCripto">
                         <div class="criptoData">
-                            <span class="cristoIMG"> <img src="${user.coins[index].large}" alt=""></span>
+                            <span class="cristoIMG"> <img src="${user.coins[index].large}" alt="Cripto"></span>
                             <div>
                                 <span class="critoName">${user.coins[index].name}</span>
                                 <span class="criptoID">${user.coins[index].symbol}</span>
@@ -579,5 +575,150 @@ getChart=async (idCripto, limit)=>{
             //paint chart
             get_style_chart(testData);
         }
+    }
+}
+
+//criptos selected to show it in .main
+loadCriptoSelected=()=>{
+    //get coin selected saved
+    let getDataSAved=checkStorageData('coinSelected')? getStorageData('coinSelected'):0;
+  
+    if(getDataSAved != 0){
+      //delete loading massage
+      removeClass([{e:$('.statusContent'),c:'show_loading'}]);
+  
+      BTCjson.coinSelected=JSON.parse(getDataSAved);
+  
+      let index=BTCjson.coinSelected.index;
+      let id=BTCjson.coinSelected.id;
+    
+      let invest_status_img =$('.invest_status_img');
+      let investex2 =$('.investex2');
+      let invested_saved =$('#invested_saved');
+      let elapseTim =$('#elapseTim');
+      let investedDate =$('#investedDate');
+      let priceSavdStorage =$('#priceSavdStorage');
+  
+      let totalInvested=0;
+  
+      //paint data of selected crypto on .center div
+      invest_status_img.innerHTML=$('.cristoIMG','all')[index].innerHTML;
+  
+      //detect which wallet was selected and show the invested prices
+      for (let j = 0; j < user.criptos.length; j++) {
+        const idCripto = user.criptos[j].idCripto;
+        if (id === idCripto) {
+            //add invested price
+            investex2.innerHTML="";
+  
+            for (let o = 0; o < user.criptos[j].investedPrice.length; o++) {
+              let user_data=user.criptos[j].investedPrice[o];
+              let user_data2=user.criptos[j].investedPrice[0];
+  
+              let elapseTime=validateElapseTime(user_data.date);
+              let elapseTimeDate=DateformatContacts(user_data.date).dateSaved;
+              totalInvested=parseFloat(totalInvested) + parseFloat(user_data.price);
+  
+              investedDate.innerHTML=DateformatContacts(user_data2.date).dateSaved;
+  
+  
+              elapseTim.innerHTML=validateElapseTime(user_data2.date);
+              //the firt invested
+              priceSavdStorage.innerHTML=convertPrice(user_data2.coinPrice, false, 0);
+
+              //more than one investion
+              if(user.criptos[j].investedPrice.length>1){//o>0
+                investedDate.innerHTML=DateformatContacts(user_data.date).dateSaved+`<span title="Total Investions">🔻X${o+1}</span>`;
+  
+                investex2.innerHTML+=`<div class="investex2_details">
+                                        <span class="elapseTime2" title="${elapseTimeDate}">${elapseTime}</span> 
+                                        <div class="priceSavd2">
+                                          <span class="priceSavdStorage2">${convertPrice(user_data.coinPrice, false, 0)}&nbsp≠&nbsp</span>
+                                          <span class="savdDifferen2 positive">↻</span>
+                                        </div> 
+                                        <span class="earningStatus">$<span class="invested_saved2">${parseFloat(user_data.price)}</span> <span>≠</span>
+                                      <span class="earnings_today2 positive">↻</span></span>
+                                      </div>`;
+              }
+
+              load_rewards(j,o);
+            }
+            invested_saved.innerHTML=totalInvested;
+            break
+        }else{
+            investex2.innerHTML="";
+            invested_saved.innerHTML="";
+            investedDate.innerHTML="";
+            priceSavdStorage.innerHTML="";
+        }
+      }
+    }
+  
+}
+
+//get rewards of investion
+load_rewards=(criptoIndex,index)=>{
+    let user_data1=user.criptos[criptoIndex].investedPrice[0];
+    let user_data2=user.criptos[criptoIndex].investedPrice[index];
+
+    let savdDifferen=$('#savdDifferen');
+    let earnings_today=$('#earnings_today');
+
+    let savdDifferen2=$('.savdDifferen2','all');
+    let earnings_today2=$('.earnings_today2','all');
+
+    
+    //the firt invested
+    if(BTCjson[BTCjson.coinSelected.id]){
+
+        //let coinPrice=BTCjson[BTCjson.coinSelected.id].coinPrice
+        let coinPrice=critopApi[BTCjson.coinSelected.id].priceData
+        let jsonData=BTCjson[BTCjson.coinSelected.id];
+        
+        let reward=CalcularGanancia(parseFloat(user_data2.price) ,parseFloat(user_data2.coinPrice) ,parseFloat(coinPrice));
+
+        //to sell register
+        let data=user.criptos[criptoIndex].investedPrice[index];
+        data.earnings=reward;
+        BTCjson[BTCjson.coinSelected.id].price_invested.push(data);
+
+
+        BTCjson[BTCjson.coinSelected.id].earnings.push(reward);
+        
+
+        //get diffent of the price since I invest
+        savdDifferen.innerHTML=convertPrice(coinPrice, '-', user_data1.coinPrice );
+        earnings_today.innerHTML=jsonData.earnings[0];
+
+
+        //more than one investion
+        if(user.criptos[criptoIndex].investedPrice.length>1){//index>0
+
+            savdDifferen2[index].innerHTML=convertPrice(coinPrice, '-', user_data2.coinPrice );
+            earnings_today2[index].innerHTML=CalcularGanancia(parseFloat(user_data2.price) ,parseFloat(user_data2.coinPrice) ,parseFloat(coinPrice));
+            
+            //sum all the inversion o show it on earnings_today
+            let totalEarning=0;
+            for (let i = 0; i < jsonData.earnings.length; i++) {
+                totalEarning += parseFloat(jsonData.earnings[i])
+
+            }
+            earnings_today.innerHTML=moneyFormat(totalEarning);
+            negative_positive(savdDifferen2[index], savdDifferen2[index].innerHTML);
+            negative_positive(earnings_today2[index], earnings_today2[index].innerHTML);
+        }
+       
+        negative_positive(savdDifferen, savdDifferen.innerHTML);
+        negative_positive(earnings_today, earnings_today.innerHTML);
+        
+    }
+  
+}
+
+function negative_positive(element, value){
+    if (parseFloat(value) < 0) {
+        setClass([{e:element,c:"negative"}]);
+    } else {
+        removeClass([{e:element,c:"negative"}]);
     }
 }

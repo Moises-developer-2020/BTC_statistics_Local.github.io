@@ -477,8 +477,23 @@ margin-top: 5px;
     position: relative;
     width: 90%;
     height: 90%;
-    background-color: rgba(105, 107, 105, 0.219);
+    background: rgb(20 20 20 / 54%);
     border-radius: 15px;
+}
+.loading {
+    display: none;
+}
+.statusContent.show_loading .loading{
+    position: absolute;
+    background: black;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .buySpace{
     position: absolute;
