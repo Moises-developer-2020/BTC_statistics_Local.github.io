@@ -29,6 +29,7 @@ const elements = {
     btnReload: $("#btnReload"),
     btnBuy: $("#btnBuy"),
     price_invest: $("#price_invest"),
+    MainIndicator: $("#indicator"),
     center: $(".center"),
     statusD: $(".status"),
     priceDifferences: $("#priceDifferences"),
@@ -146,18 +147,25 @@ async function requestPainted() {
             
             if (parseFloat(LastCheck) < parseFloat(critopApi[coin].priceData)) {
                 setClass([{e:diferenceH[i],c:"negative"} , {e:diferenceL[i],c:"positive"} , {e:priceDifferences,c:"positive"} , {e:indicator[i],c:"positive"}]);
+
+                //color of the price in 700 miliseconds
                 upDomwIndicator(0,0,price[i],'class','positive',0);
-                
-                upDomwIndicator(0,0,myCriptos[i],'class','positive',0);
+
+                //background color of the wallet
+                upDomwIndicator(0,0,myCriptos[i],'class','positives',0);
+
             } else if (parseFloat(LastCheck) != parseFloat(critopApi[coin].priceData)) {
                 removeClass([{e:diferenceH[i],c:"negative"},{e:diferenceL[i],c:"positive"},{e:priceDifferences,c:"positive"},{e:indicator[i],c:"positive"}]);
         
             }
             if (parseFloat(LastCheck) > parseFloat(critopApi[coin].priceData)) {
                 setClass([{e:diferenceH[i],c:"positive"} , {e:diferenceL[i],c:"negative"} , {e:priceDifferences,c:"negative"} , {e:indicator[i],c:"negative"}]);
-                upDomwIndicator(0,0,price[i],'class','negative',0);
 
-                upDomwIndicator(0,0,myCriptos[i],'class','negative',0);
+                //color of the price in 700 miliseconds
+                upDomwIndicator(0,0,price[i],'class','negative',0);
+                
+                //background color of the wallet
+                upDomwIndicator(0,0,myCriptos[i],'class','negatives',0);
 
             } else if (parseFloat(LastCheck) != parseFloat(critopApi[coin].priceData)) {
                 removeClass([{e:diferenceH[i],c:"positive"},{e:diferenceL[i],c:"negative"},{e:priceDifferences,c:"negative"},{e:indicator[i],c:"negative"}]);
@@ -258,6 +266,7 @@ function upDomwIndicator(variable,compare,element,option,initStyle,endStyle){
                 }, 300);
             }
             variable=compare;
+            console.log(variable);
             break;
         case 'class':
             setClass([{e:element,c:initStyle}]);
@@ -592,6 +601,7 @@ loadCriptoSelected=()=>{
   
       let index=BTCjson.coinSelected.index;
       let id=BTCjson.coinSelected.id;
+      let indicator_style=$('.indicator','all')[index].classList[1];
 
       let savdDifferen=$('#savdDifferen');
       let earnings_today=$('#earnings_today');
@@ -612,6 +622,14 @@ loadCriptoSelected=()=>{
       for (let j = 0; j < user.criptos.length; j++) {
         const idCripto = user.criptos[j].idCripto;
         if (id === idCripto) {
+
+            //paint the mainIndicator of cripto selected
+            if(MainIndicator.classList.length>0){
+                MainIndicator.removeAttribute('class')
+            }
+            setClass([{e:MainIndicator,c:`${indicator_style}`}]);
+            
+
             //add invested price
             investex2.innerHTML="";
   
@@ -701,6 +719,7 @@ load_rewards=(criptoIndex,index)=>{
         }
         
         console.log(BTCjson[BTCjson.coinSelected.id])
+        console.log(critopApi)
         
         //get diffent of the price since I invest
         savdDifferen.innerHTML=convertPrice(coinPrice, '-', user_data1.coinPrice );

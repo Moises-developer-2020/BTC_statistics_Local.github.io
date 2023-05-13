@@ -385,11 +385,11 @@ margin-top: 5px;
     height: 0px;
     margin-top: 27px;
 }
-.myCriptos.positive{
+.myCriptos.positives{
     transition: 0.5s;
     background-image: linear-gradient(300deg, #0015ab, #1aab0094);
 }
-.myCriptos.negative{
+.myCriptos.negatives{
     transition: 0.5s;
     background-image: linear-gradient(300deg,#0015ab, #ab0000bf);
 }
