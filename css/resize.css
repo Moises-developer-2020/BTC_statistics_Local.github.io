@@ -132,3 +132,14 @@
         
     }
 }
+
+@media screen and (max-width: 1435px) {
+    /*adapt to phone*/
+    .mainSection{
+        display: block;
+    }
+    .section1,
+    .section2{
+        width: 100%;
+    }
+}

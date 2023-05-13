@@ -591,7 +591,10 @@ loadCriptoSelected=()=>{
   
       let index=BTCjson.coinSelected.index;
       let id=BTCjson.coinSelected.id;
-    
+
+      let savdDifferen=$('#savdDifferen');
+      let earnings_today=$('#earnings_today');
+
       let invest_status_img =$('.invest_status_img');
       let investex2 =$('.investex2');
       let invested_saved =$('#invested_saved');
@@ -650,6 +653,8 @@ loadCriptoSelected=()=>{
             invested_saved.innerHTML="";
             investedDate.innerHTML="";
             priceSavdStorage.innerHTML="";
+            savdDifferen.innerHTML='';
+            earnings_today.innerHTML='';
         }
       }
     }
@@ -677,33 +682,40 @@ load_rewards=(criptoIndex,index)=>{
         
         let reward=CalcularGanancia(parseFloat(user_data2.price) ,parseFloat(user_data2.coinPrice) ,parseFloat(coinPrice));
 
-        //to sell register
+        //for Sales record
         let data=user.criptos[criptoIndex].investedPrice[index];
         data.earnings=reward;
-        BTCjson[BTCjson.coinSelected.id].price_invested.push(data);
 
-
-        BTCjson[BTCjson.coinSelected.id].earnings.push(reward);
+        //avoid to push each time a selected a coin, otherwise the data will be duplicates
+        if(jsonData.earnings.length == user.criptos[criptoIndex].investedPrice.length){
+            jsonData.price_invested.splice(data,0);
+            jsonData.earnings.splice(reward,0);
+        }else{
+            jsonData.price_invested.push(data);
+            jsonData.earnings.push(reward);
+        }
+        
+        console.log(BTCjson[BTCjson.coinSelected.id])
         
 
         //get diffent of the price since I invest
         savdDifferen.innerHTML=convertPrice(coinPrice, '-', user_data1.coinPrice );
         earnings_today.innerHTML=jsonData.earnings[0];
-
-
+        
         //more than one investion
         if(user.criptos[criptoIndex].investedPrice.length>1){//index>0
 
             savdDifferen2[index].innerHTML=convertPrice(coinPrice, '-', user_data2.coinPrice );
             earnings_today2[index].innerHTML=CalcularGanancia(parseFloat(user_data2.price) ,parseFloat(user_data2.coinPrice) ,parseFloat(coinPrice));
             
-            //sum all the inversion o show it on earnings_today
+            //sum all the inversion o show it in earnings_today
             let totalEarning=0;
             for (let i = 0; i < jsonData.earnings.length; i++) {
                 totalEarning += parseFloat(jsonData.earnings[i])
 
             }
             earnings_today.innerHTML=moneyFormat(totalEarning);
+
             negative_positive(savdDifferen2[index], savdDifferen2[index].innerHTML);
             negative_positive(earnings_today2[index], earnings_today2[index].innerHTML);
         }
@@ -715,6 +727,7 @@ load_rewards=(criptoIndex,index)=>{
   
 }
 
+//paint red o green the value 
 function negative_positive(element, value){
     if (parseFloat(value) < 0) {
         setClass([{e:element,c:"negative"}]);
@@ -722,3 +735,4 @@ function negative_positive(element, value){
         removeClass([{e:element,c:"negative"}]);
     }
 }
+
