@@ -3,7 +3,7 @@ var SavePriceInvert;
 var price_invested_saved;
 var DifferIndicator;
 var firtsLoad=0;
-
+let price_to_invest=0;
 
 let typeChart=0; //between 0 to 1
 let chartStyle=2; //between 1 to 4
@@ -74,7 +74,6 @@ async function getRequestData(API,parameter="BTC"){
                 percent: 0,
                 earnings: [],
                 price_invested: [],
-                price_to_invest: 0,
                 coinPrice:0
             }
         }
@@ -330,12 +329,14 @@ btnBuy.onclick = async function () {
 
     let data={
         coinPrice:BTCjson[idCripto].coinPrice,
-        investedPrice:BTCjson[idCripto].price_to_invest,
+        investedPrice:price_to_invest,
         criptoID:idCripto,
         index:indexCripto
     }
     const re= await transaction('buy',data);
     console.log(re);
+
+    price_to_invest=0;
 
     submitGet();
 
@@ -349,9 +350,9 @@ price_invest.onkeyup = function () {
     let idCripto =BTCjson.coinSelected.id;
 
     if (price_invest.value != 0 || price_invest.value != '') {
-        BTCjson[idCripto].price_to_invest = price_invest.value;
+        price_to_invest = price_invest.value;
     } else {
-        BTCjson[idCripto].price_to_invest = 0;
+        price_to_invest = 0;
     }
 }
 
@@ -686,18 +687,21 @@ load_rewards=(criptoIndex,index)=>{
         let data=user.criptos[criptoIndex].investedPrice[index];
         data.earnings=reward;
 
-        //avoid to push each time a selected a coin, otherwise the data will be duplicates
+        //avoid to push each time I selected a coin, otherwise the data will be duplicates
         if(jsonData.earnings.length == user.criptos[criptoIndex].investedPrice.length){
+
+            //replace data
             jsonData.price_invested.splice(data,0);
             jsonData.earnings.splice(reward,0);
         }else{
+
+            //add data
             jsonData.price_invested.push(data);
             jsonData.earnings.push(reward);
         }
         
         console.log(BTCjson[BTCjson.coinSelected.id])
         
-
         //get diffent of the price since I invest
         savdDifferen.innerHTML=convertPrice(coinPrice, '-', user_data1.coinPrice );
         earnings_today.innerHTML=jsonData.earnings[0];
@@ -729,7 +733,8 @@ load_rewards=(criptoIndex,index)=>{
 
 //paint red o green the value 
 function negative_positive(element, value){
-    if (parseFloat(value) < 0) {
+    //if (parseFloat(value) < 0) {
+    if(Math.sign(parseFloat(value)) == -1 || Math.sign(parseFloat(value)) == -0){
         setClass([{e:element,c:"negative"}]);
     } else {
         removeClass([{e:element,c:"negative"}]);
