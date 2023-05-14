@@ -102,9 +102,6 @@
     align-items: center;
     font-size: 30px;
 }
-.chartSection.hidde{
-    height: 50px ;
-}
 .expenseSection{
     position: relative;
     height: 15%;
@@ -115,37 +112,33 @@
     text-align: center;
     transition: 0.5s;
 }
-.expenseSection.searchPlace{
+.seach_place.searchPlace{
     display: inline-block;
-    height: calc(60% - 60px);
-    text-align: left;
-    max-height: none;
-    width: 100%;
+    height: calc(100% - 60px);
 }
-.expenseSection.hidde.searchPlace{
-    display: inline-block;
-    height: calc(60% - 22%);
-    text-align: left;
-    max-height: none;
-    width: 100%;
-}
-.expenseSection.hidde{
-    height: 0px ;
-    max-height: 0;
-    min-height: 0;
-}
- .CriptoSection.expenseHidde{
-    height: calc(37% + 140px) !important;
-}
-.expenseSection.hidde.searchPlace .rankingContent,
-.expenseSection.searchPlace .rankingContent{
-    overflow: auto;
-}
+
 .rankingContent{
     width: 100%;
     height: 100%;
     display: inline-block;
     overflow: hidden;
+}
+.seach_place{
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    margin-top: 60px;
+    backdrop-filter: blur(6px);
+    background-color: #00000045;
+    font-size: 20px;
+    text-align: center;
+    transition: 0.5s;
+}
+.rankingContent2{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    overflow: auto;
 }
 .criptoRanking{
     position: relative;
@@ -199,18 +192,7 @@
     margin: 5px;
     cursor: pointer;
 }
-.expenseSection .hiddenExp{
-    display: block;
-}
-.expenseSection.searchPlace .hiddenExp{
-    display: none;
-}
-.expenseSection .closeSearch{
-    display: none;
-}
-.expenseSection.searchPlace .closeSearch{
-    display: block;
-}
+
 .imgCripto{
     position: relative;
     width: 60px;
@@ -232,7 +214,8 @@
 	transform: rotate(15deg) scale(1.2); 
 } 
 
-.imgCripto span:nth-child(1) img {
+.imgCripto span:nth-child(1) img,
+.imgCripto span:nth-child(1) svg  {
     width: 100%;
     height: 100%;
     position: relative;

@@ -16,10 +16,9 @@ $('#coinSearch').onsubmit = async (event, e) => {
     event.preventDefault();
     
     //hidde elements necesary to show search place
-    setClass([{e:$('.chartSection'),c:'hidde'}]);
-    setClass([{e:$('.expenseSection'),c:'searchPlace'}]);
+    setClass([{e:$('.seach_place'),c:'searchPlace'}]);
 
-    $('.rankingContent').innerHTML = '';
+    $('.rankingContent2').innerHTML = '';
     let search = event.target[0].value;
   
     searchResult = await fetchData(searchAPI + `?query=${search}`);
@@ -46,8 +45,16 @@ $('#coinSearch').onsubmit = async (event, e) => {
       let element = `
         <div class="criptoRanking ${searchResult[i].symbol}" id="${i}" >
           <div class="imgCripto">
-            <span>
-              <img id="coinImage${i}" alt="">
+            <span id="coinImage${i}">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto;/* background: rgb(241, 242, 243); */display: block;" width="204px" height="204px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <circle cx="50" cy="50" r="0" fill="none" stroke="#93dbe9" stroke-width="4">
+                  <animate attributeName="r" repeatCount="indefinite" dur="1.075268817204301s" values="0;38" keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                  <animate attributeName="opacity" repeatCount="indefinite" dur="1.075268817204301s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
+                </circle><circle cx="50" cy="50" r="0" fill="none" stroke="#689cc5" stroke-width="4">
+                  <animate attributeName="r" repeatCount="indefinite" dur="1.075268817204301s" values="0;38" keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-0.5376344086021505s"></animate>
+                  <animate attributeName="opacity" repeatCount="indefinite" dur="1.075268817204301s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-0.5376344086021505s"></animate>
+                </circle>
+                </svg>
             </span>
             <span title="ranking">${searchResult[i].market_cap_rank}</span>
           </div>
@@ -55,8 +62,9 @@ $('#coinSearch').onsubmit = async (event, e) => {
         </div>
       `;
   
-      $('.rankingContent').innerHTML += element;
-  
+      $('.rankingContent2').innerHTML += element;
+  }
+  for (let i = 0; i < searchResult.length; i++) {
       // Crear una nueva instancia de Image y establecer el src en la URL de la imagen.
       const img = new Image();
       img.src = searchResult[i].large;
@@ -65,11 +73,11 @@ $('#coinSearch').onsubmit = async (event, e) => {
       await new Promise(resolve => {
         img.onload = () => {
           const coinImage = document.getElementById(`coinImage${i}`);
-          coinImage.src = searchResult[i].large;
+          coinImage.innerHTML = `<img src="${searchResult[i].large}" alt="">`;
           resolve();
         };
       });
-    }
+  }
     
     //add to my wallets
     setMyWallets();
@@ -80,15 +88,8 @@ $('#coinSearch').onsubmit = async (event, e) => {
 
 //searh place close
 $('.closeSearch').onclick=()=>{
-    removeClass([{e:$('.chartSection'),c:'hidde'}]);
-    removeClass([{e:$('.expenseSection'),c:'searchPlace'}]);
+    removeClass([{e:$('.seach_place'),c:'searchPlace'}]);
 }
-//do not show search place
-$('.hiddenExp').onclick=()=>{
-    setClass([{e:$('.CriptoSection'),c:'expenseHidde'}]);
-    setClass([{e:$('.expenseSection'),c:'hidde'}]);
-}
-
 
 //open buy section function
 openCriptoDetails=()=>{
