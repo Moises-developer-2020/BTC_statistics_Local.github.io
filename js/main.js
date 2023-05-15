@@ -48,37 +48,37 @@ Object.assign(window, elements);
 
 async function getRequestData(API,parameter="BTC"){
     try {
-        var data =API;
-        //console.log(data.data[parameter]);
-        
-        // critopApi.priceData = data.data.BTC.ohlc.c;
-        // critopApi.percentData = data.data.BTC.change.percent;
-        // critopApi.pricelow = data.data.BTC.ohlc.l;
-        // critopApi.priceHight = data.data.BTC.ohlc.h;
+        if(API.status){
+            var data =API.data;
+            //console.log(data.data[parameter]);
 
-        //save data of API on variable with the Symbol of cripto
-        for (let i = 0; i < user.coins.length; i++) {
-            critopApi[user.coins[i].symbol]={
-                priceData : data.data[user.coins[i].symbol].ohlc.c,
-                percentData : data.data[user.coins[i].symbol].change.percent,
-                pricelow : data.data[user.coins[i].symbol].ohlc.l,
-                priceHight : data.data[user.coins[i].symbol].ohlc.h
+            //save data of API on variable with the Symbol of cripto
+            for (let i = 0; i < user.coins.length; i++) {
+                critopApi[user.coins[i].symbol]={
+                    priceData : data.data[user.coins[i].symbol].ohlc.c,
+                    percentData : data.data[user.coins[i].symbol].change.percent,
+                    pricelow : data.data[user.coins[i].symbol].ohlc.l,
+                    priceHight : data.data[user.coins[i].symbol].ohlc.h
+                }
+                BTCjson[user.coins[i].symbol] = {
+                    status: {
+                        h: 0,
+                        l: 0,
+                        c: 0,
+                        difH: 0,
+                        difL: 0 //different with the Low price
+                    },
+                    percent: 0,
+                    earnings: [],
+                    price_invested: [],
+                    coinPrice:0
+                }
             }
-            BTCjson[user.coins[i].symbol] = {
-                status: {
-                    h: 0,
-                    l: 0,
-                    c: 0,
-                    difH: 0,
-                    difL: 0 //different with the Low price
-                },
-                percent: 0,
-                earnings: [],
-                price_invested: [],
-                coinPrice:0
-            }
+            online_offline = true;
+        }else{
+            online_offline = false;
         }
-        online_offline = true;
+        
     } catch (error) {
         online_offline = false;
     }
@@ -100,6 +100,7 @@ async function requestPainted() {
             //hide all the main content
             setClass([{e:center,c:'disabled'}]);
         }
+        //load if exist saved wallets
         if(user.coins[0] !== undefined && user.coins[0] !== ""){
             paintWallets();
         }
@@ -235,13 +236,14 @@ async function requestPainted() {
             //check out the last change of the price to save it if it`s diferent
             checkToSAvedPrice(coin, i);
             
-            firtsLoad=1;
+            //firtsLoad=1;
             
         }
         loadCriptoSelected();
     }
 
-    
+    firtsLoad=1;
+
 };
  
 //cconvert the price of API`s data to show them
@@ -552,8 +554,12 @@ function paintWallets(){
                         </div>
                     </div>
                 </div>`;
-        
+
+                //add criptos summarize to mobile desing
+                summarize_cryptos(user.coins[index],index);
     }
+
+    //add click event to .myCriptos
     openCriptoDetails();
 }
 

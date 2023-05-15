@@ -71,11 +71,11 @@ async function fetchData(url) {
             data = await response.json();
             online_offline = true; 
 
-            return data;
+            return {status:true,data};
         } catch (error) {
             online_offline = false;
         }
-    } else{online_offline = false;}
+    } else{online_offline = false; }
 
     if (data === undefined || data === 'undefined') {
         online_offline = false;
@@ -85,6 +85,7 @@ async function fetchData(url) {
     } else {
         getAlert('close');
     }
+    return {status:false};
 }
 
 //get local data
