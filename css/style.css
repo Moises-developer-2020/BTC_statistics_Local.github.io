@@ -184,6 +184,9 @@ body {
     font-size: 0.4em;
 
 }
+.priceDifferences{
+    display: none;
+}
 
 
 
@@ -214,7 +217,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(20 20 20 / 54%);
     overflow: hidden;
 
 }
@@ -294,6 +296,7 @@ body {
     border-top: 5px solid #7c7bff99;
     border-bottom: 5px solid #7c7bff99;
     padding: 10px 0px 10px 0px;
+    text-align: left;
 }
 
 .status div#statusTextL div span:nth-child(2),

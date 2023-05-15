@@ -203,7 +203,16 @@
     cursor: pointer;
     transform: scale(1.1);
     background: rgb(0, 0, 0);
+} 
+.criptoRanking:nth-child(2n):hover{
+    background:#000f7c;
+}
+.criptoRanking:nth-child(2n-1):hover{
+    background:#6d007c;
+}
+.myCriptos:hover{
     background-image: linear-gradient(300deg, #000f7c, transparent);
+
 }
 .expOption{
     position: absolute;
@@ -439,7 +448,7 @@ margin-top: 5px;
     overflow: hidden;
 }
 .percentCripto{
-    display: flex;
+    display: inline-flex;
     justify-content: space-between;
     align-items: center;
     background: #0041ff33;

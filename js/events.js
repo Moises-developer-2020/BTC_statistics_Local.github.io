@@ -79,8 +79,8 @@ $('#coinSearch').onsubmit = async (event, e) => {
         await new Promise(resolve => {
           img.onload = () => {
             const coinImage = document.getElementById(`coinImage${i}`);
-            //coinImage.innerHTML = `<img src="${searchResult[i].large}" alt="">`;
             coinImage.innerHTML="";
+            
             coinImage.insertAdjacentElement('beforeEnd',img);
             resolve();
           };
@@ -115,8 +115,8 @@ summarize_cryptos= async (searchResult, i)=>{
       img.onload = () => {
         const coinImage = document.getElementById(`crypto${i}`);
         coinImage.innerHTML="";
-        //coinImage.innerHTML= `<img src="${searchResult.large}" alt="">`; 
-        coinImage.insertAdjacentElement('beforeEnd',img);// `<img src="${searchResult.large}" alt="">`; 
+
+        coinImage.insertAdjacentElement('beforeEnd',img);
         resolve();
       };
     });
