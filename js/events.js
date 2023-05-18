@@ -62,8 +62,10 @@ $('#coinSearch').onsubmit = async (event, e) => {
     
         $('.rankingContent2').innerHTML += element;
     }
-//add to my wallets
-setMyWallets();
+   
+    //add to my wallets
+    setMyWallets();
+
     //paint images
     for (let i = 0; i < searchResult.length; i++) {
         // Crear una nueva instancia de Image y establecer el src en la URL de la imagen.
@@ -81,9 +83,7 @@ setMyWallets();
           };
         });
     }
-      
-    // //add to my wallets
-    // setMyWallets();
+    
   }
 }
 
@@ -93,7 +93,11 @@ summarize_cryptos= async (searchResult, i)=>{
     let element = `
             <div class="criptoRanking" id="${searchResult.symbol}" index="${i}">
                 <div class="imgCripto">
-                    <span id="crypto${i}">↻</span>
+                    <span id="crypto${i}">
+                      <div class="spin-wrapper not_background">
+                        <div class="spinonediv-1" style="transform: scale(0.5);"></div>
+                      </div>
+                  </span>
                 </div>
               <div class="ranking">${searchResult.symbol}</div>
             </div>`;

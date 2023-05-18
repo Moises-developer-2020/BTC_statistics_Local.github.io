@@ -111,6 +111,8 @@ async function requestPainted() {
             }
             
         }
+
+        paintCoindSelectede();
     }
     console.log(user);
     //take a peek if there is saved wallets
@@ -496,8 +498,10 @@ setMyWallets=()=>{
 
                 //update data users
                 await validateSession();
+
                 //paint wallet on window
                 paintWallets();
+
                 //update API data
                 requestPainted();
                 
@@ -705,6 +709,8 @@ loadCriptoSelected=()=>{
             earnings_today.innerHTML='';
         }
       }
+
+      paintCoindSelectede();
     }
   
 }
@@ -789,3 +795,25 @@ function negative_positive(element, value){
     }
 }
 
+paintCoindSelectede=()=>{
+    let coin;
+    if(BTCjson.coinSelected.id == ''){
+        coin = checkStorageData('coinSelected')? JSON.parse(getStorageData('coinSelected')).index:'';
+    }else{
+        coin = BTCjson.coinSelected.index;
+    }
+
+    if(coin !== ''){
+        let Put_delete_class=$('.criptoRanking','all');
+
+        // delete class of last selected
+        Put_delete_class.forEach(element => {
+        if(element.classList.contains('selected')){
+            removeClass([{e:element,c:'selected'}]);
+        }
+        });
+        
+        // add class to the new seelcted
+        setClass([{e:$('.criptoRanking','all')[coin],c:'selected'}]);
+    };
+}
