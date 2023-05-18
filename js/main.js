@@ -480,9 +480,13 @@ singInButton.onclick = async function(){
 
 //add to my wallets
 setMyWallets=()=>{
-    let criptos= $('.criptoRanking','all');
-    criptos.forEach(element => {
-        element.onclick= async ()=>{
+    let criptos= $('.rankingContent2');
+    //add event to work even when not all the elements are set, using propagation of events (bubbling)
+    criptos.onclick= async(event) =>{
+        if (event.target.classList.contains('criptoRanking')) {
+            
+            let element =event.target;
+
             let index = element.id;
             let data=searchResult[index];
 
@@ -496,10 +500,12 @@ setMyWallets=()=>{
                 paintWallets();
                 //update API data
                 requestPainted();
-               
+                
             }
         }
-    });
+    };
+           
+        
 }
 
 
