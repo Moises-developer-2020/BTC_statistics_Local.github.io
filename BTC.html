@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Stadisticts</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/style.css">
@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/sectionStyle.css">
     <link rel="stylesheet" href="css/graphic.css">
-    
+    <link rel="stylesheet" href="css/section.css">
+
 
     <link rel="stylesheet" href="css/resize.css">
     <style>
@@ -23,12 +24,25 @@
         .innerRoute-section {
             display: none;
         }
+
         .route-section.active,
         .innerRoute-section.active {
             display: block;
         }
+
+        /* #loadingPage{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            font-size: 5em;
+        } */
     </style>
-    
+
 </head>
 
 <body>
@@ -36,32 +50,59 @@
     <div class="main-content">
         <section id="loadingPage" class="route-section active">loading</section>
 
-         <!-- home page it is called Section-->
+        <!-- home page it is called Section-->
         <section id="Section" class="route-section">
-            <a href="#/home">Home</a>
-            <a href="#/login">Login</a>
-        </section> 
+            <div class="sectionContent">
+                <span><img src="logo.png" alt=""></span>
+                <span>
+                    <a href="#/home">Home</a>
+                </span>
+                <span>
+                    <a href="#/login">Login</a>
+                </span>
+            </div>
+        </section>
         <section id="PageNotFound" class="route-section">
             <h2>Page Not Found</h2>
             <p>The requested page was not found.</p>
-          </section>
-         
+        </section>
+
         <section id="homeSection" class="main route-section">
             <div class="menu-bars">
                 <span></span>
             </div>
-            <div class="menu hidde">
+            <div class="menu window movil hidde">
+                
+                <div class="menu-user-content">
+                    <div class="user-image">JM</div>
+                </div>
+                <div class="open_close_session"></div>
+                <div class="close_Session_content">
+                    <div class="close_Session_user_info">
+                        <div class="img_user">
+                            <img src="logo.png" alt="">
+                        </div>
+                        <div class="nameMovil">
+                            <span>JOSE MOISES</span>
+                        </div>
+                        <div class="Session_user_info">
+                            <span>JOSE MOISES NUÑEZ IGLESIAS</span>
+                            <span>2535452@mail.utec.edu.sv</span>
+                            <span>View accoun</span>
+                        </div>
+                    </div>
+                    <div class="close_Session_option">
+                        <span>config. <img src="img/settings.png" alt=""></span>
+                        <span>Sing Out</span>
+                    </div>
+                </div>
                 <div class="menu-search">
                     <div>
                         <form action="#" method="get" id="coinSearch">
                             <input type="text" name="coins" placeholder="Search coins">
-                            <span></span>
+                            <span><img src="img/search.png" alt=""></span>
                         </form>
                     </div>
-                </div>
-                <div class="menu-user-content">
-                    <span class="user-content-name">Moises Iglesias</span>
-                    <div class="user-image">JM</div>
                 </div>
             </div>
             <div class="mainSection">
@@ -69,7 +110,7 @@
                     <div class="chartSection">
                         <div class="chartInfo">
                             <div class="dataH1">
-                                <div class="dataH1_data"> 
+                                <div class="dataH1_data">
                                     <span id="price"></span>
                                     <span id="priceDifferences" class="positive"></span>
                                     <span id="percent" class="positive"></span>
@@ -100,7 +141,7 @@
                     </div>
                     <div class="expenseSection">
                         <div class="rankingContent">
-                            
+
                         </div>
                     </div>
                     <div class="CriptoSection">
@@ -115,7 +156,9 @@
                         </div>
                         <div class="criptoContent">
 
-                            <div class="Empty_wallets_content"><p>Your Wallets will appear here!</p></div>
+                            <div class="Empty_wallets_content">
+                                <p>Your Wallets will appear here!</p>
+                            </div>
 
                         </div>
                         <div class="buySection">
@@ -149,10 +192,10 @@
                                     <span>Invested since: </span>
                                     <span id="investedDate">↻</span>
                                 </div>
-                                <div class="investex2 " >
-                                    
+                                <div class="investex2 ">
+
                                 </div>
-                                <div class="status main_status" >
+                                <div class="status main_status">
                                     <div id="statusTextH">
                                         <div>
                                             <span>H: </span>
@@ -184,7 +227,7 @@
                                     </div>
                                     <div class="dataH1_img"><img src="logo.png" alt=""></div>
                                 </div> -->
-                                
+
                                 <div class="reload">
                                     <div>
                                         <button class="button-34" id="sellSubmit" role="button">Sell</button>
@@ -208,12 +251,10 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-            
-            <div class="reloadData">
-                <button class="button-34" id="btnReload" role="button">💱</button>
-
+                <div class="reloadData">
+                    <button class="button-34" id="btnReload" role="button">💱</button>
+    
+                </div>
             </div>
             <section id="searchSection" class="seach_place innerRoute-section">
                 <div class="expOption">
@@ -235,14 +276,15 @@
                     <div class="buySpace_content_flex">
                         <div class="buySpace_card"></div>
                         <div class="buySpace_card_data">
-                            <div class="open_ghost_buy"><span>ghost buys</span> <span><input type="checkbox" name="" id="open_ghost_buy"></span></div>
+                            <div class="open_ghost_buy"><span>ghost buys</span> <span><input type="checkbox" name=""
+                                        id="open_ghost_buy"></span></div>
                             <div class="buySpace_ghostBuy">
                                 <div class="ghostBuy1">
                                     <div class="ghostBuy1_content">
                                         <span>price of begin</span>
                                         <span><input type="text" placeholder="100.00"></span>
                                     </div>
-                                    
+
                                     <div class="ghostBuy1_content">
                                         <span>limite</span>
                                         <span><input type="number" placeholder="infinity"></span>
@@ -252,7 +294,7 @@
                                     <span>automaticas?</span>
                                     <span><input type="checkbox"></span>
                                 </div>
-                                
+
                             </div>
                             <span class="ghost_content">👻</span>
                             <div class="buySpace_bottom">
@@ -327,8 +369,7 @@
         </div>
         <div class="backgroundLogin">
             <svg id="gradientSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 3840 2160" shape-rendering="geometricPrecision"
-                text-rendering="geometricPrecision">
+                viewBox="0 0 3840 2160" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
                 <style>
                     .shadd {
                         filter: drop-shadow(-17px 0px 13px blue);
@@ -336,26 +377,25 @@
                 </style>
                 <defs>
 
-                    <linearGradient id="gradient-s-path1-fill" x1="1.3" y1="0" x2="0.9" y2="1"
-                        spreadMethod="pad" gradientUnits="objectBoundingBox" gradientTransform="translate(0 0)">
+                    <linearGradient id="gradient-s-path1-fill" x1="1.3" y1="0" x2="0.9" y2="1" spreadMethod="pad"
+                        gradientUnits="objectBoundingBox" gradientTransform="translate(0 0)">
                         <stop id="gradient-s-path1-fill-0" offset="0%" stop-color="rgba(0,77,255,0.77)"></stop>
                         <stop id="gradient-s-path1-fill-1" offset="73%" stop-color="rgba(0,77,255,0)"></stop>
                     </linearGradient>
-                    <linearGradient id="gradient-s-path2-fill" x1="0.7" y1="0" x2="0.9" y2="1"
-                        spreadMethod="pad" gradientUnits="objectBoundingBox" gradientTransform="translate(0 0)">
+                    <linearGradient id="gradient-s-path2-fill" x1="0.7" y1="0" x2="0.9" y2="1" spreadMethod="pad"
+                        gradientUnits="objectBoundingBox" gradientTransform="translate(0 0)">
                         <stop id="gradient-s-path1-fill-0" offset="0%" stop-color="rgb(0 77 255 / 25%)"></stop>
                         <stop id="gradient-s-path1-fill-1" offset="73%" stop-color="rgba(0,77,255,0)"></stop>
                     </linearGradient>
-                    <linearGradient xmlns="http://www.w3.org/2000/svg" id="gradient_rect_back_fill" x1="0"
-                        y1="0" x2="0" y2="1" spreadMethod="pad" gradientUnits="objectBoundingBox"
-                        gradientTransform="translate(0 0)">
+                    <linearGradient xmlns="http://www.w3.org/2000/svg" id="gradient_rect_back_fill" x1="0" y1="0" x2="0"
+                        y2="1" spreadMethod="pad" gradientUnits="objectBoundingBox" gradientTransform="translate(0 0)">
                         <stop id="gradient-s-rect7-fill-0" offset="0%" stop-color="#79c9fb"
                             style="stop-color: rgb(15 8 35 / 0%);"></stop>
                         <stop id="gradient-s-rect7-fill-1" offset="100%" stop-color="rgba(128,239,255,0)"
                             style="stop-color: #0c154b;"></stop>
                     </linearGradient>
-                    <linearGradient xmlns="http://www.w3.org/2000/svg" id="gradient_rect_front_fill" x1="0"
-                        y1="0" x2="0" y2="1" spreadMethod="pad" gradientUnits="objectBoundingBox"
+                    <linearGradient xmlns="http://www.w3.org/2000/svg" id="gradient_rect_front_fill" x1="0" y1="0"
+                        x2="0" y2="1" spreadMethod="pad" gradientUnits="objectBoundingBox"
                         gradientTransform="translate(0 0)">
                         <stop id="gradient-s-rect7-fill-0" offset="0%" stop-color="#79c9fb"
                             style="stop-color: rgb(15 8 35 / 0%);z-index: 2;"></stop>
@@ -368,122 +408,108 @@
                     transform="matrix(-1 0 0 1 3839.999998 0)" fill="url(#gradient-s-path1-fill)"
                     stroke="url(#gradient-s-path1-stroke)" stroke-width="7.68" class="svg-elem-1"></path>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 10.5s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(3805.551114 1448.8636510000001) rotate(180)"
+                    height="525.257" rx="0" ry="0" transform="translate(3805.551114 1448.8636510000001) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 10s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0" transform="translate(3664.155553 1367.561208) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 10s forwards;" width="74.232665" height="525.257"
+                    rx="0" ry="0" transform="translate(3664.155553 1367.561208) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 9.5s forwards;" width="74.232665"
                     height="525.257" rx="0" ry="0" transform="translate(3505.085557 1505.421872) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 9s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(3331.876006 1682.1663130000002) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 9s forwards;" width="74.232665" height="525.257"
+                    rx="0" ry="0" transform="translate(3331.876006 1682.1663130000002) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 8.5s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(3119.78268 1569.0498710000002) rotate(180)"
+                    height="525.257" rx="0" ry="0" transform="translate(3119.78268 1569.0498710000002) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 8s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(2928.898684 1646.8174249999997) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 8s forwards;" width="74.232665" height="525.257"
+                    rx="0" ry="0" transform="translate(2928.898684 1646.8174249999997) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 7.5s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(2738.014688 1713.9803120000001) rotate(180)"
+                    height="525.257" rx="0" ry="0" transform="translate(2738.014688 1713.9803120000001) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 7s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(2547.95948 1646.8174249999997) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 7s forwards;" width="74.232665" height="525.257"
+                    rx="0" ry="0" transform="translate(2547.95948 1646.8174249999997) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 6.5s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(2367.680152 1713.9803120000001) rotate(180)"
+                    height="525.257" rx="0" ry="0" transform="translate(2367.680152 1713.9803120000001) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 6s forwards;" width="74.232665"
-                    height="525.257" rx="0" ry="0" transform="translate(2148.517048 1855.375864) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 6s forwards;" width="74.232665" height="525.257"
+                    rx="0" ry="0" transform="translate(2148.517048 1855.375864) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 5.5s forwards;" width="74.232665"
                     height="525.257" rx="0" ry="0" transform="translate(1957.116333 1915.468974) rotate(180)"
                     fill="url(#gradient_rect_back_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 5s forwards;" width="70.6978"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(3752.5277929999997 1788.2129759999998) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 5s forwards;" width="70.6978" height="525.257"
+                    rx="0" ry="0" transform="translate(3752.5277929999997 1788.2129759999998) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 4.5s forwards;" width="70.697776"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(3589.922888 1713.9803120000001) rotate(180)"
+                    height="525.257" rx="0" ry="0" transform="translate(3589.922888 1713.9803120000001) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 4s forwards;" width="70.697776"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(3430.852892 1869.5154199999997) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 4s forwards;" width="70.697776" height="525.257"
+                    rx="0" ry="0" transform="translate(3430.852892 1869.5154199999997) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
                 <rect class="ld2" style="animation: up1 3s ease-in-out 3.5s forwards;" width="70.697776"
                     height="279.257" rx="0" ry="0" transform="translate(3257.643341 1800.259861) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 3s forwards;" width="70.697776"
-                    height="525.257" rx="0" ry="0" transform="translate(3045.550015 1915.468974) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 3s forwards;" width="70.697776" height="525.257"
+                    rx="0" ry="0" transform="translate(3045.550015 1915.468974) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 2.5s forwards;" width="70.697776"
                     height="525.257" rx="0" ry="0" transform="translate(2854.666019 2003.841195) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 2s forwards;" width="70.697776"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(2663.7820229999998 2067.469194) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 2s forwards;" width="70.697776" height="525.257"
+                    rx="0" ry="0" transform="translate(2663.7820229999998 2067.469194) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
                 <rect class="ld1" style="animation: up1 3s ease-in-out 1.5s forwards;" width="70.697776"
-                    height="525.257" rx="0" ry="0"
-                    transform="translate(2473.726815 2025.0505279999998) rotate(180)"
+                    height="525.257" rx="0" ry="0" transform="translate(2473.726815 2025.0505279999998) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
-                <rect class="ld1" style="animation: up1 3s ease-in-out 1s forwards;" width="70.697776"
-                    height="525.257" rx="0" ry="0" transform="translate(2307.587044 2102.818081) rotate(180)"
+                <rect class="ld1" style="animation: up1 3s ease-in-out 1s forwards;" width="70.697776" height="525.257"
+                    rx="0" ry="0" transform="translate(2307.587044 2102.818081) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
                 <rect class="ld3" style="animation: up1 3s ease-in-out 0.5s forwards;" width="70.697776"
-                    height="466.257" rx="0" ry="0"
-                    transform="translate(2074.284383 2153.3996349999998) rotate(180)"
+                    height="466.257" rx="0" ry="0" transform="translate(2074.284383 2153.3996349999998) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
-                <rect class="ld4" style="animation: up1 3s ease-in-out 0s forwards;" width="70.697776"
-                    height="380.257" rx="0" ry="0" transform="translate(1882.883668 2113.353189) rotate(180)"
+                <rect class="ld4" style="animation: up1 3s ease-in-out 0s forwards;" width="70.697776" height="380.257"
+                    rx="0" ry="0" transform="translate(1882.883668 2113.353189) rotate(180)"
                     fill="url(#gradient_rect_front_fill)" stroke-width="0"></rect>
                 <path id="gradient-s-path2"
                     d="M3839.999994,1565.188967v594.811029l-2127.103068-17.609262-.000001-133.573217c0,0,99.288967-141.395553,99.288967-141.395553l52.711251,141.395553l70.697776-42.418667l103.340575,77.767555l103.351049-113.116443l54.890148-.000001l96.270795-113.116444l60.011269,91.90711l84.91917-21.209333l109.581553,77.767553l133.496978-132.55833l56.558229,54.790777h153.767664l83.069887-114.883887l53.023323,37.116333l54.790784-123.721108l104.279218-.000001l190.88399-86.604776l176.744445,111.348996l72.465219-97.209442l54.790773,37.116333l158.170006-86.604775Z"
                     transform="translate(.000006 0.000004)" fill="url(#gradient-s-path2-fill)"
                     stroke="url(#gradient-s-path1-stroke)" stroke-width="7.68" class="svg-elem-1"></path>
-                <ellipse class="p16" style="animation: line 2s linear 5.5s forwards;" rx="26.667706"
-                    ry="27.395389" transform="translate(1930.448627 1806.445132)" fill="none" stroke="#0066c7"
-                    stroke-width="5"></ellipse>
-                <ellipse class="p16" style="animation: line 2s linear 6.2s forwards;" rx="26.667706"
-                    ry="27.395389" transform="translate(2547.95948 1687.142635)" fill="none" stroke="#0066c7"
-                    stroke-width="5"></ellipse>
-                <ellipse class="p16" style="animation: line 2s linear 7s forwards;" rx="26.667706"
-                    ry="27.395389" transform="translate(2854.666019 1505.979584)" fill="none" stroke="#0066c7"
-                    stroke-width="5"></ellipse>
-                <ellipse class="p16" style="animation: line 2s linear 8.4s forwards;" rx="26.667706"
-                    ry="27.395389" transform="translate(3404.185186 1521.002861)" fill="none" stroke="#0066c7"
-                    stroke-width="5"></ellipse>
-                <ellipse class="p16" style="animation: line 2s linear 9.2s forwards;" rx="26.667706"
-                    ry="27.395389" transform="translate(3757.986155 1080)" fill="none" stroke="#0066c7"
-                    stroke-width="5"></ellipse>
+                <ellipse class="p16" style="animation: line 2s linear 5.5s forwards;" rx="26.667706" ry="27.395389"
+                    transform="translate(1930.448627 1806.445132)" fill="none" stroke="#0066c7" stroke-width="5">
+                </ellipse>
+                <ellipse class="p16" style="animation: line 2s linear 6.2s forwards;" rx="26.667706" ry="27.395389"
+                    transform="translate(2547.95948 1687.142635)" fill="none" stroke="#0066c7" stroke-width="5">
+                </ellipse>
+                <ellipse class="p16" style="animation: line 2s linear 7s forwards;" rx="26.667706" ry="27.395389"
+                    transform="translate(2854.666019 1505.979584)" fill="none" stroke="#0066c7" stroke-width="5">
+                </ellipse>
+                <ellipse class="p16" style="animation: line 2s linear 8.4s forwards;" rx="26.667706" ry="27.395389"
+                    transform="translate(3404.185186 1521.002861)" fill="none" stroke="#0066c7" stroke-width="5">
+                </ellipse>
+                <ellipse class="p16" style="animation: line 2s linear 9.2s forwards;" rx="26.667706" ry="27.395389"
+                    transform="translate(3757.986155 1080)" fill="none" stroke="#0066c7" stroke-width="5"></ellipse>
                 <path class="p17" style="animation: line 3s linear 5.5s forwards;"
                     d="M1935.594925,1779.049743l336.643231-213.860772l249.053617,121.953664"
                     transform="translate(.000001 0)" fill="none" stroke="rgb(0, 102, 199)" stroke-width="7.68">
                 </path>
                 <path class="p17" style="animation: line 3s linear 6.5s forwards;"
-                    d="M2574.627186,1687.142635l253.371127-166.139774" transform="translate(.000001 0)"
-                    fill="none" stroke="rgb(0, 102, 199)" stroke-width="7.68"></path>
+                    d="M2574.627186,1687.142635l253.371127-166.139774" transform="translate(.000001 0)" fill="none"
+                    stroke="rgb(0, 102, 199)" stroke-width="7.68"></path>
                 <path class="p17" style="animation: line 3s linear 7.5s forwards;"
                     d="M2881.333725,1521.002861l47.564959,27.395389l258.046882-285.442275l208.558436,236.024"
-                    transform="translate(.000003 0.000003)" fill="none" stroke="rgb(0, 102, 199)"
-                    stroke-width="7.68"></path>
+                    transform="translate(.000003 0.000003)" fill="none" stroke="rgb(0, 102, 199)" stroke-width="7.68">
+                </path>
                 <path class="p17" style="animation: line 3s linear 8.5s forwards;"
                     d="M3430.852892,1505.979585L3554.574,1262.955976l72.465221,22.976777l119.279 -182.794"
-                    transform="translate(.000001 0.000003)" fill="none" stroke="rgb(0, 102, 199)"
-                    stroke-width="7.68"></path>
+                    transform="translate(.000001 0.000003)" fill="none" stroke="rgb(0, 102, 199)" stroke-width="7.68">
+                </path>
                 <path class="p18"
                     d="M1964.457312,1810.863744l232.719385,77.767553l170.503455-273.953885l206.947035,203.256108l354.271497-554.977545l209.520183,341.116772l119.224473-447.163435l210.325884,187.349107l51.255887-187.349107l107.814109-76.909313"
-                    transform="translate(.000002 0.000001)" fill="none" stroke="rgb(0 65 126)"
-                    stroke-dasharray="18" stroke-width="7.68"></path>
+                    transform="translate(.000002 0.000001)" fill="none" stroke="rgb(0 65 126)" stroke-dasharray="18"
+                    stroke-width="7.68"></path>
                 <path class="p19"
                     d="M1712.896931,1909.840631l515.546419,134.325774l282.399796-495.768155l227.171541,340.233046l254.511987-340.233048l250.977105,361.44238l205.023552-613.979558l319.90745,109.816042l71.565218-82.030226"
                     transform="translate(.000001 0.000006)" fill="none" stroke="#3f5787" stroke-width="1.68">

@@ -379,7 +379,7 @@ body {
 
 
 .reloadData{
-    position: fixed;
+    position: absolute;
     bottom: 10px;
     right: 10px;
     border-radius: 150px;

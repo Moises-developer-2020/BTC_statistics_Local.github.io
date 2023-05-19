@@ -521,6 +521,7 @@ setMyWallets=()=>{
 
 function paintWallets(){
     $('.criptoContent').innerHTML='';
+    $('.rankingContent').innerHTML='';
     for (let index = 0; index < user.coins.length; index++) {
         $('.criptoContent').innerHTML+=`<div class="myCriptos not_buys">
                     <div class="infoCripto">

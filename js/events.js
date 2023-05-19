@@ -1,7 +1,7 @@
 //open and close menu
 $('.menu-bars').onclick=function(){
     if($('.menu').classList.contains('hidde')){
-        removeClass([{e:$('.menu'),c:'hidde'}]);
+        removeClass([{e:$('.menu'),c:'hidde'},{e:$('.menu'),c:'window'}]);
         setClass([{e:$('.mainSection'),c:'hidde'}]);
         return
     }
@@ -92,7 +92,7 @@ $('#coinSearch').onsubmit = async (event, e) => {
 
 //Paint summarize cryptos to movil desing
 summarize_cryptos= async (searchResult, i)=>{
-  
+
     let element = `
             <div class="criptoRanking" id="${searchResult.symbol}" index="${i}">
                 <div class="imgCripto">
