@@ -198,9 +198,9 @@ body {
     min-width: 280px;
 
 }
-.center.disabled{
+/* .center.disabled{
     display: none;
-}
+} */
 .invest_status{
     display: flex;
     text-align: center;
@@ -669,4 +669,13 @@ body {
     animation-name: spinner-1--after;
   }
   
-  
+  #loading{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+  }

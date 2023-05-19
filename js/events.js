@@ -16,9 +16,12 @@ $('#coinSearch').onsubmit = async (event, e) => {
   event.preventDefault();
   
   //hidde elements necesary to show search place
-  setClass([{e:$('.seach_place'),c:'searchPlace'}]);
+//  setClass([{e:$('.seach_place'),c:'searchPlace'}]);
+ 
 
   let search = event.target[0].value;
+
+  showTo(`/search?${search}`)
 
   searchResult = await fetchData(searchAPI + `?query=${search}`);
   if (searchResult.status) {
@@ -127,8 +130,7 @@ summarize_cryptos= async (searchResult, i)=>{
 
 //searh place close
 $('.closeSearch').onclick=()=>{
-    removeClass([{e:$('.seach_place'),c:'searchPlace'}]);
-    removeClass([{e:$('.rankingContent2'),c:'active'}]);
+    closeTo('/search'); 
 }
 
 //open buy section function

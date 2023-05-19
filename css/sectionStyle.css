@@ -115,7 +115,8 @@
     text-align: center;
     transition: 0.5s;
 }
-.seach_place.searchPlace{
+.seach_place.searchPlace,
+.seach_place.active{
     display: inline-block;
     height: calc(100% - 60px);
 }
@@ -128,6 +129,7 @@
 }
 .seach_place{
     position: absolute;
+    display: inline-block !important;
     width: 100%;
     height: 0px;
     margin-top: 60px;
@@ -151,10 +153,10 @@
 .rankingContent2.active{
     display: inline-block;
 }
-.rankingContent2 .criptoRanking{
+.seach_place  .criptoRanking{
     opacity: 0;
 }
-.rankingContent2.active .criptoRanking{
+.seach_place.active .criptoRanking{
     opacity: 1;
 }
 .criptoRanking{

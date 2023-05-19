@@ -1,10 +1,14 @@
+let Searchparameter; //global variable
+
+
 let statusReload = 1; //the firts load
 let closes=1; //avoid to remove and set again the class active to pages when appear a innerRouter
+
 function handleRouteChange() {
   
-  if(location.hash.split('/').length == 2 && closes == 1 || statusReload == 1){
+  //if(location.hash.split('/').length == 2 && closes == 1 || statusReload == 1){
     pagesRoutes();
-  }
+  //}
  
   innerRoutes();
   statusReload =2;
@@ -12,8 +16,14 @@ function handleRouteChange() {
 function pagesRoutes() {
  
   // get route from url
-  var route = location.hash.split('/')[1];
-
+  var route;
+  // validate pages whithout hash "home page"
+  if(location.hash !== ""){
+    route=location.hash.split('/')[1];
+  }else{
+    route = location.hash;
+  }
+  
   // show router
   showRoute(route);
   
@@ -38,7 +48,6 @@ function showRoute(route) {
 function innerRoutes() {
 
   var route = location.hash.split('/')[2];
-
   //if there is a inner route in the hash
   if (route) {
 
@@ -52,8 +61,8 @@ function innerRoutes() {
 }
 
 function showInnerRoute(route) {
-  let parameter = route.split('?')[1]
-  //console.error("()"+parameter);
+  Searchparameter = route.split('?')[1]
+  console.log("()"+Searchparameter);
   let innerRoute = route.split('?')[0]
 
 
@@ -86,10 +95,40 @@ function navigateTo(route) {
 
   // validate if the hash is the same
   if(hash !== `#${route}`){
-    window.history.pushState(null, null, `${path}#${route}`);
+    
+    // if(route == "/home"){
+    //   //home page
+    //   window.history.pushState(null, null, `${path}#/`);
+    // }else{
+      
+      //others page
+      window.history.pushState(null, null, `${path}#${route}`);
+    //}
+    handleRouteChange();
+  }else if(hash == ""){
+    
     handleRouteChange();
   }
+  
 }
+function keepTo(route) {
+  let path = window.location.pathname;
+  let hash = window.location.hash;
+  
+
+  if(hash !== `#${route}` && route == '/'){
+    
+    window.history.replaceState(null, null, `${path}`);
+
+    handleRouteChange();
+  }else if(hash !== `#${route}`){// validate if the hash is the same
+    
+      window.history.replaceState(null, null, `${path}#${route}`);
+      
+      handleRouteChange();
+  }
+}
+
 // show inner routers
 function showTo(route) {
 
@@ -185,10 +224,54 @@ function validateParent(route, parameter=false){
   return false;
   
 }
-
+// verify what ruta it is to avoid load data 
+function verifyRoute(routeToVerify){
+  
+  // if(routeToVerify == "/home"){
+   
+  //   if(location.hash == "#/"){
+  //     return true
+  //   }
+  //   return false
+  // }
+  let actual;
+  if(location.hash){
+    actual =location.hash.split('#')[1].split("/")[1];
+  }
+  if("/"+actual !== routeToVerify){
+      return false
+  }
+  return true
+  
+}
+//verifyRoute('/home')
 // handle the change of hash from url
 //window.addEventListener('load', handleRouteChange);
-//window.addEventListener('hashchange', handleRouteChange);
 
+//event of route
+function routeEvent(event, handle){
+  switch (event) {
+    case 'hashchange':
+
+      window.addEventListener('hashchange',function(){
+        handleRouteChange();
+        handle();
+      })
+
+      break;
+      case 'load':
+
+      window.addEventListener('load',function(){
+        handleRouteChange();
+      })
+
+      break;
+    default:
+
+      break;
+  }
+}
+
+routeEvent('load',()=>{});
 
 
