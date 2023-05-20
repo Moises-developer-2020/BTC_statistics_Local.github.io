@@ -1,4 +1,4 @@
-@media screen and (min-width: 550px) {
+@media screen and (min-width: 560px) {
     /* .center{
         transform: scale(1.5);
     } */
@@ -21,20 +21,6 @@
         margin-right: 60vw;
     }
     /*style menu*/
-    .menu{
-        display: block;
-        background-color: #000000f0;
-        height: 100vh;
-        width: 100vw;
-        right: 0;
-        font-size: 1.5em;
-        overflow: hidden;
-        transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .menu.hidde{
-        width: 0px;
-        padding: 0px;
-    }
     .menu-bars{
         height: 50px;
         cursor: pointer;
@@ -53,7 +39,9 @@
         top: 20%;
         border-radius: 5px;
         transform: rotate(0deg);
-        background-color: white;
+        background: none;
+        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
+        transition: 0.5s;
     }
     .menu-bars span{
         position: absolute;
@@ -63,7 +51,9 @@
         top: 40%;
         border-radius: 5px;
         transform: rotate(0deg);
-        background-color: white;
+        background: none;
+        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
+        transition: 0.5s;
     }
     .menu-bars.hidde::after{
         transform: rotate(30deg);
@@ -80,40 +70,223 @@
         top: 60%;
         border-radius: 5px;
         transform: rotate(0deg);
-        background-color: white;
+        background: none;
+        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
+        transition: 0.5s;
     }
-    .menu-user-content{
-        position: absolute;
-        top: 100px;
-        right: 50px;
+    .open_close_session{
+        display: none !important;
+    }
+    /*selected after element*/
+    /* .menu-bars + .movil {
+        background: red !important;
+    } */
+    /*selected before element*/
+    /* .menu-bars:has(~ .window) {
+        background: red !important;
+    } */
+    /*selected before element with have .hidde*/
+    /* .menu-bars:has(~ .menu.hidde) {
+        background: red !important;
+    } */
+    /*selected before element with have not .hidde*/
+    /* .menu-bars:not(:has(~ .menu.hidde)) {
+        background: red !important;
+    } */
+    .menu-bars:not(:has(~ .menu.hidde)) span{
+        /* width: 30px; */
+        opacity:0 ;
+    }
+    .menu-bars:not(:has(~ .menu.hidde))::after{
+        transform: rotate(-30deg);
+        top: 12px;
+    }
+    .menu-bars:not(:has(~ .menu.hidde))::before{
+        transform: rotate(+30deg);
+        transition: 0.5;
+        top: 26px;
+    }
+    .menu-bars:not(:has(+ .menu.hidde))::after,
+    .menu-bars:not(:has(+ .menu.hidde))::before{
+        background-image: linear-gradient(90deg, #E91E63,transparent);
+    }
+    .menu-bars + .movil:not(.hidde) .Session_user_info,
+        .menu-bars + .movil:not(.hidde) .close_Session_option{
+        
+        animation: effectOpen 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) backwards;
+       
+    }
+    @keyframes effectOpen {
+        0%{
+            margin-right: 0px;
+        }
+        100%{
+            margin-right: 50px;
+        }
+    }
+    .movil{
+        display: block;
+        background-color: #1c1c28c4;
+        height: 100vh;
+        width: 100vw;
+        right: 0;
+        font-size: 0.5em;
+        overflow: auto;
+        text-align: center;
+        transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-family: "Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;
+        line-height: normal;
         
     }
-    .user-image{
-        font-size: 2em;
-        width: 150px;
-        height: 150px;
-        border-radius: 180px;
+    .movil div span{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .menu.hidde{
+        width: 0px;
+        padding: 0px;
+    }
+    .movil div{
+        margin: auto;
+        display: block;
+        text-align: right;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        
+    }
+    .movil .menu-user-content {
+        display: none;
+    }
+    .movil .close_Session_content{
+        
+        margin-top: 90px;
+        max-width: 77%;
+        position: relative;
+        margin-right: 0;
+        display: block;
+    }
+    .movil .img_user{
+        width: 200px;
+        height: 200px;
+        border-radius: 500px;
+        overflow: hidden;
+        max-width: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 4px solid #1c1c28;
+    }
+    .movil .img_user img{
+        width: 190px;
+        height: 190px;
+        border-radius: 500px;
+        overflow: hidden;
+        max-width: none;
+    }
+    .movil .close_Session_user_info span{
+        margin-bottom: 10px;
+        font-size: .9em;
+    }
+    .movil .nameMovil{
+        text-align: center;
+        font-size: 1.5em;
+        margin-top: 25px !important;
+    }
+    .movil .Session_user_info span:nth-child(1){
+        display: none;
+    }
+    .movil .nameMovil,
+    .movil .Session_user_info span:nth-child(2){
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 55px;
+        display: block;
+    }
+    .movil .Session_user_info,
+    .movil .close_Session_option{
+       /* top: 50%;
+       position: absolute; */
+       margin-right: 50px;
+    }
+    .movil .Session_user_info span:nth-child(3){
+        color: #0078d6;
+        background-color: inherit;
+        text-decoration: underline;
+        cursor: pointer;
+        display: block;
+    }
+    .movil .close_Session_option span:nth-child(1){
+        margin-top: 15px;
+        display: block;
+    }
+    .movil .close_Session_option span:nth-child(1),
+    .movil .close_Session_option span:nth-child(2){
+        cursor: pointer;
+    }
+    .movil .close_Session_option span:nth-child(2){
+        margin-top: 55px;
+        display: block;
+        text-decoration: underline;
+        
+    }
+    .movil .menu-search{
+        background: none;
+        height: 50px;
         position: absolute;
-        top: -55px;
-        right: 66px;
+        bottom: 72px;
+        left: 133px;
+        top: 0;
+        overflow: hidden;
+    }
+    .movil .menu-search div{
+        background-color: transparent;
+        
+    }
 
+    .movil .menu-search input{
+        width: 70px;
     }
-    .user-content-name{
-        top: 110px;
+    .movil .menu-search input,
+    .movil .menu-search input:focus,
+    .movil .menu-search input:valid,
+    .movil .menu-search input:not(:placeholder-shown) {
+        border: none;
+        box-shadow: none;
+        outline: none;
+        background: transparent;
     }
-    .menu-search{
-        position: absolute;
-        right: 50px;
-        top: 50%;
+    
+    .movil .menu-search span{
+        background: transparent;
+       
     }
+    .movil .menu-search span img{
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    
+    /**/
     .mainSection.hidde{
         position: absolute;
-        left: -416px;
+        left: calc(-100% + 100px);
         height: 100%;
         width: 100%;
         background: black;
         border-radius: 0px 100px 100px 0px;
-        box-shadow: -1px -1px 20px 7px #0000007a;
+        box-shadow: -1px -1px 20px 7px #000000c4;
+    }
+    /*to avoid can make click when menu is opens*/
+    .mainSection.hidde::after{
+        position: absolute;
+        content: "";
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+
     }
     .mainSection{
         height: 100%;
@@ -125,17 +298,49 @@
     .seach_place{
         margin-top: 0;
     }
-    .seach_place.searchPlace{
+    
+    .seach_place.active{
         height: 100% !important;
         width: 100%;
-        z-index: 5;
+        z-index: 6;
     }
     
 }
-@media screen and (max-width: 420px) {
-.loginContent{
-    transform: scale(0.9);
+@media screen and (max-width: 433px) {
+    .movil div{
+        transform: scale(0.93);
+    }
+    .movil .Session_user_info, .movil .close_Session_option {
+        margin-right: 10px !important;
+    }
+    .movil .close_Session_content {
+        margin-top: 50px !important; 
+    }
+    .movil .menu-search{
+        left: 100px;
+    }
+    .movil .nameMovil{
+        margin-top: -10px !important;
+    }
 }
+@media screen and (max-width: 380px) {
+    .loginContent{
+        transform: scale(0.88);
+    }
+}
+@media screen and (max-width: 370px){
+    .movil div {
+         transform: scale(0.87); 
+    }
+    .movil .Session_user_info, .movil .close_Session_option {
+        margin-right: -15px !important;
+    }
+    .movil .close_Session_content {
+        margin-top: 20px !important; 
+    }
+    .movil .menu-search{
+        left: 100px;
+    }
 }
 
 @media screen and (max-width: 717px) {

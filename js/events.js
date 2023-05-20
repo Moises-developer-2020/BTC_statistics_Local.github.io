@@ -1,7 +1,7 @@
 //open and close menu
 $('.menu-bars').onclick=function(){
     if($('.menu').classList.contains('hidde')){
-        removeClass([{e:$('.menu'),c:'hidde'}]);
+        removeClass([{e:$('.menu'),c:'hidde'},{e:$('.menu'),c:'window'}]);
         setClass([{e:$('.mainSection'),c:'hidde'}]);
         return
     }
@@ -16,9 +16,12 @@ $('#coinSearch').onsubmit = async (event, e) => {
   event.preventDefault();
   
   //hidde elements necesary to show search place
-  setClass([{e:$('.seach_place'),c:'searchPlace'}]);
+//  setClass([{e:$('.seach_place'),c:'searchPlace'}]);
+ 
 
   let search = event.target[0].value;
+
+  showTo(`/search?${search}`)
 
   searchResult = await fetchData(searchAPI + `?query=${search}`);
   if (searchResult.status) {
@@ -50,15 +53,9 @@ $('#coinSearch').onsubmit = async (event, e) => {
           <div class="criptoRanking ${searchResult[i].symbol}" id="${i}" >
             <div class="imgCripto">
               <span id="coinImage${i}">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto;/* background: rgb(241, 242, 243); */display: block;" width="204px" height="204px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                  <circle cx="50" cy="50" r="0" fill="none" stroke="#93dbe9" stroke-width="4">
-                    <animate attributeName="r" repeatCount="indefinite" dur="1.075268817204301s" values="0;38" keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
-                    <animate attributeName="opacity" repeatCount="indefinite" dur="1.075268817204301s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
-                  </circle><circle cx="50" cy="50" r="0" fill="none" stroke="#689cc5" stroke-width="4">
-                    <animate attributeName="r" repeatCount="indefinite" dur="1.075268817204301s" values="0;38" keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-0.5376344086021505s"></animate>
-                    <animate attributeName="opacity" repeatCount="indefinite" dur="1.075268817204301s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-0.5376344086021505s"></animate>
-                  </circle>
-                  </svg>
+                <div class="spin-wrapper not_background">
+                  <div class="spinonediv-1" style="transform: scale(0.5);"></div>
+                </div>
               </span>
               <span title="ranking">${searchResult[i].market_cap_rank}</span>
             </div>
@@ -68,6 +65,9 @@ $('#coinSearch').onsubmit = async (event, e) => {
     
         $('.rankingContent2').innerHTML += element;
     }
+   
+    //add to my wallets
+    setMyWallets();
 
     //paint images
     for (let i = 0; i < searchResult.length; i++) {
@@ -86,19 +86,21 @@ $('#coinSearch').onsubmit = async (event, e) => {
           };
         });
     }
-      
-    //add to my wallets
-    setMyWallets();
+    
   }
 }
 
 //Paint summarize cryptos to movil desing
 summarize_cryptos= async (searchResult, i)=>{
-  
+
     let element = `
             <div class="criptoRanking" id="${searchResult.symbol}" index="${i}">
                 <div class="imgCripto">
-                    <span id="crypto${i}">↻</span>
+                    <span id="crypto${i}">
+                      <div class="spin-wrapper not_background">
+                        <div class="spinonediv-1" style="transform: scale(0.5);"></div>
+                      </div>
+                  </span>
                 </div>
               <div class="ranking">${searchResult.symbol}</div>
             </div>`;
@@ -128,8 +130,7 @@ summarize_cryptos= async (searchResult, i)=>{
 
 //searh place close
 $('.closeSearch').onclick=()=>{
-    removeClass([{e:$('.seach_place'),c:'searchPlace'}]);
-    removeClass([{e:$('.rankingContent2'),c:'active'}]);
+    closeTo('/search'); 
 }
 
 //open buy section function
@@ -281,3 +282,15 @@ function get_style_chart(data){
   }
 
 }
+
+mainEvent('resize',()=>{
+    var width = window.innerWidth; // píxeles
+    var height = window.innerHeight; // píxeles
+
+    //delete class of menu .window to responsive menu
+    if(width >= 551){
+      setClass([{e:$('.menu'),c:'window'}]);
+    }else if(width <= 550){
+      removeClass([{e:$('.menu'),c:'window'}]);
+    }
+});

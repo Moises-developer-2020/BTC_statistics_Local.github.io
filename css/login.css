@@ -10,7 +10,7 @@
     color: #f0e8e8;
 }
 .login.active{
-    display: flex;
+    display: flex !important;
 }
 .sectionLogin{
     display: flex;

@@ -1,0 +1,22 @@
+#Section{
+    /* height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+    
+}
+.sectionContent{
+    width: 300px;
+    text-align: center;
+}
+.sectionContent span img{
+    width: 200px;
+}
+.sectionContent span{
+    display: block;
+}
+.sectionContent span a{
+    color: aliceblue;
+    text-decoration: none;
+}

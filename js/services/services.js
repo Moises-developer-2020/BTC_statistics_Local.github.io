@@ -418,14 +418,52 @@ async function validateSession(){
             }
             //delete it cuz it is not valid
             deleteStorageData('usersSession');
+            navigateTo('/login');
             return false
         }else{
             //delete it cuz it is not valid
             deleteStorageData('usersSession');
+            navigateTo('/login');
             return false
         }
     }else{
+        navigateTo('/login');
         return false
+    }
+}
+function validateStatus(){
+    // validate if exist a session open
+    if(checkStorageData('usersSession')){
+        // if have a session open and url in login then sent to /home
+        if(verifyRoute('/login')){
+            keepTo('/home');
+            return true
+        }
+        // validate route to load data
+        if(verifyRoute('/home')){
+            return true
+        }
+        return false
+    }else{
+        // sent to
+        if(verifyRoute('/login')){
+            keepTo('/login');
+            return false;
+        }//if(verifyRoute('/home')){
+        //     keepTo('/login');
+        //     return false;
+        // }
+        else{
+            keepTo('/');
+            return false;
+        }
+    }
+}
+// to use validateStatus()
+async function requestPainting(path,handle){
+    let status =await path();
+    if(status == true){
+       await handle()
     }
 }
 //use to saved all sells, buys, and history records of buys from the user 
@@ -679,3 +717,26 @@ async function get_api_chart_data(idCripto="BTC", limit=100){
     return array;
     
 }
+
+// catch event of window
+function mainEvent(event, handle){
+    switch (event) {
+        case 'load':
+  
+            window.addEventListener('load',function(){
+                handle();
+            })
+  
+        break;
+        case 'resize':
+  
+            window.addEventListener('resize',function(){
+                handle();
+            })
+  
+        break;
+    default:
+  
+        break;
+    }
+  }

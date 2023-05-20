@@ -84,20 +84,27 @@ async function getRequestData(API,parameter="BTC"){
     
     //console.log(online_offline);
 }
+//event of route when the page change
+routeEvent('hashchange',()=>{
+    console.log(3);
+    requestPainted();
+});
+
+
+async function requestPainted(){
+    requestPainting(validateStatus, async()=>{
+        await paintingData();
+    });
+}
 //to see data just call user.
-async function requestPainted() {
-    
+async function paintingData(){
+    console.log(4);
     //first load of the page
     if(firtsLoad == 0){
 
         //validate session and get his data
-        const userStatus=await validateSession();
-        if(!userStatus){
-            //open login
-            setClass([{e:formLogin,c:'active'}]);
-            //hide all the main content
-            setClass([{e:center,c:'disabled'}]);
-        }
+        await validateSession();
+        
         //load if exist saved wallets
         if(user.coins[0] !== undefined && user.coins[0] !== ""){
             paintWallets();
@@ -111,6 +118,8 @@ async function requestPainted() {
             }
             
         }
+
+        paintCoindSelected();
     }
     console.log(user);
     //take a peek if there is saved wallets
@@ -473,16 +482,19 @@ singInButton.onclick = async function(){
     //working with a succesfully session
     if(data.status){
         requestPainted();
-        removeClass([{e:formLogin,c:'active'}]);
-        removeClass([{e:center,c:'disabled'}]);
+        navigateTo('/login')
     }
 }
 
 //add to my wallets
 setMyWallets=()=>{
-    let criptos= $('.criptoRanking','all');
-    criptos.forEach(element => {
-        element.onclick= async ()=>{
+    let criptos= $('.rankingContent2');
+    //add event to work even when not all the elements are set, using propagation of events (bubbling)
+    criptos.onclick= async(event) =>{
+        if (event.target.classList.contains('criptoRanking')) {
+            
+            let element =event.target;
+
             let index = element.id;
             let data=searchResult[index];
 
@@ -492,24 +504,29 @@ setMyWallets=()=>{
 
                 //update data users
                 await validateSession();
+
                 //paint wallet on window
                 paintWallets();
+
                 //update API data
                 requestPainted();
-               
+                
             }
         }
-    });
+    };
+           
+        
 }
 
 
 function paintWallets(){
     $('.criptoContent').innerHTML='';
+    $('.rankingContent').innerHTML='';
     for (let index = 0; index < user.coins.length; index++) {
         $('.criptoContent').innerHTML+=`<div class="myCriptos not_buys">
                     <div class="infoCripto">
                         <div class="criptoData">
-                            <span class="cristoIMG"> <img src="${user.coins[index].large}" alt="Cripto"></span>
+                            <span class="cristoIMG"> <img src="${user.coins[index].large}" alt="img"></span>
                             <div>
                                 <span class="critoName">${user.coins[index].name}</span>
                                 <span class="criptoID">${user.coins[index].symbol}</span>
@@ -699,6 +716,8 @@ loadCriptoSelected=()=>{
             earnings_today.innerHTML='';
         }
       }
+
+      paintCoindSelected();
     }
   
 }
@@ -783,3 +802,25 @@ function negative_positive(element, value){
     }
 }
 
+paintCoindSelected=()=>{
+    let coin;
+    if(BTCjson.coinSelected.id == ''){
+        coin = checkStorageData('coinSelected')? JSON.parse(getStorageData('coinSelected')).index:'';
+    }else{
+        coin = BTCjson.coinSelected.index;
+    }
+
+    if(coin !== ''){
+        let Put_delete_class=$('.criptoRanking','all');
+
+        // delete class of last selected
+        Put_delete_class.forEach(element => {
+        if(element.classList.contains('selected')){
+            removeClass([{e:element,c:'selected'}]);
+        }
+        });
+        
+        // add class to the new seelcted
+        setClass([{e:$('.criptoRanking','all')[coin],c:'selected'}]);
+    };
+}

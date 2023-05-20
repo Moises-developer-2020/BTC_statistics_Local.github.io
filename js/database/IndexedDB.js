@@ -57,7 +57,7 @@ let user={
     coins:[],
     criptos:[],
     checkPrice:[],
-    identified:''
+    identified:false
 }
 
 //get localBD
