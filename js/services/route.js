@@ -259,13 +259,13 @@ function routeEvent(event, handle){
       })
 
       break;
-      case 'load':
+      // case 'load':
 
-      window.addEventListener('load',function(){
-        handleRouteChange();
-      })
+      // window.addEventListener('load',function(){
+      //   //handleRouteChange();
+      // })
 
-      break;
+      // break;
     default:
 
       break;
@@ -274,4 +274,4 @@ function routeEvent(event, handle){
 
 routeEvent('load',()=>{});
 
-
+handleRouteChange();

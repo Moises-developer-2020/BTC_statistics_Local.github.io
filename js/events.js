@@ -282,3 +282,15 @@ function get_style_chart(data){
   }
 
 }
+
+mainEvent('resize',()=>{
+    var width = window.innerWidth; // píxeles
+    var height = window.innerHeight; // píxeles
+
+    //delete class of menu .window to responsive menu
+    if(width >= 551){
+      setClass([{e:$('.menu'),c:'window'}]);
+    }else if(width <= 550){
+      removeClass([{e:$('.menu'),c:'window'}]);
+    }
+});

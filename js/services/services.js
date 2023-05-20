@@ -717,3 +717,26 @@ async function get_api_chart_data(idCripto="BTC", limit=100){
     return array;
     
 }
+
+// catch event of window
+function mainEvent(event, handle){
+    switch (event) {
+        case 'load':
+  
+            window.addEventListener('load',function(){
+                handle();
+            })
+  
+        break;
+        case 'resize':
+  
+            window.addEventListener('resize',function(){
+                handle();
+            })
+  
+        break;
+    default:
+  
+        break;
+    }
+  }
