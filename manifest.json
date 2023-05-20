@@ -8,8 +8,8 @@
         "type": "image/png"
       }
     ],
-    "start_url": "/index.html",
-    "display": "browser",
+    "start_url": "BTC_statistics_Local.github.io/",
+    "display": "standalone",
     "background_color": "#000000",
     "theme_color": "#000000"
   }
