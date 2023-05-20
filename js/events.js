@@ -294,3 +294,10 @@ mainEvent('resize',()=>{
       removeClass([{e:$('.menu'),c:'window'}]);
     }
 });
+
+mainEvent('load',()=>{
+  var width = document.querySelector(".main-content").clientWidth; // píxeles
+  var height = document.querySelector(".main-content").clientHeight; // píxeles
+
+alert("width:"+width+" height:"+height);
+});

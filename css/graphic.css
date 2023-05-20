@@ -1,12 +1,85 @@
-#graphic_chart {
-    width: 104%;
-    margin-left: -62px;
+  #graphic_chart {
+    width: 103%;
+    display: block;
   }
 
-  #graphic_chart div#graphic_chart {
-    width: 105% !important;
+  #graphic_chart div {
+    margin-left: -63px;
   }
 
   #graphic_chart label {
     display: none;
+  }
+
+  @media screen and (max-width: 930px) {
+    #graphic_chart {
+      width: 104%;
+    }
+  
+  }
+  @media screen and (max-width: 780px) {
+    #graphic_chart {
+      width: 105%;
+    }
+  
+  }
+  @media screen and (max-width: 610px) {
+    #graphic_chart {
+      width: 106%;
+    }
+  
+  }
+  @media screen and (max-width: 495px) {
+    #graphic_chart {
+      width: 108%;
+    }
+  
+  }
+  @media screen and (max-width: 450px) {
+    #graphic_chart {
+      width: 109%;
+    }
+  
+  }
+  @media screen and (max-width: 395px) {
+    #graphic_chart {
+      width: 110%;
+    }
+  
+  }
+  /* @media screen and (max-width: 370px) {
+    #graphic_chart {
+      width: 112%;
+    }
+  
+  } */
+  @media screen and (max-width: 347px) {
+    #graphic_chart {
+      width: 112%;
+    }
+  
+  }
+  @media screen and (max-width: 300px) {
+    #graphic_chart {
+      width: 114%;
+    }
+  
+  }
+  @media screen and (max-width: 280px) {
+    #graphic_chart {
+      width: 115%;
+    }
+  
+  }
+  @media screen and (max-width: 255px) {
+    #graphic_chart {
+      width: 116%;
+    }
+  
+  }
+  @media screen and (max-width: 215px) {
+    #graphic_chart {
+      width: 118%;
+    }
+  
   }

@@ -239,6 +239,7 @@
         left: 133px;
         top: 0;
         overflow: hidden;
+        transform: scale(1.1);
     }
     .movil .menu-search div{
         background-color: transparent;
@@ -246,7 +247,18 @@
     }
 
     .movil .menu-search input{
-        width: 70px;
+        width: 15px;
+        transition: 0.5s;
+        z-index: 1;
+    }
+    .movil .menu-search input::placeholder{
+        color: transparent;
+    }
+    .movil .menu-search input:focus{
+        width: 100px;
+    }
+    .movil .menu-search input:focus::placeholder {
+        color: rgb(165, 165, 165);
     }
     .movil .menu-search input,
     .movil .menu-search input:focus,
@@ -260,7 +272,8 @@
     
     .movil .menu-search span{
         background: transparent;
-       
+        left: -30px;
+        position: relative;
     }
     .movil .menu-search span img{
         display: block;
