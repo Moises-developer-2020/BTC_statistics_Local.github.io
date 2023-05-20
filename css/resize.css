@@ -40,7 +40,7 @@
         border-radius: 5px;
         transform: rotate(0deg);
         background: none;
-        background-image: linear-gradient(90deg, #ffffff 0%, #00000000 100%);
+        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
         transition: 0.5s;
     }
     .menu-bars span{
@@ -52,7 +52,7 @@
         border-radius: 5px;
         transform: rotate(0deg);
         background: none;
-        background-image: linear-gradient(90deg, #ffffff 0%, #00000000 100%);
+        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
         transition: 0.5s;
     }
     .menu-bars.hidde::after{
@@ -71,7 +71,7 @@
         border-radius: 5px;
         transform: rotate(0deg);
         background: none;
-        background-image: linear-gradient(90deg, #ffffff 0%, #00000000 100%);
+        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
         transition: 0.5s;
     }
     .open_close_session{
@@ -96,7 +96,6 @@
     .menu-bars:not(:has(~ .menu.hidde)) span{
         /* width: 30px; */
         opacity:0 ;
-        background-image: linear-gradient(90deg, white,transparent);
     }
     .menu-bars:not(:has(~ .menu.hidde))::after{
         transform: rotate(-30deg);
@@ -106,6 +105,24 @@
         transform: rotate(+30deg);
         transition: 0.5;
         top: 26px;
+    }
+    .menu-bars:not(:has(+ .menu.hidde))::after,
+    .menu-bars:not(:has(+ .menu.hidde))::before{
+        background-image: linear-gradient(90deg, #E91E63,transparent);
+    }
+    .menu-bars + .movil:not(.hidde) .Session_user_info,
+        .menu-bars + .movil:not(.hidde) .close_Session_option{
+        
+        animation: effectOpen 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) backwards;
+       
+    }
+    @keyframes effectOpen {
+        0%{
+            margin-right: 0px;
+        }
+        100%{
+            margin-right: 50px;
+        }
     }
     .movil{
         display: block;
@@ -227,9 +244,7 @@
         background-color: transparent;
         
     }
-    .movil .menu-search form{
-        /* border-bottom: 2px solid #2e2e3e; */
-    }
+
     .movil .menu-search input{
         width: 70px;
     }
@@ -242,12 +257,7 @@
         outline: none;
         background: transparent;
     }
-    .movil .menu-search input:-internal-autofill-selected{
-        background-color: red !important;
-        appearance: none;
-        background-image: none;
-        color: white !important;
-    }
+    
     .movil .menu-search span{
         background: transparent;
        
@@ -266,7 +276,17 @@
         width: 100%;
         background: black;
         border-radius: 0px 100px 100px 0px;
-        box-shadow: -1px -1px 20px 7px #0000007a;
+        box-shadow: -1px -1px 20px 7px #000000c4;
+    }
+    /*to avoid can make click when menu is opens*/
+    .mainSection.hidde::after{
+        position: absolute;
+        content: "";
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+
     }
     .mainSection{
         height: 100%;

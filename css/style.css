@@ -361,7 +361,8 @@ body {
 }
 
 .negative {
-    color: red !important;
+    /* color: red !important; */
+    color: #e91e63 !important;
 }
 
 .earnings {
