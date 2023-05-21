@@ -142,7 +142,9 @@ function showTo(route) {
 
     validateHash = hash.split('/')[2]?hash.split('/')[2].split('?')[1]:hash.split('/')[1].split('?')[1];
     validatRoute = route.split('/')[1].split('?')[1];
-    
+    console.log(validateParent(route,true));
+    console.log(validateHash);
+    console.log(validatRoute);
     // validate if the parameter is the same to avoid save history
     if(validateHash !== validatRoute && validateParent(route,true)){
       window.history.pushState(null, null, `${path}#/${hash.split('/')[1]}${route}`);
@@ -158,6 +160,7 @@ function showTo(route) {
     if(validateHash !== validatRoute && validateParent(route,false)){
       window.history.pushState(null, null, `${path}#/${hash.split('/')[1]}${route}`);
       handleRouteChange();
+      
     }
   }
   
@@ -244,6 +247,18 @@ function verifyRoute(routeToVerify){
   return true
   
 }
+// event when this route is active
+// function eventRoute(route){
+//   let actual;
+//   if(location.hash){
+//     actual =location.hash.split('#')[1].split("/")[1];
+//   }
+//   if("/"+actual !== routeToVerify){
+//       return false
+//   }
+//   return true
+  
+// }
 //verifyRoute('/home')
 // handle the change of hash from url
 //window.addEventListener('load', handleRouteChange);

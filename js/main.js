@@ -706,6 +706,7 @@ loadCriptoSelected=()=>{
               load_rewards(j,o);
             }
             invested_saved.innerHTML=totalInvested;
+
             break
         }else{
             investex2.innerHTML="";
@@ -719,6 +720,8 @@ loadCriptoSelected=()=>{
 
       paintCoindSelected();
     }
+    //open section2 to see data on movil desing
+    setClass([{e:$('.section2'),c:'show'}]);
   
 }
 

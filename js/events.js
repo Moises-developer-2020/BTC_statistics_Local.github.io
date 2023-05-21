@@ -154,6 +154,10 @@ openCriptoDetails=()=>{
       }
   });
 };
+$('.close_sect2').onclick=()=>{
+  removeClass([{e:$('.section2'),c:'show'}]);
+}
+
 //open buy section function for movil desing
 openCriptoDetails_mobile=()=>{
   let criptoRanking= $('.criptoRanking','all');
@@ -293,11 +297,24 @@ mainEvent('resize',()=>{
     }else if(width <= 550){
       removeClass([{e:$('.menu'),c:'window'}]);
     }
+    movilDesing(width, height);
 });
 
-mainEvent('load',()=>{
-  var width = document.querySelector(".main-content").clientWidth; // píxeles
-  var height = document.querySelector(".main-content").clientHeight; // píxeles
+movilDesing=(w,h)=>{
+    var width = w; // píxeles
+    var height = h; // píxeles
 
-alert("width:"+width+" height:"+height);
-});
+    if(width <= 1435){
+      //setClass([{e:$('.section2'),c:'show'}]);
+      
+    }
+
+}
+/*open and close .section2 on movil desing*/
+$('.section2_option_window').onclick=()=>{
+  if(!$('.section2_option').classList.contains('active')){
+    setClass([{e:$('.section2_option'),c:'active'}]);
+  }else{
+    removeClass([{e:$('.section2_option'),c:'active'}]);
+  }
+}
