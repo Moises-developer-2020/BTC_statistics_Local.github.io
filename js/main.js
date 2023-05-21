@@ -638,6 +638,7 @@ loadCriptoSelected=()=>{
       let earnings_today=$('#earnings_today');
 
       let invest_status_img =$('.invest_status_img');
+      let cripto_IMG_selected =$('.cripto_IMG_selected');// to phone desing
       let investex2 =$('.investex2');
       let invested_saved =$('#invested_saved');
       let elapseTim =$('#elapseTim');
@@ -648,6 +649,7 @@ loadCriptoSelected=()=>{
   
       //paint data of selected crypto on .center div
       invest_status_img.innerHTML=$('.cristoIMG','all')[index].innerHTML;
+      cripto_IMG_selected.innerHTML=$('.cristoIMG','all')[index].innerHTML;
 
       //paint the differences of the last price with the new price
       $("#priceDifferences").innerHTML =$('.priceDifferences','all')[index].innerHTML; 
@@ -720,8 +722,6 @@ loadCriptoSelected=()=>{
 
       paintCoindSelected();
     }
-    //open section2 to see data on movil desing
-    setClass([{e:$('.section2'),c:'show'}]);
   
 }
 

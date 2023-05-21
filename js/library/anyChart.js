@@ -1,4 +1,4 @@
-function paintChart(typeChart, chartData, style, user={invested:29460, criptoName:"Bitcoin"}){
+function paintChart(typeChart, chartData, style, user={invested:29460, criptoName:""}){
 
     //crear chart every call
     document.getElementById("graphic_chart").innerHTML='';

@@ -4,8 +4,9 @@
     align-items: center;
     position: absolute;
     width: 100%;
-    height: calc(100% - 60px);
-    top: 60px;
+    /* height: calc(100% - 60px);
+    top: 60px; */
+    height: 100%;
     overflow: hidden;
     left: 0;
     transition: 0.5s;
@@ -22,6 +23,9 @@
 .chartInfo{
     height: 50px;
     width: 100%;
+    text-align: center;
+    top: 20px;
+    position: relative;
 }
 .chartContent{
 
@@ -490,13 +494,15 @@ margin-top: 5px;
     width: 30%;
     height: 100%;
     transition: 0.5s;
+    top: 60px;
+    position: relative;
 }
 .section2 .section2_option{
     display: none;
 }
 .statusSection,
 .historySection{
-    height: 50%;
+    height: 45%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -505,7 +511,7 @@ margin-top: 5px;
 .historyContent{
     position: relative;
     width: 90%;
-    height: calc(90% - 25px);
+    height: calc(90% - 15px);
     padding: 15px;
     background: rgb(20 20 20 / 54%);
     border-radius: 15px;

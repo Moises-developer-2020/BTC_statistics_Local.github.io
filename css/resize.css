@@ -389,18 +389,26 @@
         display: flex;
         justify-content: right;
         position: absolute;
-        top: -24px;
+        top: -14px;
         align-items: center;
         font-size: 16px;
+        z-index: 1;
 
+    }
+    .section2.show  .close_sect2{
+        cursor: pointer;
+        height: 30px;
+        width: 30px;
+        border-radius: 10px;
     }
     .section2.show  .close_sect2::after{
         position: absolute;
         content: "";
         border-radius: 50px;
         width: 3px;
-        height: 10px;
-        right: 7px;
+        height: 16px;
+        right: 11px;
+        top: 17px;
         transform: rotate(40deg);
         background: #DDE1FB;
     }
@@ -409,8 +417,9 @@
         content: "";
         border-radius: 50px;
         width: 3px;
-        height: 10px;
-        right: 13px;
+        height: 16px;
+        right: 21px;
+        top: 17px;
         transform: rotate(140deg);
         background: #DDE1FB;
     }
@@ -431,6 +440,7 @@
         background-image: linear-gradient(360deg, #000352 50%, #000000f5 100%);
         display: inline-flex;
         z-index: 1;
+        overflow: hidden;
     }
     .section2.show{
         height: calc(100% - 45% + 50px);
@@ -444,7 +454,6 @@
         min-width: 366px;
         max-width: 500px;
         margin: auto;
-
     }
 }
 @media screen and (max-width: 735px) {
@@ -454,19 +463,34 @@
     .section2 .statusSection,
     .section2 .historySection{
         position: absolute;
-        height: calc(100% - 60px - 15px);
+        height: calc(100% - 60px - 8px);
         width: 100%;
         margin-top: 15px;
         max-width: none;
         left: 0;
         transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+    .open_statusSection::after{
+        position: absolute;
+        content: "";
+        width: 50%;
+        height: 100%;
+        border-radius: 5px;
+        left: 0;
+        top: 0;
+        background-color: #0007c7;
+        box-shadow:0 0 20px 2px black;
+        transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
     /*valid when hidde one of them all depend of .active class from .section2_option*/
-    .section2_option.active  .open_statusSection{
+    /* .section2_option.active  .open_statusSection{
         background-color: #0007c7;
     }
     .section2_option:not(.active)  .open_historySection{
         background-color: #0007c7;
+    } */
+    .section2_option:not(.active)  .open_statusSection::after{
+        left: 40px;
     }
     .section2_option.active +  .statusSection{
         left: 0;
@@ -489,8 +513,7 @@
     
     .section2.show .section2_option .section2_option_window{
         display: flex;
-        background: #010454a3;
-        /* background: green; */
+        background: #000478eb;
         border-radius: 5px;
         align-items: center;
         justify-content: center;
@@ -524,9 +547,8 @@
         position: fixed;
         width: 100%;
         bottom: 0px;
-        background: #000352;
-        background-image: linear-gradient(360deg, #000000, #00000000 );
-        border-radius: 90px 90px 0 0;
+        background-image: linear-gradient(360deg, #000000f2, #00000000 );
+        
         left: 0;
         height: 60px;
         transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -535,5 +557,70 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    .reload .cripto_IMG_selected{
+        display: block;
+        width: 70px;
+        height: 70px;
+        border-radius: 100px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    .reload .cripto_IMG_selected img{
+        width: 100%;
+        height: 100%;
+    }
+
+    .criptoContent{
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 100%;
+    }
+    .expenseSection{
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 35px;
+        min-height: 0px; 
+        font-size: 0px; 
+        transition: 0.5s;
+        margin-top: 5px;
+    }
+    .rankingContent {
+        display: flex;
+        justify-content: center;
+    }
+    .criptoRanking{
+        min-width: 0px;
+        min-height: 0px;
+        display: flex;
+        height: 31px;
+        padding: 0;
+        margin: 0;
+        opacity: 0.5;
+        border-radius: 100px;
+    }
+    .criptoRanking.selected{
+        opacity: 1;
+    }
+    .criptoRanking .ranking{
+        display: none;
+    }
+    .imgCripto {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border-radius: 80px; 
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .CriptoSection{
+        top: 40px;
     }
 }

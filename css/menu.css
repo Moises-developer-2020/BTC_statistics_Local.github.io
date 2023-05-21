@@ -3,12 +3,17 @@
     top: 0;
     background: #0037b300;
     /* background-image: linear-gradient(180deg, #2300af73 -54%, #00000000 102%); */
-    width: 100%;
+    /* width: 100%; */
+    width: 30%;
+    right: 0;
     height: 60px;
     display: flex;
     justify-content: right;
     align-items: center;
     font-size: 0.7em;
+}
+.menu.window{
+    z-index: 1;
 }
 .window .menu-search{
     position: absolute;

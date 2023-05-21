@@ -99,7 +99,7 @@
                 <div class="menu-search">
                     <div>
                         <form action="#" method="get" id="coinSearch">
-                            <input type="text" name="coins" placeholder="Search coins">
+                            <input type="text" name="coins" id="coinSearch_input" placeholder="Search coins">
                             <span><img src="img/search.png" alt=""></span>
                         </form>
                     </div>
@@ -112,10 +112,12 @@
                             <div class="dataH1">
                                 <div class="dataH1_data">
                                     <span id="price"></span>
-                                    <span id="priceDifferences" class="positive"></span>
-                                    <span id="percent" class="positive"></span>
+                                    <div class="reflact">
+                                        <span id="percent" class="positive"></span>
+                                        <span id="priceDifferences" class="positive"></span>
+                                    </div>
+                                    
                                 </div>
-                                <div class="dataH1_img"><img src="logo.png" alt=""></div>
                             </div>
                         </div>
                         <div class="chartContent"> 
@@ -238,6 +240,9 @@
                                 <div class="reload">
                                     <div>
                                         <button class="button-34" id="sellSubmit" role="button">Sell</button>
+                                    </div>
+                                    <div class="cripto_IMG_selected">
+                                        <img src="logo.png" alt="">
                                     </div>
                                     <div>
                                         <button class="button-34" id="investInput" role="button">Buy</button>

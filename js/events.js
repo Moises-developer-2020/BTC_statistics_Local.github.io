@@ -18,6 +18,8 @@ $('#coinSearch').onsubmit = async (event, e) => {
   //hidde elements necesary to show search place
 //  setClass([{e:$('.seach_place'),c:'searchPlace'}]);
  
+  //remove focus from input
+  $('#coinSearch_input').blur();
 
   let search = event.target[0].value;
 
@@ -150,7 +152,7 @@ openCriptoDetails=()=>{
           setStorageData('json','coinSelected',BTCjson.coinSelected);
 
           loadCriptoSelected();
-
+          open_Cripto_selected_mobile();
       }
   });
 };
@@ -176,9 +178,15 @@ openCriptoDetails_mobile=()=>{
 
           loadCriptoSelected();
 
+          open_Cripto_selected_mobile();
       }
   });
 };
+
+open_Cripto_selected_mobile=()=>{
+  //open section2 to see data on movil desing
+  setClass([{e:$('.section2'),c:'show'}]);
+}
 
 ////open buy section by click
 $('#investInput').onclick=()=>{
