@@ -99,7 +99,7 @@ summarize_cryptos= async (searchResult, i)=>{
             <div class="criptoRanking" id="${searchResult.symbol}" index="${i}">
                 <div class="imgCripto">
                     <span id="crypto${i}">
-                      <div class="spin-wrapper not_background">
+                      <div class="spin-wrapper not_background" style="transform: scale(0.5);">
                         <div class="spinonediv-1" style="transform: scale(0.5);"></div>
                       </div>
                   </span>

@@ -236,7 +236,7 @@ body {
 }
 
 .animation {
-    animation-name: nice;
+    /* animation-name: nice; */
     animation-duration: 0.5s;
     animation-direction: alternate;
     animation-iteration-count: 2;
@@ -402,9 +402,11 @@ body {
     bottom: 10px;
     right: 10px;
     border-radius: 150px;
-    display: flex;
+    /* display: flex; */
+    display: none;
     justify-content: center;
     align-items: center;
+
 }
 .reloadData button{
     height: 60px;

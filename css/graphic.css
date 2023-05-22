@@ -3,7 +3,7 @@
     display: block;
   }
 
-  #graphic_chart div {
+  #graphic_chart div:not(.spin-wrapper) {
     margin-left: -63px;
   }
 

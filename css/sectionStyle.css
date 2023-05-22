@@ -26,6 +26,7 @@
     text-align: center;
     top: 20px;
     position: relative;
+    z-index: 1;
 }
 .chartContent{
 
@@ -245,6 +246,7 @@
     width: 60px;
     height: 60px;
     border-radius: 80px;
+    overflow: hidden;
     margin: auto;
     display: flex;
     justify-content: center;
@@ -276,6 +278,7 @@
     padding: 2px;
     font-size: 15px;
     border-radius: 100px;
+    display: none;
 }
 .ranking{
 margin-top: 5px;
