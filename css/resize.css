@@ -40,7 +40,7 @@
         border-radius: 5px;
         transform: rotate(0deg);
         background: none;
-        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
+        background-image: linear-gradient(90deg, #1248c300 0%, #e91e63  100%);
         transition: 0.5s;
     }
     .menu-bars span{
@@ -52,7 +52,7 @@
         border-radius: 5px;
         transform: rotate(0deg);
         background: none;
-        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
+        background-image: linear-gradient(90deg, #1248c300 0%, #e91e63  100%);
         transition: 0.5s;
     }
     .menu-bars.hidde::after{
@@ -71,7 +71,7 @@
         border-radius: 5px;
         transform: rotate(0deg);
         background: none;
-        background-image: linear-gradient(90deg, #1248c3 0%, #00000000 100%);
+        background-image: linear-gradient(90deg, #1248c300 0%, #e91e63  100%);
         transition: 0.5s;
     }
     .open_close_session{
@@ -372,7 +372,7 @@
         display: block;
         overflow: auto;
         height: 100%;
-        
+        transform: scale(0.8);
     }
 }
 
@@ -384,7 +384,7 @@
     
     .section2.show .section2_option{
         width: 100%;
-        height: 50px;
+        height: 60px;
         right: 6px;
         display: flex;
         justify-content: right;
@@ -517,7 +517,7 @@
         border-radius: 5px;
         align-items: center;
         justify-content: center;
-        height: 20px;
+        height: 25px;
         overflow: hidden;
         left: 13px;
         position: relative;
@@ -568,6 +568,7 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        box-shadow: 0 0 15px 5px #0000004f;
     }
     .reload .cripto_IMG_selected img{
         width: 100%;
@@ -578,7 +579,14 @@
         display: flex;
         justify-content: flex-start;
         width: 100%;
-        max-width: 100%;
+        max-width: 90%;
+        left: 5%;
+        position: relative;
+    }
+    .criptoContent .myCriptos:hover {
+        cursor: none;
+        transform: scale(1);
+        background: rgb(0, 0, 0);
     }
     .expenseSection{
         position: absolute;
@@ -623,5 +631,27 @@
     }
     .CriptoSection{
         top: 40px;
+    }
+
+    /*efect shadow fo .CriptoSection*/
+    .CriptoSection:after{
+        position: absolute;
+        content: '';
+        bottom: 0px;
+        background: linear-gradient(90deg,rgb(0 0 0 / 0%),#000000);
+        height: 100%;
+        right: 0;
+        width: 53px;
+        left: auto;
+    }
+    .CriptoSection::before{
+        position: absolute;
+        content: '';
+        bottom: 0px;
+        background: linear-gradient(270deg,rgb(0 0 0 / 0%),#000000);
+        height: 100%;
+        left: 0;
+        width: 53px;
+        z-index: 1;
     }
 }
