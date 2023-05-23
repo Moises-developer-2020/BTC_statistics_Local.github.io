@@ -142,9 +142,12 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+/* .investeInfo:has(#investedDate span) {
+    margin-top: 10px;
+} */
 .investex2{
     overflow: auto;
-    max-height: calc(25px * 5);
+    /* max-height: calc(25px * 5); */
     margin-top: 5px;
 
 }

@@ -26,8 +26,8 @@
         cursor: pointer;
         width: 50px;
         position: fixed;
-        right: 26px;
-        top: 18px;
+        right: 14px;
+        top: 7px;
         z-index: 2;
     }
     .menu-bars::after{
@@ -282,7 +282,7 @@
     }
     
     /**/
-    .mainSection.hidde{
+    .menu:not(.hidde) + .mainSection{
         position: absolute;
         left: calc(-100% + 100px);
         height: 100%;
@@ -291,13 +291,12 @@
         border-radius: 0px 100px 100px 0px;
         box-shadow: -1px -1px 20px 7px #000000c4;
     }
-    
-    .mainSection.hidde .reload{
+    .menu:not(.hidde) + .mainSection .reload{
         left: calc(-100% + 0px) !important;
        
-    }
+    } 
     /*to avoid can make click when menu is opens*/
-    .mainSection.hidde::after{
+    .menu:not(.hidde) + .mainSection::after{
         position: absolute;
         content: "";
         height: 100%;

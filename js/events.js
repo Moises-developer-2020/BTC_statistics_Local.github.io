@@ -2,10 +2,8 @@
 $('.menu-bars').onclick=function(){
     if($('.menu').classList.contains('hidde')){
         removeClass([{e:$('.menu'),c:'hidde'},{e:$('.menu'),c:'window'}]);
-        setClass([{e:$('.mainSection'),c:'hidde'}]);
         return
     }
-    removeClass([{e:$('.mainSection'),c:'hidde'}]);
     setClass([{e:$('.menu'),c:'hidde'}]);
 };
 
@@ -14,9 +12,6 @@ $('.menu-bars').onclick=function(){
 let searchResult;
 $('#coinSearch').onsubmit = async (event, e) => {
   event.preventDefault();
-  
-  //hidde elements necesary to show search place
-//  setClass([{e:$('.seach_place'),c:'searchPlace'}]);
  
   //remove focus from input
   $('#coinSearch_input').blur();
