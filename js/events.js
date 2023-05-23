@@ -2,9 +2,11 @@
 $('.menu-bars').onclick=function(){
     if($('.menu').classList.contains('hidde')){
         removeClass([{e:$('.menu'),c:'hidde'},{e:$('.menu'),c:'window'}]);
+        setClass([{e:$('.mainSection'),c:'hidde'}]);
         return
     }
     setClass([{e:$('.menu'),c:'hidde'}]);
+    removeClass([{e:$('.mainSection'),c:'hidde'}]);
 };
 
 

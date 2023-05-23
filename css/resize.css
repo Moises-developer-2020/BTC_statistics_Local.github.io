@@ -282,7 +282,16 @@
     }
     
     /**/
-    .menu:not(.hidde) + .mainSection{
+    /* .menu:not(.hidde) + .mainSection{
+        position: absolute;
+        left: calc(-100% + 100px);
+        height: 100%;
+        width: 100%;
+        background: black;
+        border-radius: 0px 100px 100px 0px;
+        box-shadow: -1px -1px 20px 7px #000000c4;
+    } */
+    .mainSection.hidde{
         position: absolute;
         left: calc(-100% + 100px);
         height: 100%;
@@ -291,12 +300,16 @@
         border-radius: 0px 100px 100px 0px;
         box-shadow: -1px -1px 20px 7px #000000c4;
     }
-    .menu:not(.hidde) + .mainSection .reload{
+    .mainSection.hidde .reload{
         left: calc(-100% + 0px) !important;
        
     } 
+    .mainSection.hidde .CriptoSection:after{
+        background: linear-gradient(90deg,rgba(0, 0, 0, 0),#00000000);
+       
+    } 
     /*to avoid can make click when menu is opens*/
-    .menu:not(.hidde) + .mainSection::after{
+    .mainSection.hidde::after{
         position: absolute;
         content: "";
         height: 100%;
@@ -305,6 +318,24 @@
         left: 0;
         z-index: 1;
     }
+    /* .menu:not(.hidde) + .mainSection .reload{
+        left: calc(-100% + 0px) !important;
+       
+    } 
+    .menu:not(.hidde) + .mainSection .CriptoSection:after{
+        background: linear-gradient(90deg,rgba(0, 0, 0, 0),#00000000);
+       
+    } 
+    /*to avoid can make click when menu is opens*/
+    /*.menu:not(.hidde) + .mainSection::after{
+        position: absolute;
+        content: "";
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    } */
     .mainSection{
         height: 100%;
         top: 0px;
