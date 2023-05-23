@@ -614,10 +614,11 @@
         position: relative;
     }
     .criptoContent .myCriptos:hover {
-        cursor: none;
+        cursor: pointer;
         transform: scale(1);
         background: rgb(0, 0, 0);
     }
+
     .expenseSection{
         position: absolute;
         left: 0;
@@ -683,5 +684,67 @@
         left: 0;
         width: 53px;
         z-index: 1;
+    }
+    .arrow_to_slides1{
+        left: 0;
+    }
+    .arrow_to_slides2{
+        right: 0;
+        
+    }
+    .arrow_to_slides1 span{
+        border-left: 10px solid #ffffff;
+        border-right: 0px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-top: 10px solid transparent;
+        transform: rotate(180deg);
+        cursor: pointer;
+            
+    }
+    .arrow_to_slides2 span{
+        border-left: 10px solid #ffffff;
+        border-right: 0px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-top: 10px solid transparent;
+        cursor: pointer;
+            
+    }
+    .arrow_to_slides1,
+    .arrow_to_slides2{
+        position: absolute;
+        width: 30px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        background-color: rgba(255, 0, 0, 0.397);
+        z-index: 1;
+    }
+    .criptoContent{
+        position: initial;
+    }
+    .myCriptos {
+        position: absolute;
+        margin: 10px;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.6);
+        left: 50%;
+        top: 50%;
+        /* transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
+        box-shadow: 0 0 20px 7px black;
+    }
+    .myCriptos.focus{
+        opacity: 1;
+        z-index: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    .myCriptos.right{
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.6);
+    }
+    .myCriptos.left{
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.6);
     }
 }

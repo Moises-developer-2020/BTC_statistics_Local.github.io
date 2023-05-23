@@ -299,6 +299,10 @@ margin-top: 5px;
     height: calc(100% - 40px);
     text-align: center;
 }
+.arrow_to_slides1,
+.arrow_to_slides2{
+    display: none;
+}
 .CriptoSection:after {
     position: absolute;
     content: '';

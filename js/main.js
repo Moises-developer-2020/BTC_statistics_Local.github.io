@@ -586,6 +586,7 @@ function paintWallets(){
 
     //add click event to .myCriptos
     openCriptoDetails();
+    arrow_to_slides_clickEvent();
 }
 
 getChart=async (idCripto, limit)=>{
