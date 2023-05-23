@@ -93,7 +93,7 @@ $('#coinSearch').onsubmit = async (event, e) => {
 summarize_cryptos= async (searchResult, i)=>{
 
     let element = `
-            <div class="criptoRanking" id="${searchResult.symbol}" index="${i}">
+            <div class="criptoRanking image" id="${searchResult.symbol}" index="${i}">
                 <div class="imgCripto">
                     <span id="crypto${i}">
                       <div class="spin-wrapper not_background" style="transform: scale(0.5);">
@@ -101,7 +101,7 @@ summarize_cryptos= async (searchResult, i)=>{
                       </div>
                   </span>
                 </div>
-              <div class="ranking">${searchResult.symbol}</div>
+              <div class="ranking" style="display:none">${searchResult.symbol}</div>
             </div>`;
 
     $('.rankingContent').innerHTML += element;
@@ -150,6 +150,7 @@ openCriptoDetails=()=>{
 
           loadCriptoSelected();
           open_Cripto_selected_mobile();
+          
       }
   });
 };
@@ -176,6 +177,7 @@ openCriptoDetails_mobile=()=>{
           loadCriptoSelected();
 
           open_Cripto_selected_mobile();
+          
       }
   });
 };
@@ -302,16 +304,26 @@ mainEvent('resize',()=>{
     }else if(width <= 550){
       removeClass([{e:$('.menu'),c:'window'}]);
     }
-    movilDesing(width, height);
+    if(width <= 735){
+      arrow_to_slides_clickEvent()
+    }
+    movilDesing();
+
+});
+mainEvent('load',()=>{
+  movilDesing();
 });
 
-movilDesing=(w,h)=>{
-    var width = w; // píxeles
-    var height = h; // píxeles
+movilDesing=()=>{
+    var width = window.innerWidth; // píxeles
+    var height = window.innerHeight; // píxeles
 
-    if(width <= 1435){
-      //setClass([{e:$('.section2'),c:'show'}]);
-      
+
+    if(width <= 735){
+      movil_Desing=true;
+    }else{
+      arrow_to_slides_clickEvent();
+      movil_Desing= false;
     }
 
 }
@@ -325,67 +337,24 @@ $('.section2_option_window').onclick=()=>{
 }
 
 // event to arrow_to_slides
-arrow_to_slides_clickEvent=()=>{
-  arrow_right=$('.arrow_right');
-  arrow_left=$('.arrow_left');
-
-  criptoContent = $('.criptoContent');
-  criptoContent_width = criptoContent.clientWidth;
-
+arrow_to_slides_clickEvent=(index)=>{
   myCriptos = $('.myCriptos','all');
   criptoRanking = $('.criptoRanking','all');
-  
-  myCriptos_width = myCriptos[0].clientWidth;
 
-  // width of criptoContent
-  let width=-myCriptos_width;
-  let widthLeft=0;
-  let widthRight=0;
-  let width_lenght=0;
-
-  let long=0;
-  function setfocus(index){
-    
-    setClass([{e:myCriptos[long],c:'focus'}]);
-    //long++;
-    if(myCriptos[long-1]){
-      setClass([{e:myCriptos[long-1],c:'left'}]);
-      myCriptos[long-1].setAttribute('style',`left: 0%;`);
-
-    }
-    setClass([{e:myCriptos[long],c:'focus'}]);
-    setClass([{e:criptoRanking[long],c:'selected'}]);
-    myCriptos[long].setAttribute('style',`left: 50%;`);
-
-    if(myCriptos[long+1]){
-      setClass([{e:myCriptos[long+1],c:'right'}]);
-      myCriptos[long+1].setAttribute('style',`left: 100%;`);
-
-    }
+  // to disable this function
+  if(!movil_Desing){
+    // delete last style
+    myCriptos.forEach(element =>{element.removeAttribute('style');});
+    return;
   }
+  arrow_right=$('.arrow_to_slides2');
+  arrow_left=$('.arrow_to_slides1');
 
-  myCriptos.forEach((element, index) =>{
-    // how much it will move
-    if(myCriptos_width*(index+1) < criptoContent_width){
-      width_lenght++;
-    }
-    width+=(myCriptos_width)+15
-    //element.setAttribute('style',`left:${width}px;`);
+  let long=index || 0;
 
-    // if(element.classList.contains('focus')){
-    //   console.log(index);
-    // }
-    
-      if(index == 0){
-        setfocus(0);
-      }
-    
-  })
-
-  // right event
-  arrow_right.onclick=()=>{
+  function setfocus(longg){
+    // remove previus class
     myCriptos.forEach((element, index) =>{
-      //element.setAttribute('style',`left:${width}px;`);
       
       if(element.classList.contains('left')){
         removeClass([{e:element,c:'left'}]);
@@ -399,41 +368,75 @@ arrow_to_slides_clickEvent=()=>{
       if(criptoRanking[index].classList.contains('selected')){
         removeClass([{e:criptoRanking[index],c:'selected'}]);
       }
-      //myCriptos[index].setAttribute('style',`margin-left:${0}px;`);
+      element.removeAttribute('style');
 
-    })
+    });
 
-    // how much it will move
-    // widthRight+=(myCriptos_width)*width_lenght;
-    long++;
-    if(myCriptos[long-1]){
-      setClass([{e:myCriptos[long-1],c:'left'}]);
-      myCriptos[long-1].setAttribute('style',`left: 0%;`);
-
+    setClass([{e:myCriptos[longg],c:'focus'}]);
+    //long++;
+    if(myCriptos[longg-1]){
+      setClass([{e:myCriptos[longg-1],c:'left'}]);
+      myCriptos[longg-1].setAttribute('style',`left: 0%;`);
+  
+    }else{
+      setClass([{e:myCriptos[myCriptos.length-1],c:'left'}]);
+      myCriptos[myCriptos.length-1].setAttribute('style',`left: 0%;`);
     }
-    setClass([{e:myCriptos[long],c:'focus'}]);
-    setClass([{e:criptoRanking[long],c:'selected'}]);
-    myCriptos[long].setAttribute('style',`left: 50%;`);
-
-    if(myCriptos[long+1]){
-      setClass([{e:myCriptos[long+1],c:'right'}]);
-      myCriptos[long+1].setAttribute('style',`left: 100%;`);
-
-    }
-
-    // last it is to restar and not end
-    if(long == myCriptos.length-1){
-      long =-1;
+  
+  
+    setClass([{e:myCriptos[longg],c:'focus'}]);
+    setClass([{e:criptoRanking[longg],c:'selected'}]);
+    myCriptos[longg].setAttribute('style',`left: 50%;`);
+  
+    if(myCriptos[longg+1]){
+      setClass([{e:myCriptos[longg+1],c:'right'}]);
+      myCriptos[longg+1].setAttribute('style',`left: 100%;`);
+  
+    }else{
+      setClass([{e:myCriptos[0],c:'left'}]);
       myCriptos[0].setAttribute('style',`left: 100%;`);
-      
     }
+  
+  
+  }
+
+  // start when load 
+  setfocus(long);
+ 
+  function transition(direction){
+    // to disable this function
+    if(!movil_Desing){
+      return;
+    }
+    // how much it will move
+    if(direction == "right"){
+      long++;
+      if(long == myCriptos.length){
+        long = 0;
+      }
+    }else{
+      long--;
+      if(long == -1){
+        long = myCriptos.length-1;
+      }
+    }
+
+    //load style every time
+    setfocus(long);
+
+    // last to beging again and not end
+    if(long == myCriptos.length-1 && direction == "right"){
+      long =-1;
+    }
+
+  }
+  // right event
+  arrow_right.onclick=()=>{
+    
+    transition("right");
   }
   // left event
   arrow_left.onclick=()=>{
-    setClass([{e:myCriptos[3],c:'focus'}]);
-
-    // widthLeft-=(myCriptos_width-widthRight)*width_lenght;
-    // myCriptos[0].setAttribute('style',`margin-left:${-widthLeft}px;`);
+    transition("left");
   }
-  console.log(myCriptos_width+":"+criptoContent_width);
 }

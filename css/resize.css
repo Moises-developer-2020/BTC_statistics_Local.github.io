@@ -316,7 +316,7 @@
         width: 100%;
         top: 0;
         left: 0;
-        z-index: 1;
+        z-index: 2;
     }
     /* .menu:not(.hidde) + .mainSection .reload{
         left: calc(-100% + 0px) !important;
@@ -469,7 +469,7 @@
         /* background: #000000; */
         background-image: linear-gradient(360deg, #000352 50%, #000000f5 100%);
         display: inline-flex;
-        z-index: 1;
+        z-index: 2;
         overflow: hidden;
     }
     .section2.show{
@@ -598,6 +598,7 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        background: #0000004f;
         box-shadow: 0 0 15px 5px #0000004f;
     }
     .reload .cripto_IMG_selected img{
@@ -612,11 +613,6 @@
         max-width: 90%;
         left: 5%;
         position: relative;
-    }
-    .criptoContent .myCriptos:hover {
-        cursor: pointer;
-        transform: scale(1);
-        background: rgb(0, 0, 0);
     }
 
     .expenseSection{
@@ -698,53 +694,70 @@
         border-bottom: 10px solid transparent;
         border-top: 10px solid transparent;
         transform: rotate(180deg);
-        cursor: pointer;
-            
+         
     }
     .arrow_to_slides2 span{
         border-left: 10px solid #ffffff;
         border-right: 0px solid transparent;
         border-bottom: 10px solid transparent;
         border-top: 10px solid transparent;
-        cursor: pointer;
-            
+        
     }
     .arrow_to_slides1,
     .arrow_to_slides2{
         position: absolute;
-        width: 30px;
-        height: 100%;
+        width: 54px;
+        height: 70px;
         display: flex;
         justify-content: center;
         align-items: center;
-        top: 0;
-        background-color: rgba(255, 0, 0, 0.397);
-        z-index: 1;
+        top: 50%;
+        z-index: 2;
+        transform: translateY(-50%);
+        border-radius: 5px;
+        cursor: pointer;
     }
     .criptoContent{
-        position: initial;
+        position: absolute;
+        overflow: hidden;
     }
     .myCriptos {
         position: absolute;
         margin: 10px;
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.6);
+        transform: translate(-53%, -53%) scale(0.6);
         left: 50%;
         top: 50%;
         /* transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
         box-shadow: 0 0 20px 7px black;
     }
+   
     .myCriptos.focus{
         opacity: 1;
         z-index: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-53%, -53%) scale(1.1);
     }
     .myCriptos.right{
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.5;
+        transform: translate(-53%, -53%) scale(0.6);
+        z-index: 0;
     }
     .myCriptos.left{
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.5;
+        transform: translate(-53%, -53%) scale(0.6);
+        z-index: 0;
     }
+    .myCriptos:hover{
+        cursor: pointer;
+    }
+    .myCriptos.focus{
+        transform: translate(-53%, -53%) scale(1.1);
+    }
+    .myCriptos.right:hover,
+    .myCriptos.left:hover{
+        cursor: pointer;
+        transform: translate(-53%, -53%) scale(0.6);
+        background: rgb(0, 0, 0);
+    }
+    
 }

@@ -11,6 +11,8 @@ let dataChart={
     date:''
 }
 
+movil_Desing=false; // to know is it size of a mobile
+
 //Api`s data
 let critopApi={}
 
@@ -98,7 +100,6 @@ async function requestPainted(){
 }
 //to see data just call user.
 async function paintingData(){
-    console.log(4);
     //first load of the page
     if(firtsLoad == 0){
 
@@ -121,7 +122,7 @@ async function paintingData(){
 
         paintCoindSelected();
     }
-    console.log(user);
+    //console.log(user);
     //take a peek if there is saved wallets
     if(user.coins[0] !== undefined && user.coins[0] !== ""){
         //get data of saved wallets
@@ -586,7 +587,6 @@ function paintWallets(){
 
     //add click event to .myCriptos
     openCriptoDetails();
-    arrow_to_slides_clickEvent();
 }
 
 getChart=async (idCripto, limit)=>{
@@ -722,6 +722,7 @@ loadCriptoSelected=()=>{
       }
 
       paintCoindSelected();
+      
     }
   
 }
@@ -826,5 +827,9 @@ paintCoindSelected=()=>{
         
         // add class to the new seelcted
         setClass([{e:$('.criptoRanking','all')[coin],c:'selected'}]);
+
+        // when start load selected crypto on slide
+        arrow_to_slides_clickEvent(coin);
     };
+    
 }

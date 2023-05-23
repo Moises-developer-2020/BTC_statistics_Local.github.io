@@ -112,9 +112,9 @@
 }
 .expenseSection{
     position: relative;
-    height: 15%;
+    height: 11%;
     max-height: 140px;
-    min-height: 140px;
+    min-height: 104px;
     font-size: 20px;
     overflow: hidden;
     text-align: center;
@@ -145,6 +145,7 @@
     font-size: 20px;
     text-align: center;
     transition: 0.5s;
+    z-index: 2;
 }
 .rankingContent2{
     width: 100%;
@@ -179,6 +180,11 @@
     background: rgb(20 20 20 / 54%);
     padding: 10px;
     transition: 0.5s;
+}
+.criptoRanking.image{
+    height: 60px ;
+    min-width: 0px !important;
+    min-height: 0px !important;
 }
 /* to click event */
 .criptoRanking:after {
@@ -231,7 +237,6 @@
 }
 .myCriptos:hover{
     background-image: linear-gradient(300deg, #000f7c, transparent);
-
 }
 .expOption{
     position: absolute;
@@ -296,7 +301,7 @@ margin-top: 5px;
     align-items: center;
     overflow: auto;
     max-width: 94%;
-    height: calc(100% - 40px);
+    height: calc(100% - 12px);
     text-align: center;
 }
 .arrow_to_slides1,
@@ -306,7 +311,7 @@ margin-top: 5px;
 .CriptoSection:after {
     position: absolute;
     content: '';
-    bottom: 19px;
+    bottom: -2px;
     left: 0;
     /* box-shadow: 0px 8px 73px 55px rgb(0 0 0 / 92%); */
     background: linear-gradient(180deg,rgba(5,10,15,0),#000000);
