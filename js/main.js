@@ -10,6 +10,10 @@ let dataChart={
     data:'',
     date:''
 }
+let user_saved_data={
+    invested:0,
+    criptoName:"none"
+    };
 
 movil_Desing=false; // to know is it size of a mobile
 
@@ -129,7 +133,6 @@ async function paintingData(){
     if(user.coins[0] !== undefined && user.coins[0] !== ""){
         //get data of saved wallets
         getRequestData(await fetchData(API+`${getWalletSymbols()}`));
-        getChart()
     }
     
     if (online_offline && user.identified && user.coins[0] != "") {
@@ -247,8 +250,8 @@ async function paintingData(){
             
         }
         loadCriptoSelected();
+        
     }
-
     firtsLoad=1;
 
 };
@@ -590,20 +593,20 @@ function paintWallets(){
     //add click event to .myCriptos
     openCriptoDetails();
 }
-
+let lastCriptoSelected;
 getChart=async (idCripto, limit)=>{
-
     //validate if doesn't exist data 
-    if(dataChart.data == ''){
+    if(dataChart.data == '' || idCripto != lastCriptoSelected){
+        // load effect to change chart for the new cripto
+        setClass([{e:$('.chartContent'),c:'load'}]);
 
-        //let data= await get_api_chart_data(idCripto, limit);
+        let data= await get_api_chart_data(idCripto, limit);
         dataChart={
-            data:testData,
+            data:data,
             date:new Date() //to validate 5 min. of the API
         }
         //paint chart
-        get_style_chart(testData);
-
+        get_style_chart(data);
     }else{
 
         var elapseTime = DateformatContacts(dataChart.date);
@@ -611,19 +614,44 @@ getChart=async (idCripto, limit)=>{
 
         //request to the API again
         if(elapseTime.minutes >= 5 && elapseTime.seconds >= 30){
-            //let data= await get_api_chart_data(idCripto, limit);
+            let data= await get_api_chart_data(idCripto, limit);
             dataChart={
-                data:testData,
+                data:data,
                 date:new Date() //to validate 5 min. of the API
             }
             //paint chart
-            get_style_chart(testData);
+            get_style_chart(data);
         }
     }
+    lastCriptoSelected=idCripto;
 }
+loadChart= async()=>{
+    if(BTCjson.coinSelected.id !== ""){
+        if(BTCjson[BTCjson.coinSelected.id]){
+            let idCripto =BTCjson.coinSelected.id;
 
+            if(BTCjson[BTCjson.coinSelected.id].price_invested[0]){
+                let Price_saved =BTCjson[BTCjson.coinSelected.id].price_invested[0].coinPrice
+                Price_saved = convertPrice(Price_saved, false, 0);
+                let toValidPrice = Price_saved.replace(',','');
+
+                user_saved_data.invested=toValidPrice;
+                //user_saved_data.criptoName=idCripto;
+                user_saved_data.criptoName='';
+
+            }else{
+                //user_saved_data.criptoName=idCripto;
+                user_saved_data.criptoName='';
+                user_saved_data.invested=0;
+            }
+
+            await getChart(idCripto);
+        }
+        
+    }
+}
 //criptos selected to show it in .main
-loadCriptoSelected=()=>{
+loadCriptoSelected= async ()=>{
     //get coin selected saved
     let getDataSAved=checkStorageData('coinSelected')? getStorageData('coinSelected'):0;
   
@@ -724,7 +752,7 @@ loadCriptoSelected=()=>{
       }
 
       paintCoindSelected();
-      
+      await loadChart();
     }
   
 }

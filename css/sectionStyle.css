@@ -35,8 +35,47 @@
     width: 100%;
     /* background-color: rgba(105, 107, 105, 0.219); */
     overflow: hidden;
-    
+    position: relative;
 
+}
+.loadinCripto{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 50px);
+    backdrop-filter: blur(2px);
+    background-color: #00000045;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.5s;
+}
+.loadinCripto span{
+    width: 70px;
+    height: 70px;
+    border-radius: 500px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid grey;
+    border-bottom: 5px solid grey;
+    
+}
+.chartContent.load .loadinCripto{
+    display: flex;
+    opacity: 1;
+}
+.chartContent.load .loadinCripto span{
+    animation: load 1s linear infinite;
+}
+@keyframes load {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
 }
 .graphic_chart{
     width: 100%;

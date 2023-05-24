@@ -163,7 +163,7 @@ $('.close_sect2').onclick=()=>{
 }
 
 //open buy section function for movil desing
-openCriptoDetails_mobile=()=>{
+openCriptoDetails_mobile= ()=>{
   let criptoRanking= $('.criptoRanking','all');
   criptoRanking.forEach((element,index) => {
         element.onclick= async ()=>{
@@ -186,7 +186,7 @@ openCriptoDetails_mobile=()=>{
           setStorageData('json','coinSelected',BTCjson.coinSelected);
           loadCriptoSelected();
 
-          open_Cripto_selected_mobile();          
+          open_Cripto_selected_mobile();    
       }
   });
 };
@@ -249,15 +249,16 @@ closeBuySpace=()=>{
 
 //paint type of chart
 $('#typeChart').onclick=()=>{
+
   if(typeChart == 2) typeChart=0;
 
   if(typeChart == 1){
-    paintChart(typeChart,testData,chartStyle-1);//keep chartStyle
+    paintChart(typeChart,dataChart.data,chartStyle-1,user_saved_data);//keep chartStyle
     set_style_chart(typeChart,chartStyle-1);
 
   } 
   if(typeChart == 0){
-    paintChart(typeChart,testData,1);
+    paintChart(typeChart,dataChart.data,1,user_saved_data);
     set_style_chart(typeChart,1);
 
   }
@@ -268,7 +269,7 @@ $('#typeChart').onclick=()=>{
 $('#chartStyle').onclick=()=>{
   if(chartStyle == 5) chartStyle=1;
   
-  paintChart(1,testData,chartStyle);
+  paintChart(1,dataChart.data,chartStyle,user_saved_data);
   set_style_chart(1,chartStyle);
 
   typeChart=0;
@@ -291,16 +292,16 @@ function get_style_chart(data){
   if(saveChartStyle != 0){
     typeChart=saveChartStyle.typeChart;
     chartStyle=saveChartStyle.chartStyle;
-    paintChart(typeChart,data,chartStyle);
+    paintChart(typeChart,data,chartStyle,user_saved_data);
 
     //to pass to the next style when I made click on the buttons
     typeChart++;
     chartStyle++;
   }else{
     //start with the default style
-    paintChart(1,data,1);
+    paintChart(1,data,1,user_saved_data);
   }
-
+  removeClass([{e:$('.chartContent'),c:'load'}]);
 }
 
 mainEvent('resize',()=>{
