@@ -120,7 +120,9 @@ async function paintingData(){
             
         }
 
-        paintCoindSelected();
+        let coin=paintCoindSelected();
+        // when start load selected crypto on slide
+        arrow_to_slides_clickEvent(coin);
     }
     //console.log(user);
     //take a peek if there is saved wallets
@@ -303,12 +305,12 @@ function moneyFormat(money){
 }
 //animation to buy or reload
 function submitGet() {
-    if (!center.classList.contains('animation') && !statusD.classList.contains('statusAnimation')) {
+    if (!$('.cripto_IMG_selected').classList.contains('animation') && !statusD.classList.contains('statusAnimation')) {
         setTimeout(() => {
-            removeClass([{e:center,c:'animation'},{e:statusD,c:'statusAnimation'}])
+            removeClass([{e:$('.cripto_IMG_selected'),c:'animation'},{e:statusD,c:'statusAnimation'}])
         }, 1500);
     }
-    setClass([{e:center,c:'animation'} , {e:statusD,c:'statusAnimation'}]);
+    setClass([{e:$('.cripto_IMG_selected'),c:'animation'} , {e:statusD,c:'statusAnimation'}]);
 
     requestPainted();
 }
@@ -319,7 +321,7 @@ setInterval(() => {
     submitGet();
 }, 15000); //15000, 10000
 
-btnReload.onclick = function () {
+$('.cripto_IMG_selected').onclick = function () {
     submitGet();
 };
 
@@ -828,8 +830,8 @@ paintCoindSelected=()=>{
         // add class to the new seelcted
         setClass([{e:$('.criptoRanking','all')[coin],c:'selected'}]);
 
-        // when start load selected crypto on slide
-        arrow_to_slides_clickEvent(coin);
+
     };
+    return coin;
     
 }

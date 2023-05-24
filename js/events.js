@@ -139,6 +139,10 @@ openCriptoDetails=()=>{
         element.onclick= async ()=>{
           let id=$('.criptoID','all')[index].innerHTML;
           
+          // to avoid select .myCriptos when is not focus with arrow in desing mobile 
+          if(movil_Desing && !element.classList.contains('focus')){
+            return
+          }
           //save coin selected in variable to use it on buys
           BTCjson.coinSelected={
             index:index,
@@ -164,20 +168,25 @@ openCriptoDetails_mobile=()=>{
   criptoRanking.forEach((element,index) => {
         element.onclick= async ()=>{
           let id=$('.ranking','all')[index].innerHTML;
+
+          // show cripto selected in content with arrow to mobile desing
+          arrow_to_slides_clickEvent(index);
+          // avoid load the next data on mobile desing
+          if(movil_Desing){
+            return
+          }
           
           //save coin selected in variable to use it on buys
           BTCjson.coinSelected={
             index:index,
             id:id
           }
-
+          
           //save on localStorage the coin selected
           setStorageData('json','coinSelected',BTCjson.coinSelected);
-
           loadCriptoSelected();
 
-          open_Cripto_selected_mobile();
-          
+          open_Cripto_selected_mobile();          
       }
   });
 };
@@ -304,6 +313,7 @@ mainEvent('resize',()=>{
     }else if(width <= 550){
       removeClass([{e:$('.menu'),c:'window'}]);
     }
+    // show arrow in mobile desing
     if(width <= 735){
       arrow_to_slides_clickEvent()
     }
@@ -322,6 +332,7 @@ movilDesing=()=>{
     if(width <= 735){
       movil_Desing=true;
     }else{
+      // remove arrow and style of .myCriptos
       arrow_to_slides_clickEvent();
       movil_Desing= false;
     }
