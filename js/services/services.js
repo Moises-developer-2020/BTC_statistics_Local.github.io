@@ -569,7 +569,9 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
                 //each time the current price change, it is update in the database
                 checkPrice={
                     idCripto:data.criptoID,
-                    coinPrice:data.coinPrice
+                    coinPrice:data.coinPrice,
+                    h:coin.h,
+                    l:coin.l
                         
                 }
 
@@ -609,14 +611,24 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
                 //to the first time on save this data cuz it is JSON not Array
                 if(Array.isArray(user.coins)){
                     //delete the firt element created cuz it is empty
-                    if(user.coins[0].id === undefined){
-                        user.coins.splice(0,1)
+                    if(user.coins[0] === ""){
+                        if(user.coins[0].id === undefined){
+                            user.coins.splice(0,1)
+                            console.log(222);
+                        }
                     }
-                    
+                    // if(user.coins[0] === ""){
+                    //     if(user.coins[0].id === undefined){
+                    //         console.error(1);
+                    //     }
+                    // }
                     user.coins.push(coin)
+                    //console.log(111);
                 }else{
                     user.coins=coin
                 }
+                console.log(userID);
+                console.log(user.coins);
                 const requestCoins = await fecthLocalData('coins','update',{value:user.coins,id:userID});
                 
     

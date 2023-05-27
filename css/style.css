@@ -197,7 +197,7 @@ body {
     position: relative;
     /* box-shadow: #5e5df0 0 0px 67px -5px; */
     width: 100%;
-    height: 100%;
+    height: calc(100% - 50px);
     overflow: auto;
 
 }
@@ -348,6 +348,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    bottom: 0;
+    position: absolute;
+    width: calc(100% - 29px);
 }
 .reload .cripto_IMG_selected{
     display: none;

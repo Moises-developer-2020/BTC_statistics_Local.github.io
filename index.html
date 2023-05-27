@@ -122,8 +122,8 @@
                         </div>
                         <div class="chartContent"> 
                             <div class="graphic_chart" id="graphic_chart">
-                                <div class="spin-wrapper">
-                                    <div class="spinonediv-1" style="transform: scale(1.5);"></div>
+                                <div class="spin-wrapper" style="position: absolute; height: calc(100% - 50px)">
+                                    <div class="spinonediv-1" style="transform: translate(-50%, -50%) scale(1.5); margin:0px 0 0 0px;"></div>
                                 </div>
                             </div>
                             <div class="chart_options">
@@ -214,22 +214,22 @@
                                     <div id="statusTextH">
                                         <div>
                                             <span>H: </span>
-                                            <span id="Hight">↻</span>
+                                            <span id="Hight" class="positive">↻</span>
                                         </div>
                                         <div>
                                             <span>&#8800: </span>
-                                            <span id="diferenceH">00000</span>
+                                            <span id="diferenceH" class="positive">00000</span>
                                         </div>
 
                                     </div>
                                     <div id="statusTextL">
                                         <div>
                                             <span>L: </span>
-                                            <span id="Low">↻</span>
+                                            <span id="Low" class="positive">↻</span>
                                         </div>
                                         <div>
                                             <span>&#8800: </span>
-                                            <span id="diferenceL">00000</span>
+                                            <span id="diferenceL" class="positive">00000</span>
                                         </div>
                                     </div>
 
@@ -244,18 +244,19 @@
                                     <div class="dataH1_img"><img src="logo.png" alt=""></div>
                                 </div> -->
 
-                                <div class="reload">
-                                    <div class="ct_btn_sell">
-                                        <button class="button-34" id="sellSubmit" role="button">Sell: ---</button>
-                                    </div>
-                                    <div class="cripto_IMG_selected">
-                                        <img src="logo.png" alt="">
-                                    </div>
-                                    <div class="ct_btn_buy">
-                                        <button class="button-34 btnGReen" id="investInput" role="button">Buy: ---</button>
-                                    </div>
-                                </div>
+                                
 
+                            </div>
+                            <div class="reload">
+                                <div class="ct_btn_sell">
+                                    <button class="button-34" id="sellSubmit" role="button">Sell: ---</button>
+                                </div>
+                                <div class="cripto_IMG_selected">
+                                    <img src="logo.png" alt="">
+                                </div>
+                                <div class="ct_btn_buy">
+                                    <button class="button-34 btnGReen" id="investInput" role="button">Buy: ---</button>
+                                </div>
                             </div>
                             <div class="loading">
                                 <div class="spin-wrapper not_background">

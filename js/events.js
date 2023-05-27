@@ -66,7 +66,7 @@ $('#coinSearch').onsubmit = async (event, e) => {
     }
    
     //add to my wallets
-    setMyWallets();
+    setMyWallets(searchResult);
 
     //paint images
     for (let i = 0; i < searchResult.length; i++) {
@@ -123,7 +123,8 @@ summarize_cryptos= async (searchResult, i)=>{
     });
     
     //add click event to .criptoRanking
-    openCriptoDetails_mobile();
+    openCriptoDetails_mobile(i);
+  
 }
 
 
@@ -163,32 +164,42 @@ $('.close_sect2').onclick=()=>{
 }
 
 //open buy section function for movil desing
-openCriptoDetails_mobile= ()=>{
+openCriptoDetails_mobile= (i)=>{
+
   let criptoRanking= $('.criptoRanking','all');
-  criptoRanking.forEach((element,index) => {
-        element.onclick= async ()=>{
-          let id=$('.ranking','all')[index].innerHTML;
+  // to avoid add onclick() each time it is in the bucle for so add it in the end
+  if(i == user.coins.length-1){ 
+    criptoRanking.forEach((element,index) => {
+      element.onclick= async ()=>{
+        let id=$('.ranking','all')[index].innerHTML;
 
-          // show cripto selected in content with arrow to mobile desing
-          arrow_to_slides_clickEvent(index);
-          // avoid load the next data on mobile desing
-          if(movil_Desing){
-            return
-          }
-          
-          //save coin selected in variable to use it on buys
-          BTCjson.coinSelected={
-            index:index,
-            id:id
-          }
-          
-          //save on localStorage the coin selected
-          setStorageData('json','coinSelected',BTCjson.coinSelected);
-          loadCriptoSelected();
+        // show cripto selected in content with arrow to mobile desing
+        arrow_to_slides_clickEvent(index);
+        
+        // avoid load the next data on mobile desing
+        if(movil_Desing){
+          return
+        }
+        
+        //save coin selected in variable to use it on buys
+        BTCjson.coinSelected={
+          index:index,
+          id:id
+        }
+        
+        //save on localStorage the coin selected
+        setStorageData('json','coinSelected',BTCjson.coinSelected);
+        loadCriptoSelected();
 
-          open_Cripto_selected_mobile();    
+        open_Cripto_selected_mobile();    
       }
-  });
+    });
+  }
+  // to paint crypto selected after a new crypto is added
+  let coinIndex=paintCoindSelected();
+  if($(`.image`,'all')[coinIndex]){
+    $(`.image`,'all')[coinIndex].click();
+  }
 };
 
 open_Cripto_selected_mobile=()=>{
@@ -316,7 +327,7 @@ mainEvent('resize',()=>{
     }
     // show arrow in mobile desing
     if(width <= 735){
-      arrow_to_slides_clickEvent()
+      arrow_to_slides_clickEvent();
     }
     movilDesing();
 
@@ -349,7 +360,7 @@ $('.section2_option_window').onclick=()=>{
 }
 
 // event to arrow_to_slides
-arrow_to_slides_clickEvent=(index)=>{
+arrow_to_slides_clickEvent=(index=0)=>{
   myCriptos = $('.myCriptos','all');
   criptoRanking = $('.criptoRanking','all');
 
@@ -362,7 +373,7 @@ arrow_to_slides_clickEvent=(index)=>{
   arrow_right=$('.arrow_to_slides2');
   arrow_left=$('.arrow_to_slides1');
 
-  let long=index || 0;
+  let long=index;
 
   function setfocus(longg){
     // remove previus class
@@ -384,31 +395,39 @@ arrow_to_slides_clickEvent=(index)=>{
 
     });
 
-    setClass([{e:myCriptos[longg],c:'focus'}]);
+    if(myCriptos[longg]){
+      setClass([{e:myCriptos[longg],c:'focus'}]);
+    }
     //long++;
+    
     if(myCriptos[longg-1]){
       setClass([{e:myCriptos[longg-1],c:'left'}]);
       myCriptos[longg-1].setAttribute('style',`left: 0%;`);
-  
+      
     }else{
-      setClass([{e:myCriptos[myCriptos.length-1],c:'left'}]);
-      myCriptos[myCriptos.length-1].setAttribute('style',`left: 0%;`);
+      if(myCriptos.length != 1){ // when is it just onw crypto saved
+        setClass([{e:myCriptos[myCriptos.length-1],c:'left'}]);
+        myCriptos[myCriptos.length-1].setAttribute('style',`left: 0%;`);
+      }
+      
     }
   
-  
-    setClass([{e:myCriptos[longg],c:'focus'}]);
-    setClass([{e:criptoRanking[longg],c:'selected'}]);
-    myCriptos[longg].setAttribute('style',`left: 50%;`);
+    if(myCriptos[longg]){
+      setClass([{e:myCriptos[longg],c:'focus'}]);
+      setClass([{e:criptoRanking[longg],c:'selected'}]);
+      myCriptos[longg].setAttribute('style',`left: 50%;`);
+    }
   
     if(myCriptos[longg+1]){
       setClass([{e:myCriptos[longg+1],c:'right'}]);
       myCriptos[longg+1].setAttribute('style',`left: 100%;`);
   
     }else{
-      setClass([{e:myCriptos[0],c:'left'}]);
-      myCriptos[0].setAttribute('style',`left: 100%;`);
+      if(myCriptos.length != 1){ // when is it just onw crypto saved
+        setClass([{e:myCriptos[0],c:'left'}]);
+        myCriptos[0].setAttribute('style',`left: 100%;`);
+      }
     }
-  
   
   }
 
@@ -442,12 +461,12 @@ arrow_to_slides_clickEvent=(index)=>{
     }
 
   }
-  // right event
+  // right event of the arrow
   arrow_right.onclick=()=>{
     
     transition("right");
   }
-  // left event
+  // left event of the arrow
   arrow_left.onclick=()=>{
     transition("left");
   }

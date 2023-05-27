@@ -485,6 +485,7 @@
         max-width: 500px;
         margin: auto;
     }
+    
 }
 @media screen and (max-width: 735px) {
     .section2.show {
@@ -568,6 +569,9 @@
     } */
     .section2.show .section2_option{
         justify-content: space-between;
+    }
+    .center{
+        height: 100%;
     }
     .reload{
         text-align: center;

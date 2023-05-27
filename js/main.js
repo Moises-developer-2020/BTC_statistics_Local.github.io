@@ -1,4 +1,5 @@
 var LastCheck;
+var LastCheck_H_L={};
 var SavePriceInvert;
 var price_invested_saved;
 var firtsLoad=0;
@@ -92,14 +93,15 @@ async function getRequestData(API,parameter="BTC"){
 }
 //event of route when the page change
 routeEvent('hashchange',()=>{
-    console.log(3);
     requestPainted();
 });
 
 
 async function requestPainted(){
     requestPainting(validateStatus, async()=>{
+        
         await paintingData();
+        
     });
 }
 //to see data just call user.
@@ -124,18 +126,21 @@ async function paintingData(){
             
         }
 
-        let coin=paintCoindSelected();
-        // when start load selected crypto on slide
-        arrow_to_slides_clickEvent(coin);
+        if(user.coins[0] !== ""){
+            
+            let coin=paintCoindSelected();
+            // when start load selected crypto on slide
+            arrow_to_slides_clickEvent(coin);
+        }
     }
-    //console.log(user);
+    console.log(user);
     //take a peek if there is saved wallets
     if(user.coins[0] !== undefined && user.coins[0] !== ""){
         //get data of saved wallets
         getRequestData(await fetchData(API+`${getWalletSymbols()}`));
     }
     
-    if (online_offline && user.identified && user.coins[0] != "") {
+    if (online_offline && user.identified && user.coins[0] !== "") {
         for(var i=0; i< user.coins.length; i++){
 
             LastCheck = user.checkPrice[i]?user.checkPrice[i].coinPrice:0;
@@ -203,6 +208,12 @@ async function paintingData(){
                         save_price_to_chart(coin,critopApi[coin].priceData);
 
                     }
+                    // profits highter and lower
+                    LastCheck_H_L[coin] = {h:user.checkPrice[i]?user.checkPrice[i].h:"0", l: user.checkPrice[i]?user.checkPrice[i].l:"0"};
+                    LastCheck_H_L[coin].h = LastCheck_H_L[coin].h === undefined? 0:LastCheck_H_L[coin].h;
+                    LastCheck_H_L[coin].l = LastCheck_H_L[coin].l === undefined? 0:LastCheck_H_L[coin].l;
+                    // LastCheck_H_L[coin] = {h:0, l:0};
+                    calc_profits_h_l(coin, j)
 
                     break
                 }else{
@@ -250,6 +261,7 @@ async function paintingData(){
             
         }
         loadCriptoSelected();
+        
         
     }
     firtsLoad=1;
@@ -344,7 +356,7 @@ async function checkToSAvedPrice(coin,id) {
         }
 
         //update the new price
-        await transaction('UpdateCheckPrice',{criptoID:coin, coinPrice:critopApi[coin].priceData,index:id});
+        await transaction('UpdateCheckPrice',{criptoID:coin, coinPrice:critopApi[coin].priceData,index:id},LastCheck_H_L[coin]);
 
         saveStyles(coin,id);
     }//else{ no diferent};
@@ -486,14 +498,15 @@ singInButton.onclick = async function(){
     }
 
     //working with a succesfully session
+    //console.log(data);
     if(data.status){
+        navigateTo('/home')
         requestPainted();
-        navigateTo('/login')
     }
 }
 
 //add to my wallets
-setMyWallets=()=>{
+setMyWallets=(searchResult)=>{
     let criptos= $('.rankingContent2');
     //add event to work even when not all the elements are set, using propagation of events (bubbling)
     criptos.onclick= async(event) =>{
@@ -507,7 +520,7 @@ setMyWallets=()=>{
             //save only valid coins
             if(!element.classList.contains("own") && !element.classList.contains("invalid")){
                 const re= await transaction('saveCoin',{},data);
-
+                
                 //update data users
                 await validateSession();
 
@@ -589,11 +602,11 @@ function paintWallets(){
                 //add criptos summarize to mobile desing
                 summarize_cryptos(user.coins[index],index);
     }
-
+    
     //add click event to .myCriptos
     openCriptoDetails();
 }
-let lastCriptoSelected;
+let lastCriptoSelected; // to avoid reload the chart when it is the same selected
 getChart=async (idCripto, limit)=>{
     //validate if doesn't exist data 
     if(dataChart.data == '' || idCripto != lastCriptoSelected){
@@ -625,6 +638,7 @@ getChart=async (idCripto, limit)=>{
     }
     lastCriptoSelected=idCripto;
 }
+// load the chart
 loadChart= async()=>{
     if(BTCjson.coinSelected.id !== ""){
         if(BTCjson[BTCjson.coinSelected.id]){
@@ -675,7 +689,19 @@ loadCriptoSelected= async ()=>{
       let elapseTim =$('#elapseTim');
       let investedDate =$('#investedDate');
       let priceSavdStorage =$('#priceSavdStorage');
-  
+
+      // profits of my investion hight and low
+      let Hight =$('#Hight');
+      let Low =$('#Low');
+
+      // if there is a investion show the highter and lower profits otherwise dont show it
+      Hight.innerHTML=LastCheck_H_L[id]?LastCheck_H_L[id].h:  0;
+      Low.innerHTML=LastCheck_H_L[id]?LastCheck_H_L[id].l: 0;
+     
+      // paint respective color of the price
+      negative_positive(Hight,Hight.innerHTML)
+      negative_positive(Low,Low.innerHTML)
+
       let totalInvested=0;
   
       //paint data of selected crypto on .center div
@@ -802,6 +828,13 @@ load_rewards=(criptoIndex,index)=>{
         savdDifferen.innerHTML=convertPrice(coinPrice, '-', user_data1.coinPrice );
         earnings_today.innerHTML=jsonData.earnings[0];
         
+        $('#diferenceH').innerHTML= convertPrice(savdDifferen.innerHTML,'-' , $('#Hight').innerHTML); 
+        $('#diferenceL').innerHTML= convertPrice(savdDifferen.innerHTML,'-' , $('#Low').innerHTML); 
+        
+        // paint respective color of the price
+        negative_positive($('#diferenceH'),$('#diferenceH').innerHTML);
+        negative_positive($('#diferenceL'),$('#diferenceL').innerHTML);
+
         //more than one investion
         if(user.criptos[criptoIndex].investedPrice.length>1){//index>0
 
@@ -825,6 +858,35 @@ load_rewards=(criptoIndex,index)=>{
         
     }
   
+}
+calc_profits_h_l=(criptoIndex,index)=>{
+    let user_data1=user.criptos[index].investedPrice[0];
+
+    let coinPrice=critopApi[criptoIndex].priceData
+    let diference =convertPrice(coinPrice, '-', user_data1.coinPrice ).toString()
+    //replace any ',' that it could has
+    diference = diference.replace(/,?/g,'');
+    diference=parseFloat(diference);
+
+    let hight= LastCheck_H_L[criptoIndex].h.toString(); // turn it into string
+    let low= LastCheck_H_L[criptoIndex].l.toString();
+    hight= hight.replace(/,?/g,''); // remove any ',' only if there is
+    low=low.replace(/,?/g,'');
+
+    hight=parseFloat(hight)
+    low=parseFloat(low)
+
+    if(diference > hight){
+        LastCheck_H_L[criptoIndex].h = diference;
+    }else if(hight === 0){ // only when it starts
+        LastCheck_H_L[criptoIndex].h = diference;
+    }
+    
+    if(diference < low){
+        LastCheck_H_L[criptoIndex].l = diference;
+     }else if(low === 0){ // only when it starts
+        LastCheck_H_L[criptoIndex].l = diference;
+    }
 }
 
 //paint red if the value is negatives o green default 
@@ -855,11 +917,11 @@ paintCoindSelected=()=>{
         }
         });
         
-        // add class to the new seelcted
+        // add class to the new selected
         setClass([{e:$('.criptoRanking','all')[coin],c:'selected'}]);
 
-
+        return coin;
     };
-    return coin;
+    return 0;
     
 }
