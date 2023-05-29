@@ -188,7 +188,9 @@
 }
 .rankingContent2{
     width: 100%;
-    height: 100%;
+    height: calc(100% - 28px);
+    margin-top: 28px;
+    position: relative;
     /* display: inline-block; */
     display: flex;
     justify-content: center;
@@ -216,7 +218,7 @@
     text-align: center;
     display: inline-block;
     
-    background: rgb(20 20 20 / 54%);
+    background: rgb(20 20 20 / 66%);
     padding: 10px;
     transition: 0.5s;
 }
@@ -241,7 +243,7 @@
     cursor:not-allowed !important;
     background: rgba(204, 2, 2, 0.54) !important;
 }
-.criptoRanking.own:hover
+
 .criptoRanking.own{
     cursor:not-allowed !important;
     background: rgba(76, 204, 2, 0.54) !important;
@@ -281,12 +283,56 @@
 }
 .expOption{
     position: absolute;
-    right: 20px;
-    margin: 5px;
-    cursor: pointer;
+    right: 0;
+    margin-top: 5px;
     z-index: 1;
+    width: 100%;
+    height: 23px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    color: #DDE1FB;
+    
 }
-
+.searh_details{
+    position: absolute;
+    left: 0;
+    padding-left: 10px;
+    width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    text-align: left;
+}
+.searh_options{
+    position: relative;
+    height: 100%;
+    width: 30px;
+    margin-right: 25px;
+    cursor: pointer;
+}
+.searh_options span{
+    display: block;
+    background: #606dd1;
+    height: 9px;
+    width: 9px;
+    margin: 2px 2px 2px 4px;
+    
+}
+.searh_options span::after{
+    position: absolute;
+    content: '';
+    right: 5px;
+    display: block;
+    background: #4155ec;
+    height: 9px;
+    width: 9px;
+}
+.closeSearch{
+    padding-right: 10px;
+    cursor: pointer;
+}
 .imgCripto{
     position: relative;
     width: 60px;

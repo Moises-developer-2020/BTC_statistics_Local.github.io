@@ -29,6 +29,11 @@ $('#coinSearch').onsubmit = async (event, e) => {
     $('.rankingContent2').innerHTML = '';
 
     searchResult = searchResult.data.coins;
+    let searchResult2=[];
+
+    console.log(searchResult2);
+    
+    $('.searh_details').innerHTML = `${searchResult.length} results to: ${search}`;
 
     //convert my crypto names to array
     let MyCoinsArray=getWalletSymbols().split(",");
@@ -196,9 +201,11 @@ openCriptoDetails_mobile= (i)=>{
     });
   }
   // to paint crypto selected after a new crypto is added
-  let coinIndex=paintCoindSelected();
-  if($(`.image`,'all')[coinIndex]){
-    $(`.image`,'all')[coinIndex].click();
+  if(movil_Desing){
+    let coinIndex=paintCoindSelected();
+    if($(`.image`,'all')[coinIndex]){
+      $(`.image`,'all')[coinIndex].click();
+    }
   }
 };
 

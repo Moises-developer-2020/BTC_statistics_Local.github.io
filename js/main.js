@@ -520,7 +520,10 @@ setMyWallets=(searchResult)=>{
             //save only valid coins
             if(!element.classList.contains("own") && !element.classList.contains("invalid")){
                 const re= await transaction('saveCoin',{},data);
-                
+                console.log(index);
+                if(re.status){
+                    setClass([{e:element,c:'own'}]);
+                }
                 //update data users
                 await validateSession();
 
@@ -695,8 +698,8 @@ loadCriptoSelected= async ()=>{
       let Low =$('#Low');
 
       // if there is a investion show the highter and lower profits otherwise dont show it
-      Hight.innerHTML=LastCheck_H_L[id]?LastCheck_H_L[id].h:  0;
-      Low.innerHTML=LastCheck_H_L[id]?LastCheck_H_L[id].l: 0;
+      Hight.innerHTML=moneyFormat(LastCheck_H_L[id]?LastCheck_H_L[id].h:0)
+      Low.innerHTML=moneyFormat(LastCheck_H_L[id]?LastCheck_H_L[id].l:0)
      
       // paint respective color of the price
       negative_positive(Hight,Hight.innerHTML)
@@ -828,8 +831,23 @@ load_rewards=(criptoIndex,index)=>{
         savdDifferen.innerHTML=convertPrice(coinPrice, '-', user_data1.coinPrice );
         earnings_today.innerHTML=jsonData.earnings[0];
         
-        $('#diferenceH').innerHTML= convertPrice(savdDifferen.innerHTML,'-' , $('#Hight').innerHTML); 
-        $('#diferenceL').innerHTML= convertPrice(savdDifferen.innerHTML,'-' , $('#Low').innerHTML); 
+        let diferences =savdDifferen.innerHTML.toString();
+        //replace any ',' that it could has
+        diferences = diferences.replace(/,?/g,'');
+        diferences=parseFloat(diferences);
+
+        let Hight =$('#Hight').innerHTML.toString();
+        //replace any ',' that it could has
+        Hight = Hight.replace(/,?/g,'');
+        Hight=parseFloat(Hight);
+
+        let Low =$('#Low').innerHTML.toString();
+        //replace any ',' that it could has
+        Low = Low.replace(/,?/g,'');
+        Low=parseFloat(Low);
+        
+        $('#diferenceH').innerHTML= convertPrice(diferences,'-' , Hight); 
+        $('#diferenceL').innerHTML= convertPrice(diferences,'-' , Low); 
         
         // paint respective color of the price
         negative_positive($('#diferenceH'),$('#diferenceH').innerHTML);
