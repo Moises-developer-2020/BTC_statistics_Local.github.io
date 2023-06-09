@@ -391,9 +391,23 @@ body {
 .earningStatus{
     border-radius: 5px;
     padding: 4px;
-    background: #0000cb38;
+    background: #4caf503b;
 }
-
+.earningStatus.negative{
+    background: #e91e6329;
+}
+.p_n{
+    border-radius: 5px;
+    padding: 4px;
+    background: #4caf503b;
+}
+.p_n.negative{
+    background: #e91e6329;
+}
+#invested_saved,
+.invested_saved2{
+    color: #c5c5ff;
+}
 
 .reloadData{
     position: absolute;

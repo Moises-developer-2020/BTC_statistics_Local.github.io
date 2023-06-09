@@ -768,14 +768,14 @@ loadCriptoSelected= async ()=>{
                                           <span class="priceSavdStorage2">${convertPrice(user_data.coinPrice, false, 0)}&nbsp≠&nbsp</span>
                                           <span class="savdDifferen2 positive">↻</span>
                                         </div> 
-                                        <span class="earningStatus">$<span class="invested_saved2">${parseFloat(user_data.price)}</span> <span>≠</span>
+                                        <span class="earningStatus"><span class="invested_saved2">$${parseFloat(user_data.price)}</span> <span>≠</span>
                                       <span class="earnings_today2 positive">↻</span></span>
                                       </div>`;
               }
 
               load_rewards(j,o);
             }
-            invested_saved.innerHTML=totalInvested;
+            invested_saved.innerHTML="$"+totalInvested;
 
             break
         }else{
@@ -887,11 +887,22 @@ load_rewards=(criptoIndex,index)=>{
             earnings_today.innerHTML=moneyFormat(totalEarning);
 
             negative_positive(savdDifferen2[index], savdDifferen2[index].innerHTML);
-            negative_positive(earnings_today2[index], earnings_today2[index].innerHTML);
+            let p_n=negative_positive(earnings_today2[index], earnings_today2[index].innerHTML);
+            if(!p_n){
+                
+                setClass([{e:$('.earningStatus','all')[index],c:"negative"}]);
+            }else{
+                removeClass([{e:$('.earningStatus','all')[index],c:"negative"}]);
+            }
         }
        
         negative_positive(savdDifferen, savdDifferen.innerHTML);
-        negative_positive(earnings_today, earnings_today.innerHTML);
+        let p_n=negative_positive(earnings_today, earnings_today.innerHTML);
+        if(!p_n){
+            setClass([{e:$('.p_n'),c:"negative"}]);
+        }else{
+            removeClass([{e:$('.p_n'),c:"negative"}]);
+        }
         
     }
   
@@ -928,12 +939,16 @@ calc_profits_h_l=(criptoIndex,index)=>{
 
 //paint red if the value is negatives o green default 
 function negative_positive(element, value){
-    //if (parseFloat(value) < 0) {
+    let status = false;
     if(Math.sign(parseFloat(value)) == -1 || Math.sign(parseFloat(value)) == -0){
         setClass([{e:element,c:"negative"}]);
+        status = false;
     } else {
         removeClass([{e:element,c:"negative"}]);
+        status = true;
     }
+
+    return status;
 }
 
 paintCoindSelected=()=>{
