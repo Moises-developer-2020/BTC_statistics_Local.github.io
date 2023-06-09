@@ -47,11 +47,14 @@
 
 body {
     background: black;
-    color: #7c7bff;
+    color: #c5c5ff;
     font-size: 3em;
     margin: 0;
     padding: 0;
     user-select: none;
+}
+.blue{
+    color: #7c7bff;
 }
 .main-content{
     display: flex;
@@ -147,7 +150,7 @@ body {
 } */
 .investex2{
     overflow: auto;
-    /* max-height: calc(25px * 5); */
+     max-height: calc(25px * 5); 
     margin-top: 5px;
 
 }
@@ -317,8 +320,11 @@ body {
 .reflact #percent{
     border-radius: 5px;
     padding: 3px 7px 3px 7px;
-    background: #0000ff47;
+    background: #007e0561;
     margin-right: 10px;
+}
+.reflact #percent.negative{
+    background: #e91e634f;
 }
 .dataH1 div span{
     display: block;
@@ -691,4 +697,27 @@ body {
     align-items: center;
     top: 0;
     left: 0;
+  }
+
+  .not_buys_to_show{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+  }
+  .not_buys_to_show.show{
+    display: flex;
+  }
+  .center.hidde{
+    height: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden;
+  }
+  .ct_btn_sell.hidde{
+    height: 0 !important;
+    overflow: hidden;
   }

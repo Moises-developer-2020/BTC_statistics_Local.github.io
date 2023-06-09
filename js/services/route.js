@@ -82,10 +82,7 @@ function showInnerRoute(route) {
     contentDiv.classList.add('active');
   }
 
-
-
 }
-
 
 // show pages
 function navigateTo(route) {

@@ -210,46 +210,13 @@ openCriptoDetails_mobile= (i)=>{
 };
 
 open_Cripto_selected_mobile=()=>{
-  //open section2 to see data on movil desing
+  // open section2 to see data on movil desing
   setClass([{e:$('.section2'),c:'show'}]);
 }
 
-////open buy section by click
+// open buy section by click
 $('#investInput').onclick=()=>{
-
-  let myCriptos= $('.myCriptos','all');
-  let index=BTCjson.coinSelected.index;
-
-  //saved id of element to close after 
-  setClass([{e:myCriptos[index],c:'buy'}]);
-  setClass([{e:$('.buySpace'),c:'active'}]);
-
-  let marginTop =$('.buySpace_card').offsetTop;
-  let marginleft=$('.buySpace_card').offsetLeft + $('.main').offsetLeft;
-  let invested_saved_coin =$('#invested_saved_coin');
-
-  myCriptos[index].setAttribute('style',`margin-top:${marginTop}px; margin-left:${marginleft}px;`);
-
-  //get ID of cripto
-  let id=$('.criptoID','all')[index].innerHTML;
-
-
-  //detect which wallets I selected and show the invested prices
-  for (let j = 0; j < user.criptos.length; j++) {
-    const idCripto = user.criptos[j].idCripto;
-    if (id === idCripto) {
-        //add invested price
-        invested_saved_coin.innerHTML="invested: ";
-        for (let o = 0; o < user.criptos[j].investedPrice.length; o++) {
-          invested_saved_coin.innerHTML+=`<div>${validateElapseTime(user.criptos[j].investedPrice[o].date)} = &nbsp $<span>${user.criptos[j].investedPrice[o].price}</span></div>`;
-
-        }
-
-        break
-    }else{
-        invested_saved_coin.innerHTML="";
-    }
-  }
+  setClass([{e:$('.statusContent'),c:'active'}]);
 }
 
 $('.btnCancelBuy').onclick=()=>{
@@ -261,8 +228,19 @@ closeBuySpace=()=>{
    let myCriptoID =BTCjson.coinSelected.index;
  
    myCripto[myCriptoID].removeAttribute('style');
-   removeClass([{e:myCripto[myCriptoID],c:'buy'}]);
-   removeClass([{e:$('.buySpace'),c:'active'}]);
+   //removeClass([{e:myCripto[myCriptoID],c:'buy'}]);
+   removeClass([{e:$('.statusContent'),c:'active'}]);
+}
+
+$('#open_ghost_buy').onclick=()=>{
+  if($('#open_ghost_buy').checked){
+    setClass([{e:$('.buySpace_ghostBuy'),c:'active'}]);
+    removeClass([{e:$('.chekboxes'),c:'active'}]);
+    
+  }else{
+    removeClass([{e:$('.buySpace_ghostBuy'),c:'active'}]);
+    setClass([{e:$('.chekboxes'),c:'active'}]);
+  }
 }
 
 //paint type of chart

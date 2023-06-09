@@ -354,6 +354,12 @@
     }
     
 }
+@media screen and (max-width: 520px) {
+    .buySpace_ghostBuy input {
+        width: 140px;
+        
+    }
+}
 @media screen and (max-width: 433px) {
     .movil div{
         transform: scale(0.93);
@@ -393,7 +399,7 @@
 
 @media screen and (max-width: 717px) {
     /*begin buySpace*/
-    .buySpace_content_flex{
+    /* .buySpace_content_flex{
         display: inline-block;
         transform: scale(1.5);
     }
@@ -403,7 +409,7 @@
         overflow: auto;
         height: 100%;
         transform: scale(0.8);
-    }
+    } */
 }
 
 @media screen and (max-width: 1435px) {
@@ -473,8 +479,8 @@
         overflow: hidden;
     }
     .section2.show{
-        height: calc(100% - 45% + 50px);
-        top: calc(45% - 50px);
+        height: calc(100% - 45% + 73px);
+        top: calc(45% - 73px);
     
     }
     .section2 .statusSection,
@@ -678,7 +684,6 @@
         min-height: 0px; 
         font-size: 0px; 
         transition: 0.5s;
-        margin-top: 5px;
         overflow: initial;
     }
     .summaryWallets {
@@ -815,5 +820,14 @@
         transform: translate(-53%, -53%) scale(0.6);
         background: rgb(0, 0, 0);
     }
+    .chartInfo{
+        font-size: 1em !important;
+    }
+    .investex2{
+        max-height: 100%; 
     
+    }
+    .statusContent .active .center .investex2{
+        max-height: calc(25px * 5);
+    }
 }

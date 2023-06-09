@@ -27,6 +27,7 @@
     top: 20px;
     position: relative;
     z-index: 1;
+    font-size: 1.5em;
 }
 .chartContent{
 
@@ -43,7 +44,7 @@
     left: 0px;
     top: 0;
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 23px);
     backdrop-filter: blur(2px);
     background-color: #00000045;
     display: none;
@@ -79,7 +80,8 @@
 }
 .graphic_chart{
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 80px);
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,6 +93,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: -25px;
 }
 .chart_options_buttom{
     position: relative;
@@ -158,6 +161,7 @@
     overflow: hidden;
     text-align: center;
     transition: 0.5s;
+    margin-top: -23px;
 }
 .seach_place.searchPlace,
 .seach_place.active{
@@ -222,7 +226,7 @@
     padding: 10px;
     transition: 0.5s;
 }
-.criptoRanking.image{
+ .criptoRanking.image{
     height: 60px ;
     min-width: 0px !important;
     min-height: 0px !important;
@@ -522,7 +526,7 @@ margin-top: 5px;
     background-image: linear-gradient(300deg,#0015ab, #ab0000bf);
 }
 .myCriptos.buy{
-    position: fixed;
+    /* position: fixed;
     z-index: 2;
     top: 0;
     left: 0;
@@ -530,7 +534,7 @@ margin-top: 5px;
     border: none;
     transform: none;
     cursor:auto;
-    /* transform: scale(1.3); */
+    transform: scale(1.3); */
     
 }
 
@@ -629,68 +633,82 @@ margin-top: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 3;
 }
 .buySpace{
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #000000;
     display: none;
     justify-content: center;
     align-items: center;
+    padding-bottom: 40px;
 }
-.buySpace.active{
-    display: flex;
-    overflow: auto;
-    z-index: 2;
-}
-.buySpace_content{
-    padding: 20px;
-    border-radius: 15px;
-    font-size: 0.7em;
-    background: linear-gradient(rgb(0, 21, 171), transparent) rgb(0, 0, 0);
-    
-}
-
-.buySpace_title{
-    text-align: center;
+.statusContent.active .buySpace{
+    position: relative;
     display: block;
-    
-}
-#invested_saved_coin{
-    color: #d3eaff;
-    font-size: 0.8em;
-    width: fit-content;
+    z-index: 2;
+    height: auto;
+    top: 40px;
+    max-width: 530px;
+    width: 95%;
     margin: auto;
 }
-#invested_saved_coin span{
-    display: block;
+.statusContent.active{
+    position: fixed;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    overflow: auto;
+    padding: 0px;
+    background: rgb(0 0 0 / 55%);
+    top: 0;
+    z-index: 1;
+    backdrop-filter: blur(11px);
+    border-radius: 0;
 }
-#invested_saved_coin div{
-    display: flex;
-    justify-content: space-between;
-    padding-top: 0px;
-    padding-bottom: 0px;
+.statusContent.active .center{
+    position: relative;
+    height: auto;
+    margin: auto;
+    max-width: 530px;
+    width: 95%;
+    top: 50px;
+    
 }
+.statusContent.active .center .invest_status_img::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(0deg, black 24%, transparent 100%)
+}
+.statusContent.active .reload{
+    display: none;
+}
+.buySpace_content{
+    font-size: 0.7em;
+    /* background: linear-gradient(rgb(0, 21, 171), transparent) rgb(0, 0, 0); */
+    width: 100%;
+    height: 100%;
+}
+
 .buySpace_content_flex{
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
-.buySpace_card{
-    display: inline-block;
-}
+
 .buySpace_card_data{
     position: relative;
-    display: inline-block;
+    display: block;
+    width: 100%;
+
 }
 
-.buySpace_content div
-{
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
 .open_ghost_buy{
     display: flex;
     justify-content: space-between;
@@ -699,17 +717,10 @@ margin-top: 5px;
     font-size: 0.7em;
 
 }
-/* .open_ghost_buy + div   {
-    color:red;
-} */
-input[type="checkbox"]:checked + .buySpace_ghostBuy {
-    color: red !important;
+
+.buySpace_ghostBuy.active{
+    height: 120px;
 }
-#buySpace_ghostBuy:checked ~ .buySpace_ghostBuy {
-    transform: scale(5);
-  }
-  
-  
   
 .ghostBuy1 {
     display: flex;
@@ -730,49 +741,186 @@ input[type="checkbox"]:checked + .buySpace_ghostBuy {
 .buySpace_ghostBuy{
     position: relative;
     text-align: left;
-    padding-top: 0px !important;
-    opacity: 0.1; 
+    padding-top: 20px !important;
+    padding-bottom: 0px !important;
+    height: 0;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    
 }
-.buySpace_ghostBuy input {
+.buySpace_ghostBuy .ghostBuy2{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+.buySpace input {
     font-size: 18px;
-    width: 90px;
-    padding: 9px 0 1px;
+    padding: 9px 9px 0px;
     border: 0;
     background: none;
-    border-bottom: 1px solid aliceblue;
+    border-bottom: 2px solid #6f6f6f;
     color: aliceblue;
     
 }
-.ghostBuy2 input {
-    width: 20px !important;
-}
-.ghost_content{
+.buySpace input[type="checkbox"] {
     position: absolute;
-    font-size: 4em;
-    top: 41px;
-    left: 0;
-    opacity: 0.05;
-    width: 100%;
+    right: 4px;
+    width: 50px;
+    height: 25px;
+    z-index: 1;
+    opacity: 0;
+    cursor: pointer;
+    
+}
+.buySpace input,
+.buySpace input:focus,
+.buySpace input:valid,
+.buySpace input:not(:placeholder-shown) {
+    
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+}
+.ghostBuy1_content span,
+.buySpace_bottom span{
+    position: relative;
+}
+.ghostBuy1_content span:nth-child(2):after,
+.buySpace_bottom span:nth-child(2):after{
+    position: absolute;
+    content: '';
+    width: 9px;
+    left: 0px;
+    top: calc(100% - 9px);
+    border-bottom: 2px solid #adadad;
+    border-left: 2px solid #adadad;
+    height: 7px;
+}
+.ghostBuy1_content span:nth-child(2)::before,
+.buySpace_bottom span:nth-child(2)::before{
+    position: absolute;
+    content: '';
+    width: 9px;
+    right: 0px;
+    top: calc(100% - 9px);
+    border-bottom: 2px solid #adadad;
+    border-right: 2px solid #adadad;
+    height: 7px;
 }
 
-.buySpace_card{
-    height: 200px;
-    width: 280px;
-    min-width: 280px;
-    padding: 10px;
-    margin: 20px 70px 20px 70px;
-    background: #000000;
-}
 .profits_bottom{
+    position: fixed;
+    margin-top: calc(100vh - 160px );
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 530px;
+    width: 95%;
+    height: 35px;
 }
-.buySpace_bottom div:nth-child(1){
-    font-size: 0.7em;
-    text-align: left;
+.profits_bottom button{
+    height: 40px;
+    width: 124px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: #e91e63;
+    box-shadow: #e91e63 0 10px 20px -10px;
+}
+.buySpace_bottom {
+   
+    text-align: center;
 }
 .profits_bottom button:nth-child(2){
     background: rgb(76 204 2 / 55%);
     box-shadow: rgb(76 204 2 / 65%) 0 10px 20px -10px;
+}
+.sectionContent span:nth-child(1){
+    border-radius: 112px;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    border: 4px solid #1c1c28;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px 5px #0000004f;
+    margin: auto;
+}
+.sectionContent span:nth-child(1) img{
+    width: 190px;
+    height: 190px;
+    overflow: hidden;
+    border-radius: 200px;
+}
+
+.chekboxes{
+    display: flex;
+    background: #3939398c;
+    border-radius: 100px;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 60px;
+    overflow: hidden;
+    left: 0px;
+    position: relative;
+    color: #DDE1FB;
+    font-size: 0.6em;
+    transform: scale(0.8);
+    cursor: pointer;
+}
+.chekboxes div{
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+
+.chekboxes:not(.active)  .off::after{
+    left: 30px;
+    background: #2d7702;
+}
+
+.off::after{
+    position: absolute;
+    content: "";
+    width: 50%;
+    height: 100%;
+    border-radius: 100px;
+    left: 0;
+    top: 0;
+    background-color: #e91e63 ;
+    box-shadow:0 0 20px 2px black;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chart_percent{
+    height: 40px;
+    max-width: 530px;
+    width: 100%;
+    display: flex;
+    position: relative;
+    font-size: 0.5em;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.chart_percent_negativo{
+    background-color: #e91e63 ;
+    width: 30%;
+    text-align: center;
+    border-radius: 5px 0 0px 5px;
+}
+.chart_percent_positivo{
+    background-color: #007e05 ;
+    width: 70%;
+    text-align: center;
+    border-radius: 0 5px 5px 0;
 }

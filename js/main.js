@@ -87,8 +87,6 @@ async function getRequestData(API,parameter="BTC"){
     } catch (error) {
         online_offline = false;
     }
-
-    
     //console.log(online_offline);
 }
 //event of route when the page change
@@ -96,12 +94,9 @@ routeEvent('hashchange',()=>{
     requestPainted();
 });
 
-
 async function requestPainted(){
     requestPainting(validateStatus, async()=>{
-        
         await paintingData();
-        
     });
 }
 //to see data just call user.
@@ -123,7 +118,6 @@ async function paintingData(){
                 let coin=user.coins[i].symbol;
                 getStyleSaved(coin,i);
             }
-            
         }
 
         if(user.coins[0] !== ""){
@@ -725,7 +719,7 @@ loadCriptoSelected= async ()=>{
       for (let j = 0; j < user.criptos.length; j++) {
         const idCripto = user.criptos[j].idCripto;
         if (id === idCripto) {
-
+            notBuys('close');
             //paint the mainIndicator of cripto selected
             if(MainIndicator.classList.length>0){
                 MainIndicator.removeAttribute('class')
@@ -755,7 +749,7 @@ loadCriptoSelected= async ()=>{
                 investedDate.innerHTML=DateformatContacts(user_data.date).dateSaved+`<span title="Total Investions">🔻X${o+1}</span>`;
   
                 investex2.innerHTML+=`<div class="investex2_details">
-                                        <span class="elapseTime2" title="${elapseTimeDate}">${elapseTime}</span> 
+                                        <span class="elapseTime2 blue" title="${elapseTimeDate}">${elapseTime}</span> 
                                         <div class="priceSavd2">
                                           <span class="priceSavdStorage2">${convertPrice(user_data.coinPrice, false, 0)}&nbsp≠&nbsp</span>
                                           <span class="savdDifferen2 positive">↻</span>
@@ -777,15 +771,26 @@ loadCriptoSelected= async ()=>{
             priceSavdStorage.innerHTML="";
             savdDifferen.innerHTML='';
             earnings_today.innerHTML='';
+            notBuys('open')
+            
         }
       }
 
       paintCoindSelected();
       await loadChart();
     }
-  
 }
-
+notBuys=(status)=>{
+    if(status == "close"){
+        removeClass([{e:$('.not_buys_to_show'),c:'show'}]);
+        removeClass([{e:$('.center'),c:'hidde'}]);
+        removeClass([{e:$('.ct_btn_sell'),c:'hidde'}]);
+    }else{
+        setClass([{e:$('.not_buys_to_show'),c:'show'}]);
+        setClass([{e:$('.center'),c:'hidde'}]);
+        setClass([{e:$('.ct_btn_sell'),c:'hidde'}]);
+    }
+}
 //get rewards of investion
 load_rewards=(criptoIndex,index)=>{
     let user_data1=user.criptos[criptoIndex].investedPrice[0];

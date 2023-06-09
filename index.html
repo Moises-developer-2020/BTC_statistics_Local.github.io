@@ -55,9 +55,9 @@
             <div class="sectionContent">
                 <span><img src="logo.png" alt=""></span>
                 <span>
-                    <a href="#/home">Cibtinue has Jose...</a>
+                    <a href="#/home">Continue has Jose...</a>
                 </span>
-                <span>
+                <span style="display: none;">
                     <a href="#/login">Login</a>
                 </span>
             </div>
@@ -122,7 +122,7 @@
                         </div>
                         <div class="chartContent"> 
                             <div class="graphic_chart" id="graphic_chart">
-                                <div class="spin-wrapper" style="position: absolute; height: calc(100% - 50px)">
+                                <div class="spin-wrapper" style="position: absolute; height: calc(100% - 105px)">
                                     <div class="spinonediv-1" style="transform: translate(-50%, -50%) scale(1.5); margin:0px 0 0 0px;"></div>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                                 <div class="invest_status">
                                     <div class="invest_status_img"><img src="logo.png" alt=""></div>
                                     <div class="invest_status_info">
-                                        <div class="elapseTimeInfo">
+                                        <div class="elapseTimeInfo blue">
                                             <span id="elapseTim">↻</span>
                                         </div>
                                         <div class="priceSavd">
@@ -202,18 +202,18 @@
                                     </div>
                                 </div>
                                 <div class="earnings">
-                                    <span>Earnings</span>
+                                    <span class="blue">Earnings</span>
                                     <span class="earningStatus">$<span id="invested_saved">↻</span> <span>&#8800</span>
                                         <span id="earnings_today" class="positive">↻</span></span>
                                 </div>
                                 <div class="investeInfo">
-                                    <span>Invested since: </span>
+                                    <span class="blue">Invested since: </span>
                                     <span id="investedDate">↻</span>
                                 </div>
                                 <div class="status main_status">
                                     <div id="statusTextH">
                                         <div>
-                                            <span>H: </span>
+                                            <span class="blue">H: </span>
                                             <span id="Hight" class="positive">↻</span>
                                         </div>
                                         <div>
@@ -224,7 +224,7 @@
                                     </div>
                                     <div id="statusTextL">
                                         <div>
-                                            <span>L: </span>
+                                            <span class="blue">L: </span>
                                             <span id="Low" class="positive">↻</span>
                                         </div>
                                         <div>
@@ -236,16 +236,9 @@
                                 </div>
                                 <div class="investex2 "></div>
 
-                                <!-- <div class="dataH1">
-                                    <div class="dataH1_data">
-                                        <span id="price">19000 <span id="priceDifferences">-7</span></span>
-                                        <span id="percent" class="positive">50</span>
-                                    </div>
-                                    <div class="dataH1_img"><img src="logo.png" alt=""></div>
-                                </div> -->
-
-                                
-
+                            </div>
+                            <div class="not_buys_to_show">
+                                <p>there's not invest</p>
                             </div>
                             <div class="reload">
                                 <div class="ct_btn_sell">
@@ -261,6 +254,64 @@
                             <div class="loading">
                                 <div class="spin-wrapper not_background">
                                     <div class="spinonediv-1" style="transform: scale(1.5);"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="buySpace  ">
+                                <div class="chart_percent">
+                                    <span class="chart_percent_negativo">30%</span>
+                                    <span class="chart_percent_positivo">70%</span>
+                                </div>
+                                <div class="buySpace_content">
+                                    <div class="buySpace_content_flex">
+                            
+                                        <div class="buySpace_card_data">
+                                            <div class="open_ghost_buy">
+                                                <span class="blue">ghost buys</span>
+                                                   
+                                                    <input type="checkbox" name="" id="open_ghost_buy">
+                                                    <div class="chekboxes ghost_buy active">
+                                                        <div class="off ">off</div>
+                                                        <div class="on ">on</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            <div class="buySpace_ghostBuy">
+                                                <div class="ghostBuy1">
+                                                    <div class="ghostBuy1_content">
+                                                        <span>price of begin</span>
+                                                        <span><input type="text" placeholder="100.00"></span>
+                                                    </div>
+                
+                                                    <div class="ghostBuy1_content">
+                                                        <span>limite</span>
+                                                        <span><input type="number" placeholder="infinity"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="ghostBuy2">
+                                                    <span>automaticas?</span>
+                                                    <input type="checkbox" name="" id="ghostBuy_auto">
+                                                    <div class="chekboxes ghostBuy_auto active">
+                                                        <div class="off ">off</div>
+                                                        <div class="on ">on</div>
+                                                    </div>
+                                                </div>
+                
+                                            </div>
+                                            <div class="buySpace_bottom">
+                                                <div class="blue">Money to Invest</div>
+                                                <span>                                                
+                                                    <input  id="price_invest" type="number" placeholder="000.00">
+                                                </span>                                            
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="profits_bottom">
+                                            <button class="button-34 btnCancelBuy" id="btnCancelBuy"
+                                                role="button">Cancel</button>
+                                            <button class="button-34" id="btnBuy" role="button">Buy</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -292,55 +343,7 @@
                     </div>
                 </div>
             </section>
-            <div class="buySpace ">
-                <div class="buySpace_content">
-                    <div class="buySpace_title">
-                        <span>Your Invest Details</span>
-                        <div id="invested_saved_coin"></div>
-                    </div>
-
-                    <div class="buySpace_content_flex">
-                        <div class="buySpace_card"></div>
-                        <div class="buySpace_card_data">
-                            <div class="open_ghost_buy"><span>ghost buys</span> <span><input type="checkbox" name=""
-                                        id="open_ghost_buy"></span></div>
-                            <div class="buySpace_ghostBuy">
-                                <div class="ghostBuy1">
-                                    <div class="ghostBuy1_content">
-                                        <span>price of begin</span>
-                                        <span><input type="text" placeholder="100.00"></span>
-                                    </div>
-
-                                    <div class="ghostBuy1_content">
-                                        <span>limite</span>
-                                        <span><input type="number" placeholder="infinity"></span>
-                                    </div>
-                                </div>
-                                <div class="ghostBuy2">
-                                    <span>automaticas?</span>
-                                    <span><input type="checkbox"></span>
-                                </div>
-
-                            </div>
-                            <span class="ghost_content">👻</span>
-                            <div class="buySpace_bottom">
-                                <div>Money to Invest</div>
-                                <div class="form-group">
-                                    <span>$</span>
-                                    <input class="form-field" id="price_invest" type="number" placeholder="000.00">
-                                </div>
-                                <div class="profits_bottom">
-                                    <button class="button-34 btnCancelBuy" id="btnCancelBuy"
-                                        role="button">Cancel</button>
-                                    <button class="button-34" id="btnBuy" role="button">Buy</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
+            
         </section>
     </div>
 
