@@ -651,7 +651,17 @@ async function transaction(method,data={coinPrice:'',earned:'',investedPrice:'',
             }
 
             return charRequest;
+        case 'deleteCoin':
+            let requestDeleteCoins=[]
+            // remove coins
+            user.coins.splice(coin.index,1)
+            user.checkPrice.splice(coin.index,1)
+            //console.log(user);
 
+            requestDeleteCoins = await fecthLocalData('coins','update',{value:user.coins,id:userID});
+            requestDeleteCoins =await fecthLocalData('checkPrice','update',{value:user.checkPrice,id:userID});
+
+            return requestDeleteCoins;
         default:
             break;
         
@@ -728,6 +738,32 @@ async function get_api_chart_data(idCripto="BTC", limit=100){
 
     return array;
     
+}
+// to khow how many time the price has up and down
+async function calculatePercentage(data) {
+    let numIncreases = 0;
+    let numDecreases = 0;
+    
+    for (let i = 1; i < data.length; i++) {
+        const currentPrice = parseFloat(data[i][4]);
+        const previousPrice = parseFloat(data[i - 1][4]);
+        
+        if (currentPrice > previousPrice) {
+        numIncreases++;
+        } else if (currentPrice < previousPrice) {
+        numDecreases++;
+        }
+    }
+    
+    const totalChanges = numIncreases + numDecreases;
+    const increasePercentage = (numIncreases / totalChanges) * 100;
+    const decreasePercentage = (numDecreases / totalChanges) * 100;
+    
+    //console.log(`El precio ha aumentado el ${increasePercentage.toFixed(2)}% del tiempo y ha disminuido el ${decreasePercentage.toFixed(2)}% del tiempo.`);
+    return {
+        increase:increasePercentage.toFixed(2),
+        decrease:decreasePercentage.toFixed(2)
+    }
 }
 
 // catch event of window

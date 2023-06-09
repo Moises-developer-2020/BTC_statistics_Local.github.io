@@ -529,9 +529,7 @@ setMyWallets=(searchResult)=>{
                 
             }
         }
-    };
-           
-        
+    };      
 }
 
 
@@ -544,7 +542,7 @@ function paintWallets(){
                         <div class="criptoData">
                             <span class="cristoIMG"> <img src="${user.coins[index].large}" alt="img"></span>
                             <div>
-                                <span class="critoName">${user.coins[index].name}</span>
+                                <span class="critoName blue">${user.coins[index].name}</span>
                                 <span class="criptoID">${user.coins[index].symbol}</span>
                             </div>
                         </div>
@@ -563,7 +561,7 @@ function paintWallets(){
                     <div class="status">
                                     <div id="statusTextH">
                                         <div>
-                                            <span>H: </span>
+                                            <span class="blue">H: </span>
                                             <span class="Hight"></span>
                                         </div>
                                         <div>
@@ -574,7 +572,7 @@ function paintWallets(){
                                     </div>
                                     <div id="statusTextL">
                                         <div>
-                                            <span>L: </span>
+                                            <span class="blue">L: </span>
                                             <span class="Low"></span>
                                         </div>
                                         <div>
@@ -586,7 +584,7 @@ function paintWallets(){
                                 </div>
                     <div class="chartCrito">
                         <div>
-                            <span>Invested since</span>
+                            <span class="blue">Invested since</span>
                             <span class="elapseTim">-----</span>
                         </div>
                         <div class="detailsCritoContent">
@@ -607,6 +605,7 @@ let lastCriptoSelected; // to avoid reload the chart when it is the same selecte
 getChart=async (idCripto, limit)=>{
     //validate if doesn't exist data 
     if(dataChart.data == '' || idCripto != lastCriptoSelected){
+
         // load effect to change chart for the new cripto
         setClass([{e:$('.chartContent'),c:'load'}]);
 
@@ -617,6 +616,8 @@ getChart=async (idCripto, limit)=>{
         }
         //paint chart
         get_style_chart(data);
+
+        await linearChart(data)
     }else{
 
         var elapseTime = DateformatContacts(dataChart.date);
@@ -631,6 +632,8 @@ getChart=async (idCripto, limit)=>{
             }
             //paint chart
             get_style_chart(data);
+
+            await linearChart(data)
         }
     }
     lastCriptoSelected=idCripto;
@@ -660,6 +663,17 @@ loadChart= async()=>{
         }
         
     }
+}
+// load of linear chart from buySpace
+linearChart= async (data)=>{
+    let chart_data=await calculatePercentage(data);
+    // to colors and width
+    $('.chart_percent_negativo').setAttribute('style','width:'+chart_data.decrease+'%;');
+    $('.chart_percent_positivo').setAttribute('style','width:'+chart_data.increase+'%;');
+
+    // value
+    $('.chart_percent_negativo').innerHTML=chart_data.decrease+'%';
+    $('.chart_percent_positivo').innerHTML=chart_data.increase+'%';
 }
 //criptos selected to show it in .main
 loadCriptoSelected= async ()=>{
@@ -947,4 +961,55 @@ paintCoindSelected=()=>{
     };
     return 0;
     
+}
+
+//add event to my_criptos_setup
+my_criptos_setup_event=()=>{
+    let criptos= $('.my_criptos_setup');
+    //add event using propagation of events (bubbling)
+    criptos.onclick= async(event) =>{
+        if (event.target.classList.contains('my_criptos_content_img')) {
+            
+            let element =event.target;
+            let index = element.id.split('_')[1];
+        
+            
+            if(!element.classList.contains('not_valid')){
+
+                // if the deleted coin was the selected
+                if(BTCjson.coinSelected.index == index){
+                    //save coin selected in variable
+                    BTCjson.coinSelected={
+                        index:0,
+                        id:user.criptos[0].symbol
+                    }
+
+                    //save on localStorage the coin selected
+                    setStorageData('json','coinSelected',BTCjson.coinSelected);
+                    $('.myCriptos','all')[0].click();
+                }
+
+
+                const re= await transaction('deleteCoin',{},coin={index});
+               
+                // update data users
+                await validateSession();
+
+                // paint wallet on window
+                paintWallets();
+
+                // update API data
+                requestPainted();
+
+
+                // to reload the coin os setups place
+                $('.config_btn').click();
+            }
+              
+                
+                
+                
+            
+        }
+    };      
 }

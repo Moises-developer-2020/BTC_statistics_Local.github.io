@@ -5,6 +5,7 @@
     .menu-bars{
         display: none;
     }
+    
 }
 @media screen and (max-width: 550px) {
     .offline{
@@ -354,11 +355,18 @@
     }
     
 }
+@media screen and (max-width: 560px) {
+    ::-webkit-scrollbar {
+        height: 1rem;
+        width: 0rem;
+    }
+}
 @media screen and (max-width: 520px) {
     .buySpace_ghostBuy input {
         width: 140px;
         
     }
+
 }
 @media screen and (max-width: 433px) {
     .movil div{

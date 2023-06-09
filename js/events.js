@@ -29,9 +29,6 @@ $('#coinSearch').onsubmit = async (event, e) => {
     $('.rankingContent2').innerHTML = '';
 
     searchResult = searchResult.data.coins;
-    let searchResult2=[];
-
-    console.log(searchResult2);
     
     $('.searh_details').innerHTML = `${searchResult.length} results to: ${search}`;
 
@@ -455,4 +452,53 @@ arrow_to_slides_clickEvent=(index=0)=>{
   arrow_left.onclick=()=>{
     transition("left");
   }
+}
+
+// open config place
+$('.config_btn').onclick=()=>{
+  setClass([{e:$('.setups'),c:'active'}]);
+
+  let valid=false;
+  // paint my criptos to delete option
+  $('.my_criptos_setup').innerHTML='';
+  for (let index = 0; index < user.coins.length; index++) {
+
+    // checkout if have invest
+    for (let j = 0; j < user.criptos.length; j++) {
+      const idCripto = user.criptos[j].idCripto;
+      if (user.coins[index].symbol === idCripto) {
+        valid=true;
+        break;
+      }else{
+          valid =false;
+      }
+      }
+
+      // to avoid delete it because have invest
+      if(valid){
+        $('.my_criptos_setup').innerHTML+=`<div class="my_criptos_content">
+                                        <span>
+                                          <img src="${user.coins[index].large}" alt="">
+                                          <span >${user.coins[index].symbol}</span>
+                                        </span>
+                                        <span class="my_criptos_content_img not_valid" id="_${index}">remove</span>
+                                      </div>`;
+      }else{
+        $('.my_criptos_setup').innerHTML+=`<div class="my_criptos_content">
+                                        <span>
+                                          <img src="${user.coins[index].large}" alt="">
+                                          <span >${user.coins[index].symbol}</span>
+                                        </span>
+                                        <span class="my_criptos_content_img" id="_${index}">remove</span>
+                                      </div>`;
+      }
+                                      
+  
+  }
+    
+  my_criptos_setup_event();
+}
+// close config place
+$('.close_setups').onclick=()=>{
+  removeClass([{e:$('.setups'),c:'active'}]);
 }
