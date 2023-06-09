@@ -915,12 +915,20 @@ margin-top: 5px;
 .chart_percent_negativo{
     background-color: #e91e63 ;
     width: 0%;
-    text-align: center;
     border-radius: 5px 0 0px 5px;
+    height: 27px;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .chart_percent_positivo{
     background-color: #007e05 ;
     width: 0%;
-    text-align: center;
     border-radius: 0 5px 5px 0;
+    height: 27px;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
