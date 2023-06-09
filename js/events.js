@@ -232,11 +232,9 @@ closeBuySpace=()=>{
 $('#open_ghost_buy').onclick=()=>{
   if($('#open_ghost_buy').checked){
     setClass([{e:$('.buySpace_ghostBuy'),c:'active'}]);
-    removeClass([{e:$('.chekboxes'),c:'active'}]);
     
   }else{
     removeClass([{e:$('.buySpace_ghostBuy'),c:'active'}]);
-    setClass([{e:$('.chekboxes'),c:'active'}]);
   }
 }
 

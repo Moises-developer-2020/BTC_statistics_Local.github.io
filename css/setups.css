@@ -3,12 +3,12 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.486);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(11px);
     z-index: 4;
     display: none;
     justify-content: center;
     align-items: center;
-    font-size: 0.8em;
+    font-size: 0.5em;
     overflow: auto;
     
 }
@@ -48,7 +48,8 @@
 .my_criptos_content_img{
     background: #e91e63;
     font-size: 0.5em !important;
-    width: 70px !important;
+    width: 50px !important;
+    height: 30px !important;
     justify-content: center !important;
     border-radius: 5px;
 }

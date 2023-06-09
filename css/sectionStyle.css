@@ -642,7 +642,7 @@ margin-top: 5px;
     display: none;
     justify-content: center;
     align-items: center;
-    padding-bottom: 40px;
+    padding-bottom: 70px;
 }
 .statusContent.active .buySpace{
     position: relative;
@@ -658,7 +658,7 @@ margin-top: 5px;
     position: fixed;
     width: 100%;
     left: 0;
-    height: 100%;
+    height: calc(100% - 70px);
     overflow: auto;
     padding: 0px;
     background: rgb(0 0 0 / 55%);
@@ -754,12 +754,19 @@ margin-top: 5px;
 }
 .buySpace input {
     font-size: 18px;
-    padding: 9px 9px 0px;
+    padding: 9px 9px 1px;
     border: 0;
     background: none;
     border-bottom: 2px solid #6f6f6f;
     color: aliceblue;
     
+}
+.buySpace_bottom span{
+    position: relative;
+    display: block;
+    text-align: center;
+    margin: auto;
+    width: max-content;
 }
 .buySpace input[type="checkbox"] {
     position: absolute;
@@ -780,8 +787,7 @@ margin-top: 5px;
     outline: none;
     background: transparent;
 }
-.ghostBuy1_content span,
-.buySpace_bottom span{
+.ghostBuy1_content span{
     position: relative;
 }
 .ghostBuy1_content span:nth-child(2):after,
@@ -809,13 +815,31 @@ margin-top: 5px;
 
 .profits_bottom{
     position: fixed;
-    margin-top: calc(100vh - 160px );
+    bottom: 0px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    z-index: 0;
+    left: 0;
+    background: rgb(0 0 0 / 55%);
+    backdrop-filter: blur(11px);
+}
+.statusContent.active + .profits_bottom{
+    display: flex;
+    z-index: 1;
+}
+.statusContent.show_loading + .profits_bottom .profits_content{
+    display: none;
+    z-index: 0;
+}
+.profits_content{
+    max-width: 530px;
+    width: 95%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 530px;
-    width: 95%;
-    height: 35px;
 }
 .profits_bottom button{
     height: 40px;
@@ -878,8 +902,7 @@ margin-top: 5px;
     align-items: center;
     transition: 0.5s;
 }
-
-.chekboxes:not(.active)  .off::after{
+.checkbox_parent .checkbox_input:checked + .chekboxes .off::after{
     left: 30px;
     background: #2d7702;
 }
@@ -921,6 +944,7 @@ margin-top: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .chart_percent_positivo{
     background-color: #007e05 ;
@@ -931,4 +955,5 @@ margin-top: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

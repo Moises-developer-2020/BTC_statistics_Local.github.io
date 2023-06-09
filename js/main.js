@@ -666,6 +666,15 @@ loadChart= async()=>{
 }
 // load of linear chart from buySpace
 linearChart= async (data)=>{
+    // remove last data
+    // last colors and width
+    $('.chart_percent_negativo').setAttribute('style','width:0%;');
+    $('.chart_percent_positivo').setAttribute('style','width:0%;');
+
+    // last value
+    $('.chart_percent_negativo').innerHTML='0%';
+    $('.chart_percent_positivo').innerHTML='0%';
+
     let chart_data=await calculatePercentage(data);
     // to colors and width
     $('.chart_percent_negativo').setAttribute('style','width:'+chart_data.decrease+'%;');

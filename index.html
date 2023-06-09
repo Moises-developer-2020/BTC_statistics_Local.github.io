@@ -267,11 +267,11 @@
                                     <div class="buySpace_content_flex">
                             
                                         <div class="buySpace_card_data">
-                                            <div class="open_ghost_buy">
+                                            <div class="open_ghost_buy checkbox_parent">
                                                 <span class="blue">ghost buys</span>
                                                    
-                                                    <input type="checkbox" name="" id="open_ghost_buy">
-                                                    <div class="chekboxes ghost_buy active">
+                                                    <input type="checkbox" class="checkbox_input" name="" id="open_ghost_buy">
+                                                    <div class="chekboxes ghost_buy">
                                                         <div class="off ">off</div>
                                                         <div class="on ">on</div>
                                                     </div>
@@ -281,7 +281,7 @@
                                                 <div class="ghostBuy1">
                                                     <div class="ghostBuy1_content">
                                                         <span>price of begin</span>
-                                                        <span><input type="text" placeholder="100.00"></span>
+                                                        <span><input type="number" placeholder="100.00"></span>
                                                     </div>
                 
                                                     <div class="ghostBuy1_content">
@@ -289,10 +289,10 @@
                                                         <span><input type="number" placeholder="infinity"></span>
                                                     </div>
                                                 </div>
-                                                <div class="ghostBuy2">
+                                                <div class="ghostBuy2 checkbox_parent">
                                                     <span>automaticas?</span>
-                                                    <input type="checkbox" name="" id="ghostBuy_auto">
-                                                    <div class="chekboxes ghostBuy_auto active">
+                                                    <input type="checkbox" class="checkbox_input" name="" id="ghostBuy_auto">
+                                                    <div class="chekboxes ghostBuy_auto">
                                                         <div class="off ">off</div>
                                                         <div class="on ">on</div>
                                                     </div>
@@ -307,13 +307,19 @@
                                             </div>
                                             
                                         </div>
-                                        <div class="profits_bottom">
+                                        <!-- <div class="profits_bottom">
                                             <button class="button-34 btnCancelBuy" id="btnCancelBuy"
                                                 role="button">Cancel</button>
                                             <button class="button-34" id="btnBuy" role="button">Buy</button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="profits_bottom">
+                            <div class="profits_content">
+                                <button class="button-34 btnCancelBuy" id="btnCancelBuy" role="button">Cancel</button>
+                                <button class="button-34" id="btnBuy" role="button">Buy</button>
                             </div>
                         </div>
                     </div>
