@@ -52,6 +52,7 @@
     align-items: center;
     opacity: 0;
     transition: 0.5s;
+    z-index: 1;
 }
 .loadinCripto span{
     width: 70px;
@@ -85,6 +86,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.graphic_chart_not_valid{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 43px);
+    top: -21px;
+    /* background: aliceblue; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    backdrop-filter: blur(6px);
+    font-size: 0.7em;
+    
+}
+.graphic_chart_not_valid p{
+    margin-top: 60px;
 }
 .chart_options{
     width: 100%;

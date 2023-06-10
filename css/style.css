@@ -726,6 +726,9 @@ body {
   .not_buys_to_show.show{
     display: flex;
   }
+  .statusContent.active .not_buys_to_show.show{
+    display: none;
+  }
   .center.hidde{
     height: 0 !important;
     padding-bottom: 0 !important;

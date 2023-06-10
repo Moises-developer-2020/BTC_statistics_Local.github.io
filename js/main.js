@@ -610,14 +610,18 @@ getChart=async (idCripto, limit)=>{
         setClass([{e:$('.chartContent'),c:'load'}]);
 
         let data= await get_api_chart_data(idCripto, limit);
-        dataChart={
-            data:data,
-            date:new Date() //to validate 5 min. of the API
+        if(data.status){
+            dataChart={
+                data:data.data,
+                date:new Date() //to validate 5 min. of the API
+            }
+            //paint chart
+            get_style_chart(data.data);
+    
+            await linearChart(data.data)
+        }else{
+            $('.graphic_chart').innerHTML='<span class="graphic_chart_not_valid"><p>Chart not valid</p></span>';
         }
-        //paint chart
-        get_style_chart(data);
-
-        await linearChart(data)
     }else{
 
         var elapseTime = DateformatContacts(dataChart.date);
@@ -626,14 +630,18 @@ getChart=async (idCripto, limit)=>{
         //request to the API again
         if(elapseTime.minutes >= 5 && elapseTime.seconds >= 30){
             let data= await get_api_chart_data(idCripto, limit);
-            dataChart={
-                data:data,
-                date:new Date() //to validate 5 min. of the API
+            if(data.status){
+                dataChart={
+                    data:data.data,
+                    date:new Date() //to validate 5 min. of the API
+                }
+                //paint chart
+                get_style_chart(data.data);
+    
+                await linearChart(data.data)
+            }else{
+                $('.graphic_chart').innerHTML='<span class="graphic_chart_not_valid"><p>Chart not valid</p></span>';
             }
-            //paint chart
-            get_style_chart(data);
-
-            await linearChart(data)
         }
     }
     lastCriptoSelected=idCripto;
