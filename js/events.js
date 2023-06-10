@@ -507,8 +507,20 @@ $('#btn_Sing_Out').onclick=()=>{
 
 closeSession=()=>{
   // change the necesary to close session
-  user.identified=false;
   deleteStorageData('usersSession');
+  deleteStorageData('coinSelected');
+  // crean last user`s data from session
+  user={
+    data: {},
+    historySell: [],
+    coins: [],
+    criptos: [],
+    checkPrice: [],
+    identified: false
+  }
+  // this one is to load the user`s data
+  firtsLoad=0;
+  reloadPage()
   // sent to login
-  navigateTo('/login');
+  navigateTo('/');
 }

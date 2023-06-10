@@ -106,7 +106,7 @@ async function paintingData(){
 
         //validate session and get his data
         await validateSession();
-        
+
         //load if exist saved wallets
         if(user.coins[0] !== undefined && user.coins[0] !== ""){
             paintWallets();

@@ -651,6 +651,17 @@
     .center{
         height: 100%;
     }
+    .show_loading .reload {
+        opacity: 0.2;
+    }
+    .show_loading .cripto_IMG_selected::after{
+        position: absolute;
+        content: '';
+        height: 100%;
+        width: 100%;
+        left: 0;
+
+    }
     .reload{
         text-align: center;
         display: flex;
