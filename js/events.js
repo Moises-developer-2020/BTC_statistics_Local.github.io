@@ -500,3 +500,15 @@ $('.config_btn').onclick=()=>{
 $('.close_setups').onclick=()=>{
   removeClass([{e:$('.setups'),c:'active'}]);
 }
+
+$('#btn_Sing_Out').onclick=()=>{
+  closeSession();
+}
+
+closeSession=()=>{
+  // change the necesary to close session
+  user.identified=false;
+  deleteStorageData('usersSession');
+  // sent to login
+  navigateTo('/login');
+}
