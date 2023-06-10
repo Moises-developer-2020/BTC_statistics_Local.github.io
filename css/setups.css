@@ -69,3 +69,23 @@
 .my_criptos_setup span:nth-child(2) img{
     cursor: pointer;
 }
+
+.setups_options_item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+
+
+.desing_style{
+}
+.criptos_setups{
+    border-bottom: 2px solid #8080803d;
+    border-top: 2px solid #8080803d;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.others{
+    margin-top: 10px;
+}
