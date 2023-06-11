@@ -89,12 +89,9 @@ async function getRequestData(API,parameter="BTC"){
     }
     //console.log(online_offline);
 }
-//event of route when the page change
-routeEvent('hashchange',()=>{
-    requestPainted();
-});
 
 async function requestPainted(){
+    
     requestPainting(validateStatus, async()=>{
         await paintingData();
     });
@@ -610,6 +607,7 @@ getChart=async (idCripto, limit)=>{
         setClass([{e:$('.chartContent'),c:'load'}]);
 
         let data= await get_api_chart_data(idCripto, limit);
+        
         if(data.status){
             dataChart={
                 data:data.data,
@@ -620,6 +618,7 @@ getChart=async (idCripto, limit)=>{
     
             await linearChart(data.data)
         }else{
+            // paint that is not valid to show the chart
             $('.graphic_chart').innerHTML='<span class="graphic_chart_not_valid"><p>Chart not valid</p></span>';
         }
     }else{
@@ -630,6 +629,7 @@ getChart=async (idCripto, limit)=>{
         //request to the API again
         if(elapseTime.minutes >= 5 && elapseTime.seconds >= 30){
             let data= await get_api_chart_data(idCripto, limit);
+
             if(data.status){
                 dataChart={
                     data:data.data,
@@ -640,6 +640,7 @@ getChart=async (idCripto, limit)=>{
     
                 await linearChart(data.data)
             }else{
+                // paint that is not valid to show the chart
                 $('.graphic_chart').innerHTML='<span class="graphic_chart_not_valid"><p>Chart not valid</p></span>';
             }
         }
@@ -1045,3 +1046,18 @@ my_criptos_setup_event=()=>{
         }
     };      
 }
+// validate when it is in homePage
+homePageRoute=()=>{
+    if(verifyRoute('/')){
+        if(user.identified){
+            removeClass([{e:$('.url_home'),c:'hidde'}]);
+            $('.url_home').innerHTML=`Continue has ${user.data.name}`
+            setClass([{e:$('.url_login'),c:'hidde'}]);
+        }else{
+            setClass([{e:$('.url_home'),c:'hidde'}]);
+            removeClass([{e:$('.url_login'),c:'hidde'}]);
+        }
+    }
+}
+// validate it when load the page
+homePageRoute()

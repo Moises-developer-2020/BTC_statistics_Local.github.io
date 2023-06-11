@@ -234,11 +234,11 @@ function verifyRoute(routeToVerify){
   //   }
   //   return false
   // }
-  let actual;
+  let actual="/";
   if(location.hash){
-    actual =location.hash.split('#')[1].split("/")[1];
+    actual ="/"+location.hash.split('#')[1].split("/")[1];
   }
-  if("/"+actual !== routeToVerify){
+  if(actual !== routeToVerify){
       return false
   }
   return true

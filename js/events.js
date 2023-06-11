@@ -1,3 +1,12 @@
+//event of route when the page change
+routeEvent('hashchange',()=>{
+  // validate it when url changed
+  homePageRoute()
+
+  // start validation
+  requestPainted();
+});
+
 //open and close menu
 $('.menu-bars').onclick=function(){
     if($('.menu').classList.contains('hidde')){
@@ -413,6 +422,8 @@ arrow_to_slides_clickEvent=(index=0)=>{
 
   // start when load 
   setfocus(long);
+  // again to be sure it will load
+  setfocus(long);
  
   function transition(direction){
     // to disable this function
@@ -430,11 +441,14 @@ arrow_to_slides_clickEvent=(index=0)=>{
       if(long == -1){
         long = myCriptos.length-1;
       }
+      if(long == -2 ){
+        long = myCriptos.length-2;
+      }
     }
 
     //load style every time
     setfocus(long);
-
+    
     // last to beging again and not end
     if(long == myCriptos.length-1 && direction == "right"){
       long =-1;
@@ -477,7 +491,7 @@ $('.config_btn').onclick=()=>{
         $('.my_criptos_setup').innerHTML+=`<div class="my_criptos_content">
                                         <span>
                                           <img src="${user.coins[index].large}" alt="">
-                                          <span >${user.coins[index].symbol}</span>
+                                          <span class="my_criptos_symbol">${user.coins[index].symbol}</span>
                                         </span>
                                         <span class="my_criptos_content_img not_valid" id="_${index}">remove</span>
                                       </div>`;
@@ -485,7 +499,7 @@ $('.config_btn').onclick=()=>{
         $('.my_criptos_setup').innerHTML+=`<div class="my_criptos_content">
                                         <span>
                                           <img src="${user.coins[index].large}" alt="">
-                                          <span >${user.coins[index].symbol}</span>
+                                          <span class="my_criptos_symbol">${user.coins[index].symbol}</span>
                                         </span>
                                         <span class="my_criptos_content_img" id="_${index}">remove</span>
                                       </div>`;

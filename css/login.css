@@ -1,13 +1,11 @@
 .login{
     position: fixed;
     top: 0;
-    background-color: black;
     width: 100vw;
     height: 100vh;
     display: none;
     justify-content: center;
     align-items: center;
-    color: #f0e8e8;
 }
 .login.active{
     display: flex !important;
