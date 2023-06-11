@@ -17,6 +17,7 @@ let user_saved_data={
     };
 
 movil_Desing=false; // to know is it size of a mobile
+movil_Desing_list=false; // allow click on .myCriptos in list desing mobile
 
 //Api`s data
 let critopApi={}

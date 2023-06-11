@@ -422,6 +422,10 @@
         height: 100%;
         transform: scale(0.8);
     } */
+    .CriptoSection.listing .criptoContent .myCriptos{
+        width: 90%;
+        min-width: 0;
+    }
 }
 
 @media screen and (max-width: 1435px) {

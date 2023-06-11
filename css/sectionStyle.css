@@ -403,6 +403,7 @@ margin-top: 5px;
     height: 37%;
     text-align: center;
     overflow: hidden;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .criptoContent{
     
@@ -992,4 +993,45 @@ margin-top: 5px;
     justify-content: center;
     align-items: center;
     transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+/*list style to .myCriptos*/
+.grid_list span{
+    transition: 0.5s;
+}
+
+.CriptoSection.listing .grid_list span{
+    width: 18px;
+}
+.CriptoSection.listing{
+    top: -22px;
+    height: calc(55% - 60px);
+}
+.expenseSection:has(~ .CriptoSection.listing),
+.CriptoSection.listing .arrow_to_slides1,
+.CriptoSection.listing .arrow_to_slides2{
+    display: none;
+}
+
+.CriptoSection.listing .criptoContent{
+    display: block;
+    overflow-y: auto;
+}
+.CriptoSection.listing .criptoContent .myCriptos{
+    position: relative;
+    overflow: hidden;
+    height: 58px;
+    opacity: 1;
+    transform: translate(0%, 0%) scale(1);
+    left: 0;
+    top: 0;
+    z-index: 0;
+    margin: 5px;
+    background: transparent;
+    
+}
+.CriptoSection.listing .criptoContent .myCriptos.focus{
+    background-image: linear-gradient(300deg, #0015ab80, transparent) !important;
+    background: transparent;
 }

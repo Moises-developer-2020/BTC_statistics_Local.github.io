@@ -152,9 +152,22 @@ openCriptoDetails=()=>{
           let id=$('.criptoID','all')[index].innerHTML;
           
           // to avoid select .myCriptos when is not focus with arrow in desing mobile 
-          if(movil_Desing && !element.classList.contains('focus')){
-            return
+          if(movil_Desing){
+            if(!movil_Desing_list){ // to allow click con list style from .myCriptos
+              if(!element.classList.contains('focus')){ // to avoid make click to .myCripto when isnot focus
+                return
+              }
+            }
           }
+          
+          // remove effect of cripto selected
+          myCriptos.forEach(cripto => {
+            removeClass([{e:cripto,c:'focus'}]);
+          });
+          // set effect of cripto selected
+          setClass([{e:element,c:'focus'}]);
+
+
           //save coin selected in variable to use it on buys
           BTCjson.coinSelected={
             index:index,
@@ -350,12 +363,13 @@ $('.section2_option_window').onclick=()=>{
 
 // event to arrow_to_slides
 arrow_to_slides_clickEvent=(index=0)=>{
+  CriptoSection  = $('.CriptoSection');
   myCriptos = $('.myCriptos','all');
   criptoRanking = $('.criptoRanking','all');
 
   // to disable this function
-  if(!movil_Desing){
-    // delete last style
+  if(!movil_Desing || CriptoSection.classList.contains('listing')){
+    // delete last style when resize event is running
     myCriptos.forEach(element =>{element.removeAttribute('style');});
     return;
   }
@@ -448,7 +462,7 @@ arrow_to_slides_clickEvent=(index=0)=>{
 
     //load style every time
     setfocus(long);
-    
+
     // last to beging again and not end
     if(long == myCriptos.length-1 && direction == "right"){
       long =-1;
@@ -537,4 +551,30 @@ closeSession=()=>{
   reloadPage()
   // sent to login
   navigateTo('/');
+}
+
+// disable or enable list style to .myCriptos
+$('.grid_list').onclick=()=>{
+  myCriptos = $('.myCriptos','all');
+
+  // remove effect of cripto selected from arrow_to_slides_clickEvent
+  myCriptos.forEach(cripto => {
+    removeClass([{e:cripto,c:'focus'}]);
+    removeClass([{e:cripto,c:'left'}]);
+    removeClass([{e:cripto,c:'right'}]);
+
+    // detele all last style from arrow_to_slides_clickEvent
+    cripto.removeAttribute('style');
+  });
+  // set effect of cripto selected only when list style is actived
+  setClass([{e:myCriptos[BTCjson.coinSelected.index],c:'focus'}]);
+
+  // disable or enable 
+  if($('.CriptoSection').classList.contains('listing')){
+    removeClass([{e:$('.CriptoSection'),c:'listing'}]);
+    movil_Desing_list =false;
+  }else{
+    setClass([{e:$('.CriptoSection'),c:'listing'}]);
+    movil_Desing_list =true;
+  }
 }
