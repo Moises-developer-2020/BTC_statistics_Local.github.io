@@ -109,7 +109,7 @@
     }
     .menu-bars:not(:has(+ .menu.hidde))::after,
     .menu-bars:not(:has(+ .menu.hidde))::before{
-        background-image: linear-gradient(90deg, #E91E63,transparent);
+        background-image: linear-gradient(90deg, #0014ffb5 0%, #0014ff00  100%);
     }
     .menu-bars + .movil:not(.hidde) .Session_user_info,
         .menu-bars + .movil:not(.hidde) .close_Session_option{
@@ -574,9 +574,7 @@
     }
 }
 @media screen and (max-width: 735px) {
-    .section2.show {
-        /* display: block !important; */
-    }
+   
     .section2 .statusSection,
     .section2 .historySection{
         position: absolute;

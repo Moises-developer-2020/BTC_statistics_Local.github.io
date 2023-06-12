@@ -1008,6 +1008,10 @@ margin-top: 5px;
     top: -22px;
     height: calc(55% - 60px);
 }
+.CriptoSection.listing::after,
+.CriptoSection.listing::before{
+    width: 0;
+}
 .expenseSection:has(~ .CriptoSection.listing),
 .CriptoSection.listing .arrow_to_slides1,
 .CriptoSection.listing .arrow_to_slides2{
