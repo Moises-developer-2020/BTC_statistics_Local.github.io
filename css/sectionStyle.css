@@ -443,6 +443,9 @@ margin-top: 5px;
 .titleSecion span:nth-child(1){
     margin: 10px;
 }
+.titleSecion .num_walltes{
+    margin: 0px !important;
+}
 .Empty_wallets_content{
     position: relative;
     height: 100%;
@@ -733,7 +736,7 @@ margin-top: 5px;
     display: none;
 }
 .buySpace_content{
-    font-size: 0.7em;
+    font-size: 0.6em;
     /* background: linear-gradient(rgb(0, 21, 171), transparent) rgb(0, 0, 0); */
     width: 100%;
     height: 100%;
@@ -753,15 +756,6 @@ margin-top: 5px;
 
 }
 
-.open_ghost_buy{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 0 !important;
-    font-size: 0.7em;
-
-}
-
 .buySpace_ghostBuy.active{
     height: 120px;
 }
@@ -776,11 +770,16 @@ margin-top: 5px;
     display: block;
     text-align: left;
 }
-.ghostBuy2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.6em;
+.buySpace_card_data .blue{
+    font-size: 0.8em !important;
+}
+.ghostBuy2 .setups_options_item,
+.buySpace_card_data .setups_options_item{
+    margin: 0;
+}
+.ghostBuy2 .setups_options_item .checkbox_parent,
+.buySpace_card_data .setups_options_item .checkbox_parent{
+    right: -10px;
 }
 .buySpace_ghostBuy{
     position: relative;
@@ -980,6 +979,10 @@ margin-top: 5px;
 }
 .checkbox_parent .checkbox_btn.selected{
     background: #2d7702 !important;
+}
+
+.buySpace_card_data .checkbox_parent {
+    /* transform: scale(0.8); */
 }
 
 .off::after{

@@ -31,17 +31,6 @@
             display: block;
         }
 
-        /* #loadingPage{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            top: 0;
-            left: 0;
-            font-size: 5em;
-        } */
     </style>
 
 </head>
@@ -56,10 +45,10 @@
             <div class="sectionContent">
                 <span><img src="logo.png" alt=""></span>
                 <span>
-                    <a class="url_ url_home" href="#/home"></a>
+                    <a class="url_ url_home hidde" href="#/home"></a>
                 </span>
                 <span >
-                    <a class="url_ url_login" href="#/login">Login</a>
+                    <a class="url_ url_login hidde" href="#/login">Login</a>
                 </span>
             </div>
         </section>
@@ -156,7 +145,7 @@
                     <div class="CriptoSection">
                         
                         <div class="titleSecion">
-                            <span>Wallets</span>
+                            <span>Wallets: <span class="num_walltes"></span></span>
                             <span>
                                 <div class="searh_options grid_list" style="z-index: 1; transform: scale(0.7); margin-right:5px">
                                     <span style="margin: 2px 2px 2px 4px;"></span>
@@ -271,16 +260,19 @@
                                     <div class="buySpace_content_flex">
                             
                                         <div class="buySpace_card_data">
-                                            <div class="open_ghost_buy checkbox_parent">
-                                                <span class="blue">ghost buys</span>
-                                                   
-                                                    <input type="checkbox" class="checkbox_input" name="" id="open_ghost_buy">
-                                                    <div class="chekboxes ghost_buy">
-                                                        <div class="off ">off</div>
-                                                        <div class="on ">on</div>
+                                            <div class="setups_options">
+                                                <div class="setups_options_item">
+                                                    <span class="blue">ghost buys</span>
+                                                    <div class="checkbox_parent">
+                                                        <input type="checkbox" id="open_ghost_buy" class="checkbox_input" name="">
+                                                        <div class="chekboxes">
+                                                            <div class="off ">off</div>
+                                                            <div class="on ">on</div>
+                                                        </div>
                                                     </div>
-                                                    
                                                 </div>
+                                            </div>
+                                            
                                             <div class="buySpace_ghostBuy">
                                                 <div class="ghostBuy1">
                                                     <div class="ghostBuy1_content">
@@ -293,12 +285,18 @@
                                                         <span><input type="number" placeholder="infinity"></span>
                                                     </div>
                                                 </div>
-                                                <div class="ghostBuy2 checkbox_parent">
-                                                    <span>automaticas?</span>
-                                                    <input type="checkbox" class="checkbox_input" name="" id="ghostBuy_auto">
-                                                    <div class="chekboxes ghostBuy_auto">
-                                                        <div class="off ">off</div>
-                                                        <div class="on ">on</div>
+                                                <div class="ghostBuy2">
+                                                    <div class="setups_options">
+                                                        <div class="setups_options_item">
+                                                            <span>Automatics?</span>
+                                                            <div class="checkbox_parent">
+                                                                <input type="checkbox"  class="checkbox_input" name="">
+                                                                <div class="chekboxes">
+                                                                    <div class="off ">off</div>
+                                                                    <div class="on ">on</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                 
@@ -311,11 +309,6 @@
                                             </div>
                                             
                                         </div>
-                                        <!-- <div class="profits_bottom">
-                                            <button class="button-34 btnCancelBuy" id="btnCancelBuy"
-                                                role="button">Cancel</button>
-                                            <button class="button-34" id="btnBuy" role="button">Buy</button>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>

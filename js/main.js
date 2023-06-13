@@ -610,6 +610,9 @@ function paintWallets(){
     
     //add click event to .myCriptos
     openCriptoDetails();
+
+    // paint numbers of my saved wallets
+    $('.num_walltes').innerHTML=user.coins.length;
 }
 let lastCriptoSelected; // to avoid reload the chart when it is the same selected
 getChart=async (idCripto, limit)=>{
@@ -719,6 +722,7 @@ loadCriptoSelected= async ()=>{
   
       let index=BTCjson.coinSelected.index;
       let id=BTCjson.coinSelected.id;
+
       let indicator_style=$('.indicator','all')[index].classList[1];
       let reflact_indicator= $("#reflact_indicator");
 
@@ -760,7 +764,10 @@ loadCriptoSelected= async ()=>{
       $("#percent").innerHTML =$('.percent','all')[index].innerHTML; 
       negative_positive($("#percent"),$("#percent").innerHTML);
 
-  
+      // chart indicator to percent
+      reflact_indicator.removeAttribute('class');
+      setClass([{e:reflact_indicator,c:`${indicator_style}`}]);
+        
       //detect which wallet was selected and show the invested prices
       for (let j = 0; j < user.criptos.length; j++) {
         const idCripto = user.criptos[j].idCripto;
@@ -769,10 +776,8 @@ loadCriptoSelected= async ()=>{
             //paint the mainIndicator of cripto selected
             if(MainIndicator.classList.length>0){
                 MainIndicator.removeAttribute('class');
-                reflact_indicator.removeAttribute('class');
             }
             setClass([{e:MainIndicator,c:`${indicator_style}`}]);
-            setClass([{e:reflact_indicator,c:`${indicator_style}`}]);
             
             //add invested price
             investex2.innerHTML="";
@@ -1074,6 +1079,5 @@ homePageRoute=()=>{
             removeClass([{e:$('.url_login'),c:'hidde'}]);
         }
     }
-    console.log(user.identified);
 }
 
