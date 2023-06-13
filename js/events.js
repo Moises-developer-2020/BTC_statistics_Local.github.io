@@ -564,3 +564,21 @@ $('.grid_list').onclick=()=>{
     movil_Desing_list =true;
   }
 }
+
+// open pages on historyContent
+$('.menu_large').onclick=(event)=>{
+  //add event using propagation of events (bubbling)
+
+  let idPage=event.target.id;
+  if (event.target.classList.contains('menu_large_btn')) {
+    $('.menu_large_btn','all').forEach(element => {
+      
+        if(idPage != element.id){
+          element.checked = false;
+        }
+    
+      
+    });
+  }
+  
+}

@@ -942,9 +942,16 @@ load_rewards=(criptoIndex,index)=>{
         }else{
             removeClass([{e:$('.p_n'),c:"negative"}]);
         }
-        
+        get_prices_to_sell_buy_btn(savdDifferen.innerHTML,$("#price").innerHTML);
     }
   
+};
+get_prices_to_sell_buy_btn=(sellPrice, buyPrice)=>{
+    $('.sellSubmit_price').innerHTML = sellPrice;
+    // paint it the repective color
+    negative_positive($('.sellSubmit_price'), sellPrice);
+
+    $('.investInput_price').innerHTML = buyPrice;
 }
 calc_profits_h_l=(criptoIndex,index)=>{
     let user_data1=user.criptos[index].investedPrice[0];

@@ -115,7 +115,7 @@
                         </div>
                         <div class="chartContent"> 
                             <div class="graphic_chart" id="graphic_chart">
-                                <div class="spin-wrapper" style="position: absolute; height: calc(100% - 33px); backdrop-filter: blur(8px); z-index: 1; top: 0; background:none;">
+                                <div class="spin-wrapper" style="position: absolute; height: calc(100% - 33px); backdrop-filter: blur(3px); z-index: 1; top: 0; background:none;">
                                     <div class="spinonediv-1" style="transform: translate(-50%, -50%) scale(1.5); margin:-12px 0 0 0px;"></div>
                                 </div>
                             </div>
@@ -236,13 +236,13 @@
                             </div>
                             <div class="reload">
                                 <div class="ct_btn_sell">
-                                    <button class="button-34" id="sellSubmit" role="button">Sell: ---</button>
+                                    <button class="button-34" id="sellSubmit" role="button">Sell: <span class="sellSubmit_price positive negative"></span></button>
                                 </div>
                                 <div class="cripto_IMG_selected">
                                     <img src="logo.png" alt="">
                                 </div>
                                 <div class="ct_btn_buy">
-                                    <button class="button-34 btnGReen" id="investInput" role="button">Buy: ---</button>
+                                    <button class="button-34 btnGReen" id="investInput" role="button">Buy: <span class="investInput_price" style="color: aliceblue;"></span></button>
                                 </div>
                             </div>
                             <div class="loading">
@@ -301,6 +301,12 @@
                                                 </div>
                 
                                             </div>
+                                            <div class="buySpace_item">
+                                                <div class="blue">Goal to reach</div>
+                                                <span>                                                
+                                                    <input   type="number" placeholder="000.00">
+                                                </span>                                            
+                                            </div>
                                             <div class="buySpace_bottom">
                                                 <div class="blue">Money to Invest</div>
                                                 <span>                                                
@@ -316,13 +322,29 @@
                         <div class="profits_bottom">
                             <div class="profits_content">
                                 <button class="button-34 btnCancelBuy" id="btnCancelBuy" role="button">Cancel</button>
-                                <button class="button-34" id="btnBuy" role="button">Buy</button>
+                                <button class="button-34 btnGReen" id="btnBuy" role="button">Buy</button>
                             </div>
                         </div>
                     </div>
                     <div class="historySection">
+                        <div class="menu_large">
+                            <div class="menu_large_item">
+                                <input type="checkbox" class="menu_large_btn" id="Content_chart" checked>
+                                <span>Charts</span>
+                            </div>
+                            <div class="menu_large_item">
+                                <input type="checkbox" class="menu_large_btn" id="Content_ghost">
+                                <span>Ghost buys</span>
+                            </div>
+                            <div class="menu_large_item">
+                                <input type="checkbox" class="menu_large_btn" id="Content_history">
+                                <span>History sells</span>
+                            </div>
+                        </div>
                         <div class="historyContent" style="font-size: 0.8em;display: flex;justify-content: center;align-items: center;">
-                            <p>Nothing to see here!</p>
+                            <div class="page_ct Content_chart active"><p>Charts</p></div>
+                            <div class="page_ct Content_ghost active"><p>Ghost buys</p></div>
+                            <div class="page_ct Content_history active"><p>History sells</p></div>
                         </div>
                     </div>
                     

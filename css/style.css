@@ -381,10 +381,11 @@ body {
     width: 124px;
     margin-bottom: 15px;
     border-radius: 10px;
+    padding: 4px;
 }
 .btnGReen{
-    background-color: #007e05 !important;
-    box-shadow: #007e05 0 10px 20px -10px !important;
+    background-color: #166200 !important;
+    box-shadow: #166200 0 10px 20px -10px !important;
 }
 .positive {
     color: green !important;
@@ -553,7 +554,7 @@ body {
     border-radius: 10px;
     box-shadow: #5E5DF0 0 10px 20px -10px;
     box-sizing: border-box;
-    color: #d3eaff;
+    color: #c5c5ff;
     cursor: pointer;
     font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
     font-size: 14px;
@@ -572,8 +573,8 @@ body {
 
 #sellSubmit,
 #cancelSubmit {
-    background: #e91e63;
-    box-shadow: #e91e63  0 10px 20px -10px;
+    background: #770029;
+    box-shadow: #770029  0 10px 20px -10px;
 } 
 
 ::-webkit-scrollbar {
