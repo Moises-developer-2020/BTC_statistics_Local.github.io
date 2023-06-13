@@ -106,7 +106,8 @@ body {
 }
 
 .indicator,
-#indicator{
+#indicator,
+#reflact_indicator{
     width: 0px;
     height: 0px;
     transition: 0.3s;
@@ -118,7 +119,8 @@ body {
     border-top: 5px solid transparent;
 }
 .indicator.positive,
-#indicator.positive{
+#indicator.positive,
+#reflact_indicator.positive{
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 8px solid green;
@@ -127,7 +129,8 @@ body {
     
 }
 .indicator.negative,
-#indicator.negative{
+#indicator.negative,
+#reflact_indicator.negative{
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 8px solid red;
@@ -320,13 +323,22 @@ body {
     color: #DDE1FB !important;
 }
 .reflact #percent{
-    border-radius: 5px;
-    padding: 3px 7px 3px 7px;
-    background: #007e0561;
-    margin-right: 10px;
+   
 }
 .reflact #percent.negative{
     background: #e91e634f;
+}
+.reflact .reflact_percentCripto{
+    background: #007e0561;
+    border-radius: 5px;
+    padding: 3px 7px 3px 7px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.reflact_percentCripto:has(.hidde){
+    display: none;
 }
 .dataH1 div span{
     display: block;

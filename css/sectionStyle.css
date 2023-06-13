@@ -44,7 +44,7 @@
     left: 0px;
     top: 0;
     width: 100%;
-    height: calc(100% - 23px);
+    height: calc(100% - 33px);
     backdrop-filter: blur(2px);
     background-color: #00000045;
     display: none;
@@ -90,7 +90,7 @@
 .graphic_chart_not_valid{
     position: absolute;
     width: 100%;
-    height: calc(100% - 43px);
+    height: calc(100% - 53px);
     top: -21px;
     /* background: aliceblue; */
     display: flex;
@@ -153,7 +153,7 @@
 }
 .chart_options_style{
     width: 107px;
-    height: 100%;
+    height: 60%;
     border-left: 2px solid rgb(128 128 128 / 24%);
     display: flex;
     justify-content: center;
@@ -966,6 +966,20 @@ margin-top: 5px;
 .checkbox_parent .checkbox_input:checked + .chekboxes .off::after{
     left: 30px;
     background: #2d7702;
+}
+.checkbox_parent .checkbox_btn{
+    margin: 0px 7px 0px 7px;
+    background: #000f7c;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.7em;
+    cursor: pointer;
+}
+.checkbox_parent .checkbox_btn:last-child{
+    margin: 0px -7px 0px 7px;
+}
+.checkbox_parent .checkbox_btn.selected{
+    background: #2d7702 !important;
 }
 
 .off::after{

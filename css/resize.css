@@ -433,7 +433,7 @@
         display: block;
     }
     .CriptoSection.listing .criptoContent .myCriptos:last-child{
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
     .CriptoSection.listing .criptoContent .myCriptos:first-child{
         margin-top: 20px;
@@ -537,8 +537,8 @@
         overflow: hidden;
     }
     .section2.show{
-        height: calc(100% - 45% + 73px);
-        top: calc(45% - 73px);
+        height: calc(100% - 45% + 75px);
+        top: calc(45% - 75px);
     
     }
     .section2 .statusSection,

@@ -114,7 +114,10 @@
                                 <div class="dataH1_data">
                                     <span id="price"></span>
                                     <div class="reflact">
-                                        <span id="percent" class="positive"></span>
+                                        <div class="reflact_percentCripto">
+                                            <span id="reflact_indicator" class="positive"></span>
+                                            <span id="percent" class="positive"><span class="hidde">loading</span></span>
+                                        </div>
                                         <span id="priceDifferences" class="positive"></span>
                                     </div>
                                     
@@ -123,7 +126,7 @@
                         </div>
                         <div class="chartContent"> 
                             <div class="graphic_chart" id="graphic_chart">
-                                <div class="spin-wrapper" style="position: absolute; height: calc(100% - 23px); backdrop-filter: blur(8px); z-index: 1; top: 0; background:none;">
+                                <div class="spin-wrapper" style="position: absolute; height: calc(100% - 33px); backdrop-filter: blur(8px); z-index: 1; top: 0; background:none;">
                                     <div class="spinonediv-1" style="transform: translate(-50%, -50%) scale(1.5); margin:-12px 0 0 0px;"></div>
                                 </div>
                             </div>
@@ -378,7 +381,7 @@
                                 </div>
                             </div>
                             <div class="setups_options_item">
-                                <span>background alerts of up/down prices</span>
+                                <span>background color alerts up/down prices</span>
                                 <div class="checkbox_parent">
                                     <input type="checkbox" class="checkbox_input" name="" checked>
                                     <div class="chekboxes">
@@ -411,8 +414,9 @@
                             <div class="setups_options_item">
                                 <span>rate of update</span>
                                 <div class="checkbox_parent">
-                                    <input type="number" value="0.15">
-                                    <span>s</span>
+                                    <span class="checkbox_btn selected">0.15s</span>
+                                    <span class="checkbox_btn">0.30s</span>
+                                    <span class="checkbox_btn">1M</span>
                                 </div>
                             </div>
                         </div>

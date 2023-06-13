@@ -252,14 +252,6 @@ async function paintingData(){
             Low[i].innerHTML = BTCjson[coin].status.l;
             Hight[i].innerHTML = BTCjson[coin].status.h;
             percent[i].innerHTML = BTCjson[coin].percent;
-
-            // let p_n=negative_positive(earnings_today, earnings_today.innerHTML);
-            // if(!p_n){
-            //     setClass([{e:$('.p_n'),c:"negative"}]);
-            // }else{
-            //     removeClass([{e:$('.p_n'),c:"negative"}]);
-            // }
-            
             
             //check out the last change of the price to save it if it`s diferent
             checkToSAvedPrice(coin, i);
@@ -349,17 +341,20 @@ $('.cripto_IMG_selected').onclick = function () {
 
 async function checkToSAvedPrice(coin,id) {
     let indicator= $(".indicator",'all');
+    let chartIndicator= $("#reflact_indicator");
     let idCoinSelected=BTCjson.coinSelected.id;
 
     if (parseFloat(LastCheck) != parseFloat(critopApi[coin].priceData)) {
         //diferent;
 
-         //.myCriptos arrow indicator of increase or decrease
-         upDomwIndicator(indicator[id],'style','opacity:0;','opacity:1;');
+        //.myCriptos arrow indicator of increase or decrease
+        upDomwIndicator(indicator[id],'style','opacity:0;','opacity:1;');
 
         if(idCoinSelected == coin){
             //.center arrow indicator of increase or decrease
             upDomwIndicator(MainIndicator,'style','opacity:0;','opacity:1;');
+            // to indicator from chart
+            upDomwIndicator(chartIndicator,'style','opacity:0;','opacity:1;');
         }
 
         //update the new price
@@ -725,6 +720,7 @@ loadCriptoSelected= async ()=>{
       let index=BTCjson.coinSelected.index;
       let id=BTCjson.coinSelected.id;
       let indicator_style=$('.indicator','all')[index].classList[1];
+      let reflact_indicator= $("#reflact_indicator");
 
       let savdDifferen=$('#savdDifferen');
       let earnings_today=$('#earnings_today');
@@ -772,9 +768,11 @@ loadCriptoSelected= async ()=>{
             notBuys('close');
             //paint the mainIndicator of cripto selected
             if(MainIndicator.classList.length>0){
-                MainIndicator.removeAttribute('class')
+                MainIndicator.removeAttribute('class');
+                reflact_indicator.removeAttribute('class');
             }
             setClass([{e:MainIndicator,c:`${indicator_style}`}]);
+            setClass([{e:reflact_indicator,c:`${indicator_style}`}]);
             
             //add invested price
             investex2.innerHTML="";
