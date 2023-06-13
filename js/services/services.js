@@ -417,20 +417,43 @@ async function validateSession(){
                 return true
             }
             //delete it cuz it is not valid
-            deleteStorageData('usersSession');
-            navigateTo('/login');
+            closeSession();
+            // deleteStorageData('usersSession');
+            // navigateTo('/login');
             return false
         }else{
             //delete it cuz it is not valid
-            deleteStorageData('usersSession');
-            navigateTo('/login');
+            closeSession();
+            //deleteStorageData('usersSession');
+            //navigateTo('/login');
             return false
         }
     }else{
-        navigateTo('/login');
+        closeSession();
+        //navigateTo('/login');
         return false
     }
-}
+};
+
+closeSession=()=>{
+
+    // change the necesary to close session
+    deleteStorageData('usersSession');
+    deleteStorageData('coinSelected');
+    // crean last user`s data from session
+    user={
+      data: {},
+      historySell: [],
+      coins: [],
+      criptos: [],
+      checkPrice: [],
+      identified: false
+    }
+    
+    // sent to login
+    navigateTo('/');
+};
+
 function validateStatus(){
     // validate if exist a session open
     if(checkStorageData('usersSession')){

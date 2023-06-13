@@ -27,8 +27,8 @@
         cursor: pointer;
         width: 50px;
         position: fixed;
-        right: 14px;
-        top: 7px;
+        right: 2px;
+        top: 0px;
         z-index: 4;
     }
     .menu-bars::after{
@@ -422,9 +422,51 @@
         height: 100%;
         transform: scale(0.8);
     } */
+    .CriptoSection.listing .criptoContent{
+        height: calc(100% - 25px);
+        
+        margin-top: 8px;
+    }
     .CriptoSection.listing .criptoContent .myCriptos{
         width: 90%;
         min-width: 0;
+        display: block;
+    }
+    .CriptoSection.listing .criptoContent .myCriptos:last-child{
+        margin-bottom: 20px;
+    }
+    .CriptoSection.listing .criptoContent .myCriptos:first-child{
+        margin-top: 20px;
+    }
+    .CriptoSection.listing::after{
+        width: 100%;
+        bottom: 0;
+        height: 40px;
+        background: linear-gradient(180deg,rgb(0 0 0 / 0%),#000000);
+    }
+    .CriptoSection.listing::before{
+        width: 100%;
+        top: 28px;
+        height: 40px;
+        background: linear-gradient(0deg,rgb(0 0 0 / 0%),#000000);
+    }
+    .expenseSection{
+        margin-top: -30px;
+    }
+    .chart_options{
+        height: 40px;
+    }
+    .chart_options_buttom button{
+        height: 25px;
+        width: 42px;
+        font-size: 0.2em;
+        border-radius: 8px;
+    }
+    .chart_options_style span{
+        height: 25px;
+        width: 42px;
+        font-size: 22px;
+        border-radius: 8px;
     }
 }
 
@@ -668,6 +710,9 @@
         left: 0;
 
     }
+    .show_loading button{
+        opacity: 0;
+    }
     .reload{
         text-align: center;
         display: flex;
@@ -761,7 +806,7 @@
         align-items: center;
     }
     .CriptoSection{
-        top: 40px;
+        top: 20px;
     }
 
     /*efect shadow fo .CriptoSection*/
@@ -834,6 +879,7 @@
         top: 50%;
         /* transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
         box-shadow: 0 0 20px 7px black;
+        transition: none ;
     }
    
     .myCriptos.focus{

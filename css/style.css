@@ -191,7 +191,9 @@ body {
 
 }
 .priceDifferences{
-    display: none;
+    /* display: none; */
+    font-size: 0.8em;
+    margin-right: 10px;
 }
 
 

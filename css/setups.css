@@ -10,10 +10,16 @@
     align-items: center;
     font-size: 0.5em;
     overflow: hidden;
-    
+    left: 100%;
 }
 .setups.active{
     display: flex;
+    animation: showIt 0.2s ease-out forwards;
+}
+@keyframes showIt {
+    100%{
+        left: 0%;
+    }
 }
 .setups_content{
     position: relative;

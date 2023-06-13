@@ -52,6 +52,14 @@ const elements = {
 };
 Object.assign(window, elements);
 
+(async ()=>{
+    // get user`s data if session if valid
+    await validateSession()
+    // validate it when load the page
+    homePageRoute()
+})();
+
+
 async function getRequestData(API,parameter="BTC"){
     try {
         if(API.status){
@@ -244,6 +252,13 @@ async function paintingData(){
             Low[i].innerHTML = BTCjson[coin].status.l;
             Hight[i].innerHTML = BTCjson[coin].status.h;
             percent[i].innerHTML = BTCjson[coin].percent;
+
+            // let p_n=negative_positive(earnings_today, earnings_today.innerHTML);
+            // if(!p_n){
+            //     setClass([{e:$('.p_n'),c:"negative"}]);
+            // }else{
+            //     removeClass([{e:$('.p_n'),c:"negative"}]);
+            // }
             
             
             //check out the last change of the price to save it if it`s diferent
@@ -539,19 +554,21 @@ function paintWallets(){
                     <div class="infoCripto">
                         <div class="criptoData">
                             <span class="cristoIMG"> <img src="${user.coins[index].large}" alt="img"></span>
-                            <div>
-                                <span class="critoName blue">${user.coins[index].name}</span>
-                                <span class="criptoID">${user.coins[index].symbol}</span>
-                            </div>
                         </div>
-                        
-                        <div style="text-align: right;">
-                            <span class="price">Loading</span>
-                            <span class="priceDifferences" ></span>
-                            <div style="text-align: right;" >
-                                <div class="percentCripto">
-                                    <span class="indicator"></span>
-                                    <span class='percent positive'>Loading</span>
+                        <div class="cripto_info">
+                            <div class="cripto_info_item">
+                                <span class="critoName blue">${user.coins[index].name}</span>
+                                <span class="price">Loading</span>
+                                
+                            </div>
+                            <div class="cripto_info_item" >
+                                <span class="criptoID">${user.coins[index].symbol}</span>
+                                <div style="text-align: right; display: flex; justify-content: space-between;align-items: center;" >
+                                <span class="priceDifferences" ></span>
+                                    <div class="percentCripto">
+                                        <span class="indicator"></span>
+                                        <span class='percent positive'>Loading</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1059,6 +1076,6 @@ homePageRoute=()=>{
             removeClass([{e:$('.url_login'),c:'hidde'}]);
         }
     }
+    console.log(user.identified);
 }
-// validate it when load the page
-homePageRoute()
+

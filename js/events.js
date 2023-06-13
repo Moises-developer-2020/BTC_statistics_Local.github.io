@@ -405,12 +405,12 @@ arrow_to_slides_clickEvent=(index=0)=>{
     
     if(myCriptos[longg-1]){
       setClass([{e:myCriptos[longg-1],c:'left'}]);
-      myCriptos[longg-1].setAttribute('style',`left: 0%;`);
+      myCriptos[longg-1].setAttribute('style',`left: 0%; transition: 0.5s;`);
       
     }else{
       if(myCriptos.length != 1){ // when is it just onw crypto saved
         setClass([{e:myCriptos[myCriptos.length-1],c:'left'}]);
-        myCriptos[myCriptos.length-1].setAttribute('style',`left: 0%;`);
+        myCriptos[myCriptos.length-1].setAttribute('style',`left: 0%; transition: 0.5s;`);
       }
       
     }
@@ -418,17 +418,17 @@ arrow_to_slides_clickEvent=(index=0)=>{
     if(myCriptos[longg]){
       setClass([{e:myCriptos[longg],c:'focus'}]);
       setClass([{e:criptoRanking[longg],c:'selected'}]);
-      myCriptos[longg].setAttribute('style',`left: 50%;`);
+      myCriptos[longg].setAttribute('style',`left: 50%; transition: 0.5s;`);
     }
   
     if(myCriptos[longg+1]){
       setClass([{e:myCriptos[longg+1],c:'right'}]);
-      myCriptos[longg+1].setAttribute('style',`left: 100%;`);
+      myCriptos[longg+1].setAttribute('style',`left: 100%; transition: 0.5s;`);
   
     }else{
       if(myCriptos.length != 1){ // when is it just onw crypto saved
         setClass([{e:myCriptos[0],c:'left'}]);
-        myCriptos[0].setAttribute('style',`left: 100%;`);
+        myCriptos[0].setAttribute('style',`left: 100%; transition: 0.5s;`);
       }
     }
   
@@ -530,28 +530,14 @@ $('.close_setups').onclick=()=>{
 }
 
 $('#btn_Sing_Out').onclick=()=>{
-  closeSession();
-}
-
-closeSession=()=>{
-  // change the necesary to close session
-  deleteStorageData('usersSession');
-  deleteStorageData('coinSelected');
-  // crean last user`s data from session
-  user={
-    data: {},
-    historySell: [],
-    coins: [],
-    criptos: [],
-    checkPrice: [],
-    identified: false
-  }
   // this one is to load the user`s data
   firtsLoad=0;
+  closeSession();
+
+  //clear all data from session
   reloadPage()
-  // sent to login
-  navigateTo('/');
 }
+
 
 // disable or enable list style to .myCriptos
 $('.grid_list').onclick=()=>{
