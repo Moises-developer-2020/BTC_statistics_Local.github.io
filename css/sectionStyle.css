@@ -1205,3 +1205,13 @@ margin-top: 5px;
 .mainSection.hidde .openMenu_right{
     width: 100px;
 }
+.mainSection:has(.listing) .openMenu_right::after{
+    position: absolute;
+    content: '';
+    height: calc(55% - 60px);
+    width: 10px;
+    left: -10px;
+    bottom: 60px;
+    background: red;
+    opacity: 0;
+}

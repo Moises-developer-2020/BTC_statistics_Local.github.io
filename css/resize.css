@@ -7,6 +7,13 @@
     }
     
 }
+@media screen and (min-width: 551px) {
+    .slide_left,
+    .slide_right{
+        display: none;
+    }
+    
+}
 @media screen and (max-width: 550px) {
     .offline{
         font-size: 0.6em;
@@ -353,7 +360,6 @@
         width: 100%;
         z-index: 6;
     }
-    
 }
 @media screen and (max-width: 560px) {
     ::-webkit-scrollbar {

@@ -32,7 +32,7 @@ function menuSlide(eventElement, callback) {
                 return
             }
         }
-        //console.log(diffX); 
+        console.log(diffX); 
     }
   
     function handleTouchEnd(event) {
