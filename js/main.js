@@ -762,7 +762,7 @@ loadCriptoSelected= async ()=>{
       $("#price").innerHTML =$('.price','all')[index].innerHTML; 
 
       $("#percent").innerHTML =$('.percent','all')[index].innerHTML; 
-      negative_positive($("#percent"),$("#percent").innerHTML);
+      negative_positive($(".reflact_percentCripto"),$("#percent").innerHTML);
 
       // chart indicator to percent
       reflact_indicator.removeAttribute('class');

@@ -572,9 +572,11 @@ $('.menu_large').onclick=(event)=>{
   let idPage=event.target.id;
   if (event.target.classList.contains('menu_large_btn')) {
     $('.menu_large_btn','all').forEach(element => {
-      
+        // to change state of checkbox to hide or show the pages
         if(idPage != element.id){
           element.checked = false;
+        }else{ // to avoid close all pages and make sure always it shows one
+          element.checked = true;
         }
     
       
@@ -582,3 +584,15 @@ $('.menu_large').onclick=(event)=>{
   }
   
 }
+
+
+menuSlide($('.slide_right'), {
+  slideRight: () => {
+    // open or close depend of how it is
+    $('.menu-bars').click();
+  },
+  slideLeft: () => {
+    // open or close depend of how it is
+    $('.menu-bars').click();
+  }
+});

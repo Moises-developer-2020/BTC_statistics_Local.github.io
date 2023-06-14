@@ -325,9 +325,6 @@ body {
 .reflact #percent{
    
 }
-.reflact #percent.negative{
-    background: #e91e634f;
-}
 .reflact .reflact_percentCripto{
     background: #007e0561;
     border-radius: 5px;
@@ -339,6 +336,9 @@ body {
 }
 .reflact_percentCripto:has(.hidde){
     display: none;
+}
+.reflact .reflact_percentCripto.negative{
+    background: #e91e634f;
 }
 .dataH1 div span{
     display: block;
@@ -382,6 +382,12 @@ body {
     margin-bottom: 15px;
     border-radius: 10px;
     padding: 4px;
+
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
 }
 .btnGReen{
     background-color: #166200 !important;
