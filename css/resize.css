@@ -682,9 +682,10 @@
         justify-content: center;
         height: 25px;
         overflow: hidden;
-        left: 13px;
+        left: 5px;
         position: relative;
         color: #DDE1FB;
+        transform: scale(0.8);
     }
     .section2_option_window div{
         width: 40px;
@@ -886,6 +887,8 @@
         /* transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
         box-shadow: 0 0 20px 7px black;
         transition: none ;
+        background: #000000;
+        background-image: linear-gradient(246deg, #03001b, transparent);
     }
    
     .myCriptos.focus{

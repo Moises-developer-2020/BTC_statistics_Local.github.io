@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/graphic.css">
     <link rel="stylesheet" href="css/section.css">
     <link rel="stylesheet" href="css/setups.css">
+    <link rel="stylesheet" href="css/charts.css">
 
 
     <link rel="stylesheet" href="css/resize.css">
@@ -345,7 +346,25 @@
                             </div>
                         </div>
                         <div class="historyContent" style="font-size: 0.8em;display: flex;justify-content: center;align-items: center;">
-                            <div class="page_ct Content_chart active"><p>Charts</p></div>
+                            <div class="page_ct Content_chart active">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
+                                    <path class="grey" d="M40,90
+                                             A40,40 0 1,1 110,90" style="fill:none; transform: translate(-26px, -19px);"></path>
+                                    <path class="purple" d="M40,90
+                                             A40,40 0 1,1 110,90" style="fill:none; transform: translate(-26px, -19px);"></path>
+                                </svg>
+                                <div class="goal_chart_data">
+                                    <div class="goal_data">
+                                        <span>Your balance</span>
+                                        <span class="goal_price">$5,401</span>
+                                        <div class="reflactor">
+                                            <span id="reflact_indicator" style="opacity:1;" class="positive"></span>
+                                            <span class="negative">-390</span>
+                                        </div>
+                                        <span>Change goal</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="page_ct Content_ghost active"><p>Ghost buys</p></div>
                             <div class="page_ct Content_history active"><p>History sells</p></div>
                         </div>
