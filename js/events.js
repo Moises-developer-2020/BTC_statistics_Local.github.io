@@ -579,8 +579,6 @@ $('.menu_large').onclick=(event)=>{
         }else{ // to avoid close all pages and make sure always it shows one
           element.checked = true;
         }
-    
-      
     });
   }
   
@@ -589,15 +587,63 @@ $('.menu_large').onclick=(event)=>{
 // open menu with slide "fingers"
 menuSlide($('.slide_right'), {
   slideRight: (value) => { // +
-    // open or close depend of how it is
+    // open 
     if(!$('.menu').classList.contains('hidde')){
       $('.menu-bars').click();
     }
   },
   slideLeft: (value) => { // -
-    // open or close depend of how it is
+    // close
     if($('.menu').classList.contains('hidde')){
       $('.menu-bars').click();
+    }
+  }
+});
+
+// open menu of statusSection with slide "fingers"
+menuSlide($('.openMenu_right_statusSection'), {
+  slideRight: (value) => { // +
+    // open 
+    if(!$('.section2_option').classList.contains('active')){
+      $('.section2_option_window').click();
+    }
+  },
+  slideLeft: (value) => { // -
+    // close 
+    if($('.section2_option').classList.contains('active')){
+      $('.section2_option_window').click();
+    }
+  }
+});
+
+let menu_large_btn_lenght = $('.menu_large_btn','all').length;
+// open menu of historySection with slide "fingers"
+menuSlide($('.slide_left_historySection'), {
+  slideRight: (value) => { // +
+    // slide to the right
+    var index=Array.from($('.menu_large_btn','all')).findIndex(function(element, i){
+      return element.checked == true;
+    });
+
+    if(index <= menu_large_btn_lenght-1){
+      $('.menu_large_btn','all')[index-1].checked = true;
+      $('.menu_large_btn','all')[index].checked = false;
+    }
+  },
+  slideLeft: (value) => {}
+});
+
+menuSlide($('.slide_right_historySection'), {
+  slideRight: (value) => {},
+  slideLeft: (value) => { // -
+    // slide to the left 
+    var index=Array.from($('.menu_large_btn','all')).findIndex(function(element, i){
+      return element.checked == true;
+    });
+
+    if(index < menu_large_btn_lenght-1){
+      $('.menu_large_btn','all')[index+1].checked = true;
+      $('.menu_large_btn','all')[index].checked = false;
     }
   }
 });

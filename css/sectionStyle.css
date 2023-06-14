@@ -1199,6 +1199,7 @@ margin-top: 5px;
 .section1 .slide_left,
 .section1 .slide_right{
     z-index: 3;
+    opacity: 0;
 }
 
 /*menu config*/
@@ -1215,3 +1216,45 @@ margin-top: 5px;
     background: red;
     opacity: 0;
 }
+.mainSection:has(.historySection .menu_large .menu_large_item:last-child input:checked) .section1 .openMenu_right{
+    z-index: 5;
+    background: green;
+ }
+ .section2:has( .statusContent.active){
+    z-index: 5;
+ }
+/*statusSection*/
+
+.openMenu_right_statusSection{
+    width: 20px;
+    opacity: 0;
+    height: 95%;
+    top: 5%;
+}
+.section2_option:not(.active) + .statusSection .openMenu_right_statusSection{
+    right: -20px;
+    z-index: 1;
+}
+
+/*historySection*/
+.slide_left_historySection{
+    width: 20px;
+    opacity: 0;
+    height: 95%;
+    top: 5%;
+    background: rgba(0, 128, 0, 0.795);
+    z-index: 1;
+}
+.slide_right_historySection{
+    width: 20px;
+    opacity: 0;
+    height: 95%;
+    top: 5%;
+    background: rgba(0, 128, 0, 0.795);
+}
+.historySection:has(.menu_large .menu_large_item:last-child input:checked) .slide_right_historySection{
+   display: none; 
+}
+.historySection:has(.menu_large .menu_large_item:first-child input:checked) .slide_left_historySection{
+    display: none; 
+ }
