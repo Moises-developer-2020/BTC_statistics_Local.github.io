@@ -1220,6 +1220,20 @@ margin-top: 5px;
     z-index: 5;
     background: green;
  }
+ .mainSection:has(.show .historySection .menu_large .menu_large_item:last-child input:checked) .section1 .openMenu_right::after{
+    position: absolute;
+    content: '';
+    height: calc(55% - 60px);
+    width: 10px;
+    left: -10px;
+    bottom: 60px;
+    opacity: 0;
+    background: green;
+ }
+ .mainSection:has(.section2 .section2_option.active) .section1 .openMenu_right{
+    z-index: 3 !important;
+    background: rgb(128, 0, 111) !important;
+ }
  .section2:has( .statusContent.active){
     z-index: 5;
  }
