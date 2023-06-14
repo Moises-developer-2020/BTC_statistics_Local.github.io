@@ -1185,7 +1185,7 @@ margin-top: 5px;
     width: 10px;
     height: 100%;
     background: red;
-
+    opacity: 0;
 }
 .slide_right{
     position: absolute;
@@ -1194,6 +1194,7 @@ margin-top: 5px;
     width: 10px;
     height: 100%;
     background: red;
+    opacity: 0;
 }
 .section1 .slide_left,
 .section1 .slide_right{

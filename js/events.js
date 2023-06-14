@@ -16,6 +16,7 @@ $('.menu-bars').onclick=function(){
     }
     setClass([{e:$('.menu'),c:'hidde'}]);
     removeClass([{e:$('.mainSection'),c:'hidde'}]);
+    
 };
 
 
@@ -585,14 +586,18 @@ $('.menu_large').onclick=(event)=>{
   
 }
 
-
+// open menu with slide "fingers"
 menuSlide($('.slide_right'), {
-  slideRight: () => {
+  slideRight: (value) => { // +
     // open or close depend of how it is
-    $('.menu-bars').click();
+    if(!$('.menu').classList.contains('hidde')){
+      $('.menu-bars').click();
+    }
   },
-  slideLeft: () => {
+  slideLeft: (value) => { // -
     // open or close depend of how it is
-    $('.menu-bars').click();
+    if($('.menu').classList.contains('hidde')){
+      $('.menu-bars').click();
+    }
   }
 });
