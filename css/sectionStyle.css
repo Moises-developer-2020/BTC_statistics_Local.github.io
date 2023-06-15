@@ -341,6 +341,7 @@
     width: 30px;
     margin-right: 25px;
     cursor: pointer;
+    z-index: 4;
 }
 .searh_options span{
     display: block;
@@ -1195,7 +1196,7 @@ margin-top: 5px;
     position: absolute;
     right: 0;
     top: 0;
-    width: 13px;
+    width: 40px;
     height: 100%;
     background: red;
     opacity: 0;
@@ -1210,32 +1211,33 @@ margin-top: 5px;
 .mainSection.hidde .openMenu_right{
     z-index: 5 !important;
     width: 100px;
+    height: 100% !important;
+    top: 0 !important;
 }
-.mainSection:has(.listing) .openMenu_right::after{
-    position: absolute;
-    content: '';
-    height: calc(55% - 60px);
-    width: 10px;
-    left: -10px;
-    bottom: 60px;
-    background: red;
-    opacity: 0;
-}
+
 .mainSection:has(.historySection .menu_large .menu_large_item:last-child input:checked) .section1 .openMenu_right{
     z-index: 5;
     background: green;
  }
+ .mainSection:has(.show .historySection .menu_large .menu_large_item:last-child input:checked) .section1 .openMenu_right{
+    height: calc(45% - 120px);
+    background: aliceblue;
+    top: 42px;
+ }
+ .mainSection:not(.hidde):not(:has(.show .historySection .menu_large .menu_large_item:last-child input:checked)) .section1 .openMenu_right{
+    background: rgb(255, 0, 153) !important;
+    z-index: 3 !important;
+ }
  .mainSection:has(.show .historySection .menu_large .menu_large_item:last-child input:checked) .section1 .openMenu_right::after{
     position: absolute;
     content: '';
-    height: calc(55% - 60px);
-    width: 30px;
-    left: -30px;
-    bottom: 60px;
-    opacity: 0;
+    height: calc(100% + 130px );
+    width: 40px;
+    left: 0px;
+    top: calc(100% + 60px);
     background: green;
  }
- .mainSection:has(.section2 .section2_option.active) .section1 .openMenu_right{
+ .mainSection:not(.hidde):has(.section2 .section2_option.active) .section1 .openMenu_right{
     z-index: 3 !important;
     background: rgb(128, 0, 111) !important;
  }

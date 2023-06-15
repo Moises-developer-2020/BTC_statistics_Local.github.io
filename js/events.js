@@ -649,3 +649,11 @@ menuSlide($('.slide_right_historySection'), {
 
 loadCircularProgressBar($('.Content_chart'),75);
 
+$('.changeGoal_btn').onclick=()=>{
+  function random(rangoInicial, rangoFinal) {
+    return Math.floor(Math.random() * (rangoFinal - rangoInicial + 1) + rangoInicial); // Generamos un número aleatorio entre rangoInicial y rangoFinal
+   
+  }
+  loadCircularProgressBar($('.Content_chart'),random(-100,100));
+  console.log(random(-100,100));
+}

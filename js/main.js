@@ -1086,5 +1086,10 @@ homePageRoute=()=>{
             removeClass([{e:$('.url_login'),c:'hidde'}]);
         }
     }
+    
+    // add name and Email of user
+    $('.nameUser_movil').innerHTML=user.data.name;
+    $('.nameUser').innerHTML=user.data.name;
+    $('.EmailUser').innerHTML=user.data.email;
 }
 

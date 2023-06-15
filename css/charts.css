@@ -32,6 +32,7 @@
     stroke-dashoffset: 86;
     fill: none;
     transform: translate(-26px, -19px);
+    /* transition: 0.5s; */
 }
 .Content_chart.negatives svg path.purple{
     filter: drop-shadow(0px 0px 2px #770029);
@@ -59,6 +60,7 @@
     r: 2;
     fill: #166200;
     filter: drop-shadow(0px 0px 2px #166200);
+    /* transition: 0.5s; */
 }
 .Content_chart svg text{
     font-size: 0.1em; 
