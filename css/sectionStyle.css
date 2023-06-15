@@ -977,10 +977,6 @@ margin-top: 5px;
     background: #2d7702 !important;
 }
 
-.buySpace_card_data .checkbox_parent {
-    /* transform: scale(0.8); */
-}
-
 .off::after{
     position: absolute;
     content: "";
@@ -1192,7 +1188,7 @@ margin-top: 5px;
     position: absolute;
     right: 0;
     top: 0;
-    width: 10px;
+    width: 13px;
     height: 100%;
     background: red;
     opacity: 0;
@@ -1205,6 +1201,7 @@ margin-top: 5px;
 
 /*menu config*/
 .mainSection.hidde .openMenu_right{
+    z-index: 5 !important;
     width: 100px;
 }
 .mainSection:has(.listing) .openMenu_right::after{
@@ -1225,8 +1222,8 @@ margin-top: 5px;
     position: absolute;
     content: '';
     height: calc(55% - 60px);
-    width: 10px;
-    left: -10px;
+    width: 30px;
+    left: -30px;
     bottom: 60px;
     opacity: 0;
     background: green;
@@ -1241,19 +1238,19 @@ margin-top: 5px;
 /*statusSection*/
 
 .openMenu_right_statusSection{
-    width: 20px;
+    width: 40px;
     opacity: 0;
     height: 95%;
     top: 5%;
 }
 .section2_option:not(.active) + .statusSection .openMenu_right_statusSection{
-    right: -20px;
+    right: -40px;
     z-index: 1;
 }
 
 /*historySection*/
 .slide_left_historySection{
-    width: 20px;
+    width: 40px;
     opacity: 0;
     height: 95%;
     top: 5%;
@@ -1261,7 +1258,7 @@ margin-top: 5px;
     z-index: 1;
 }
 .slide_right_historySection{
-    width: 20px;
+    width: 40px;
     opacity: 0;
     height: 95%;
     top: 5%;
