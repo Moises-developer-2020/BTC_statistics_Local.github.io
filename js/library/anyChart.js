@@ -1,4 +1,4 @@
-function paintChart(typeChart, chartData, style, user={invested:29460, criptoName:""}){
+function paintChart(typeChart, chartData, style, user={invested:29460, criptoName:""},config={prices:false}){
 
     //crear chart every call
     document.getElementById("graphic_chart").innerHTML='';
@@ -130,6 +130,7 @@ function paintChart(typeChart, chartData, style, user={invested:29460, criptoNam
 
 
     chart.plot(0).yAxis().orientation('right');
+    chart.plot(0).yAxis(config.prices);
     chart.background('transparent')
     chart.scroller(false);
 

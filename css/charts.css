@@ -7,6 +7,7 @@
 .Content_chart svg {
     position: relative;
     height: 100%;
+    width: 100%;
     margin: auto;
     display: block;
     left: 3px;
@@ -19,15 +20,67 @@
 
 .Content_chart svg path.grey {
     stroke-width: 1px;
-    stroke: #c5c5ff;
+    stroke: #cbcbff66;
+    fill:none;
+    transform: translate(-26px, -19px);
 }
 
 .Content_chart svg path.purple {
     filter: drop-shadow(0px 0px 2px #166200);
     stroke: #166200;
     stroke-dasharray: calc(29 * 3.142 * 1.85);
-    stroke-dashoffset: 64;
+    stroke-dashoffset: 86;
+    fill: none;
+    transform: translate(-26px, -19px);
 }
+.Content_chart.negatives svg path.purple{
+    filter: drop-shadow(0px 0px 2px #770029);
+    stroke: #b2003c;
+}
+.Content_chart.negatives svg #progressBall{
+    filter: drop-shadow(0px 0px 2px #770029);
+    fill: #b2003c;
+
+}
+.Content_chart svg path.progressGuia {
+    stroke: none;
+    fill: none;
+    transform: translate(-41px, -19px);
+}
+.Content_chart svg text#progressText{
+    transform: translate(-44px, -16px);
+    font-size: 0.1em; 
+    fill:#a3a3e2;
+    transition: 0.5s;
+    font-weight: bold;
+}
+.Content_chart svg #progressBall{
+    transform: translate(-26px, -19px);
+    r: 2;
+    fill: #166200;
+    filter: drop-shadow(0px 0px 2px #166200);
+}
+.Content_chart svg text{
+    font-size: 0.1em; 
+    fill:#a3a3e2;
+}
+.Content_chart svg .load0{
+    transform: translate(17px, 77px);
+}
+.Content_chart svg .load100{
+    transform: translate(74px, 77px);
+}
+.Content_chart svg text.load100::after{
+    content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  position: absolute;
+  left: 50px;
+  top: 50px;
+}
+
 
 .goal_chart_data{
     position: absolute;
@@ -67,5 +120,4 @@
     position: relative;
     cursor: pointer;
 }
-
 

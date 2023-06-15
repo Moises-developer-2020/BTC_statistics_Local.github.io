@@ -890,6 +890,16 @@
         background: #000000;
         background-image: linear-gradient(246deg, #03001b, transparent);
     }
+    .myCriptos .status{
+        border-top: 5px solid #7c7bff24;
+        border-bottom: 5px solid #7c7bff24;
+    }
+    .myCriptos.positives{
+        background-image: linear-gradient(300deg, #0015ab00, #1aab005e);
+    }
+    .myCriptos.negatives{
+        background-image: linear-gradient(300deg,#0015ab00, #600000bf);
+    }
    
     .myCriptos.focus{
         opacity: 1;

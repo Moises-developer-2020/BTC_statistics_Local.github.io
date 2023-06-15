@@ -115,21 +115,21 @@
                             </div>
                         </div>
                         <div class="chartContent"> 
-                            <div class="graphic_chart" id="graphic_chart">
+                            <div class="graphic_chart not_prices" id="graphic_chart">
                                 <div class="spin-wrapper" style="position: absolute; height: calc(100% - 33px); backdrop-filter: blur(3px); z-index: 1; top: 0; background:none;">
                                     <div class="spinonediv-1" style="transform: translate(-50%, -50%) scale(1.5); margin:-12px 0 0 0px;"></div>
                                 </div>
                             </div>
                             <div class="chart_options">
                                 <div class="chart_options_buttom">
-                                    <button>1H</button>
+                                    <button class="active">1H</button>
                                     <button>1D</button>
                                     <button>1W</button>
                                     <button>1M</button>
                                     <button>1Y</button>
                                 </div>
                                 <div class="chart_options_style">
-                                    <span id="chartStyle">〰</span>
+                                    <span id="chartStyle" class="active">〰</span>
                                     <span id="typeChart">〽</span>
                                 </div>
                             </div>
@@ -347,12 +347,6 @@
                         </div>
                         <div class="historyContent" style="font-size: 0.8em;display: flex;justify-content: center;align-items: center;">
                             <div class="page_ct Content_chart active">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
-                                    <path class="grey" d="M40,90
-                                             A40,40 0 1,1 110,90" style="fill:none; transform: translate(-26px, -19px);"></path>
-                                    <path class="purple" d="M40,90
-                                             A40,40 0 1,1 110,90" style="fill:none; transform: translate(-26px, -19px);"></path>
-                                </svg>
                                 <div class="goal_chart_data">
                                     <div class="goal_data">
                                         <span>Your balance</span>
@@ -363,6 +357,7 @@
                                         </div>
                                         <span>Change goal</span>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="page_ct Content_ghost active"><p>Ghost buys</p></div>
@@ -678,6 +673,7 @@
     <script src="js/main.js"></script>
     <script src="js/animation.js"></script>
     <script src="js/services/slideMenu.js"></script>
+    <script src="js/services/circleChart.js"></script>
     <script src="js/events.js"></script>
 
     <script src="js/library/anychart-core.min.js"></script>

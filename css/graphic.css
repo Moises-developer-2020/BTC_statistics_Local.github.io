@@ -2,6 +2,9 @@
     width: 103%;
     display: block;
   }
+  #graphic_chart.not_prices {
+    width: calc(103% + 50px);
+  }
 
   #graphic_chart div:not(.spin-wrapper) {
     margin-left: -63px;
@@ -15,37 +18,49 @@
     #graphic_chart {
       width: 104%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(104% + 55px);
+    }
   }
   @media screen and (max-width: 780px) {
     #graphic_chart {
       width: 105%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(105% + 55px);
+    }
   }
   @media screen and (max-width: 610px) {
     #graphic_chart {
       width: 106%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(106% + 55px);
+    }
   }
   @media screen and (max-width: 495px) {
     #graphic_chart {
       width: 108%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(108% + 55px);
+    }
   }
   @media screen and (max-width: 450px) {
     #graphic_chart {
       width: 109%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(109% + 55px);
+    }
   }
   @media screen and (max-width: 395px) {
     #graphic_chart {
       width: 110%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(110% + 55px);
+    }
   }
   /* @media screen and (max-width: 370px) {
     #graphic_chart {
@@ -57,13 +72,18 @@
     #graphic_chart {
       width: 112%;
     }
+    #graphic_chart.not_prices {
+      width: calc(112% + 50px);
+    }
   
   }
   @media screen and (max-width: 300px) {
     #graphic_chart {
       width: 114%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(114% + 50px);
+    }
   }
   @media screen and (max-width: 280px) {
     #graphic_chart {
@@ -75,11 +95,15 @@
     #graphic_chart {
       width: 116%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(116% + 50px);
+    }
   }
   @media screen and (max-width: 215px) {
     #graphic_chart {
       width: 118%;
     }
-  
+    #graphic_chart.not_prices {
+      width: calc(118% + 50px);
+    }
   }

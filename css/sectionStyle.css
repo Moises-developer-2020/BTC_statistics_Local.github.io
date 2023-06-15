@@ -98,11 +98,14 @@
     justify-content: center;
     z-index: 2;
     backdrop-filter: blur(6px);
-    font-size: 0.7em;
+    font-size: 0.5em;
     
 }
 .graphic_chart_not_valid p{
     margin-top: 60px;
+}
+.graphic_chart svg g  g g:nth-child(2) g  g g text {
+    /* fill: red; */
 }
 .chart_options{
     position: relative;
@@ -148,8 +151,12 @@
 }
 .chart_options_buttom button:hover,
 .chart_options_style span:hover{
-    background: rgb(255 31 237 / 82%);
+    background: #7a0090;
     cursor: pointer;
+}
+.chart_options_buttom button.active,
+.chart_options_style span.active{
+    background: #0d004bd1;
 }
 .chart_options_style{
     width: 107px;

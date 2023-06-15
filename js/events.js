@@ -16,7 +16,6 @@ $('.menu-bars').onclick=function(){
     }
     setClass([{e:$('.menu'),c:'hidde'}]);
     removeClass([{e:$('.mainSection'),c:'hidde'}]);
-    
 };
 
 
@@ -648,31 +647,5 @@ menuSlide($('.slide_right_historySection'), {
   }
 });
 
-loadCircularProgresBar=(percent)=>{
+loadCircularProgressBar($('.Content_chart'),75);
 
-  let rotate = 314;
-  
-  if(percent < 50){
-    percent += 3;
-  }else if(percent > 50){
-    percent += -3;
-  }
-  let clip;
-
-  const degrees = (percent / 100) * 285;
-  let part1 = degrees < 310? degrees: 310;
-  let part2 = degrees > 310 ? (degrees-310): 0;
-  rotate =part2>265? rotate+((part2/670)*100):  rotate;
-  if(percent <= 50){
-    clip =`clip: rect(0px, ${part1}px, 310px, 0px);`
-  }else{
-    clip =`clip: rect(0px, 310px, ${part2}px, 0px);`
-  }
-
-  console.log(degrees+" : "+part2);
-  console.log((degrees/100)*620);
-  
-//transform: rotate(${rotate}deg);
-  //$('.goal_chart_bars_load').setAttribute('style',`transform: rotate(${degrees+38}deg);`)
-}
-loadCircularProgresBar(2);
