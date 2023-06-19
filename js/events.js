@@ -628,12 +628,10 @@ menuSlide($('.slide_left_historySection'), {
       $('.menu_large_btn','all')[index-1].checked = true;
       $('.menu_large_btn','all')[index].checked = false;
     }
-  },
-  slideLeft: (value) => {}
+  }
 });
 
 menuSlide($('.slide_right_historySection'), {
-  slideRight: (value) => {},
   slideLeft: (value) => { // -
     // slide to the left 
     var index=Array.from($('.menu_large_btn','all')).findIndex(function(element, i){

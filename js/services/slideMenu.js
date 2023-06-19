@@ -1,4 +1,6 @@
 function menuSlide(eventElement, callback) {
+    const { slideRight = () => {}, slideLeft = () => {} } = callback; // to make it optional
+
     const divElement = eventElement;
     let startX = 0;
     let currentX = 0;
@@ -18,7 +20,7 @@ function menuSlide(eventElement, callback) {
         if (diffX > 0) {
             if ( diffX > 80) {
                 // Llamar a la función slideRight a través del objeto de devolución de llamada
-                callback.slideRight(diffX);
+                slideRight(diffX);
                 // remove event to avoid been calling to slideRight() if not up the finger
                 divElement.removeEventListener('touchmove', handleTouchMove);
                 return
@@ -26,7 +28,7 @@ function menuSlide(eventElement, callback) {
         } else if ( diffX <  0) {
             if(diffX <  -80){
                 // Llamar a la función slideRight a través del objeto de devolución de llamada
-                callback.slideLeft(diffX);
+                slideLeft(diffX);
                 // remove event to avoid been calling to slideLeft() if not up the finger
                 divElement.removeEventListener('touchmove', handleTouchMove);
                 return
