@@ -341,7 +341,7 @@
     width: 30px;
     margin-right: 25px;
     cursor: pointer;
-    z-index: 4;
+    z-index: 2;
 }
 .searh_options span{
     display: block;
@@ -1161,121 +1161,30 @@ margin-top: 5px;
     width: 100%;
     height: calc(90% - 15px);
     overflow: hidden;
-    opacity: 0;
+    opacity: 1;
     display: none;
     right: 0;
     left: 0;
     margin: auto;
+    transition: 0.5s;
 }
 .menu_large:has(.menu_large_item:nth-child(1) input[type="checkbox"]:checked) + .historyContent .page_ct:nth-child(1).active,
 .menu_large:has(.menu_large_item:nth-child(2) input[type="checkbox"]:checked) + .historyContent .page_ct:nth-child(2).active,
 .menu_large:has(.menu_large_item:nth-child(3) input[type="checkbox"]:checked) + .historyContent .page_ct:nth-child(3).active{
-    display: flex; 
+    display: flex !important; 
     animation: showPage 0.3s linear forwards;
-    
 }
 @keyframes showPage{
     100%{
-        opacity: 1; 
+        /* opacity: 1;  */
+        
     }
 }
 
 .section1{
     position: relative;
 }
-.slide_left{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 10px;
-    height: 100%;
-    background: red;
-    opacity: 0;
-}
-.slide_right{
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 40px;
-    height: 100%;
-    background: red;
-    opacity: 0;
-}
-.section1 .slide_left,
-.section1 .slide_right{
-    z-index: 3;
-    opacity: 0;
-}
-
-/*menu config*/
-.mainSection.hidde .openMenu_right{
-    z-index: 5 !important;
-    width: 100px;
-    height: 100% !important;
-    top: 0 !important;
-}
-
-.mainSection:has(.historySection .menu_large .menu_large_item:last-child input:checked) .section1 .openMenu_right{
-    z-index: 5;
-    background: green;
- }
- .mainSection:has(.show .historySection .menu_large .menu_large_item:last-child input:checked) .section1 .openMenu_right{
-    height: calc(45% - 120px);
-    background: aliceblue;
-    top: 42px;
- }
- .mainSection:not(.hidde):not(:has(.show .historySection .menu_large .menu_large_item:last-child input:checked)) .section1 .openMenu_right{
-    background: rgb(255, 0, 153) !important;
-    z-index: 3 !important;
- }
- .mainSection:has(.show .historySection .menu_large .menu_large_item:last-child input:checked) .section1 .openMenu_right::after{
-    position: absolute;
-    content: '';
-    height: calc(100% + 130px );
-    width: 40px;
-    left: 0px;
-    top: calc(100% + 60px);
-    background: green;
- }
- .mainSection:not(.hidde):has(.section2 .section2_option.active) .section1 .openMenu_right{
-    z-index: 3 !important;
-    background: rgb(128, 0, 111) !important;
- }
+/* 
  .section2:has( .statusContent.active){
     z-index: 5;
- }
-/*statusSection*/
-
-.openMenu_right_statusSection{
-    width: 40px;
-    opacity: 0;
-    height: 95%;
-    top: 5%;
-}
-.section2_option:not(.active) + .statusSection .openMenu_right_statusSection{
-    right: -40px;
-    z-index: 1;
-}
-
-/*historySection*/
-.slide_left_historySection{
-    width: 40px;
-    opacity: 0;
-    height: 95%;
-    top: 5%;
-    background: rgba(0, 128, 0, 0.795);
-    z-index: 1;
-}
-.slide_right_historySection{
-    width: 40px;
-    opacity: 0;
-    height: 95%;
-    top: 5%;
-    background: rgba(0, 128, 0, 0.795);
-}
-.historySection:has(.menu_large .menu_large_item:last-child input:checked) .slide_right_historySection{
-   display: none; 
-}
-.historySection:has(.menu_large .menu_large_item:first-child input:checked) .slide_left_historySection{
-    display: none; 
- }
+ } */

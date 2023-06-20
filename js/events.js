@@ -582,67 +582,234 @@ $('.menu_large').onclick=(event)=>{
   }
   
 }
+function validateScreenSize(height, width) {
+  const screenHeight = window.innerHeight;
+  const screenWidth = window.innerWidth;
 
-// open menu with slide "fingers"
-menuSlide($('.slide_right'), {
-  slideRight: (value) => { // +
-    // open 
-    if(!$('.menu').classList.contains('hidde')){
-      $('.menu-bars').click();
+  if (screenHeight > height && screenWidth > width) {
+    return true;
+  }
+  return false;
+}
+// the content that will has active ontouchstart event
+touch_slide('.main ',validateScreenSize(0,0),c =>{
+ 
+  let menuValidate= [// validate if element touched was one of this
+    '.criptoContent',
+    '.spin-wrapper',
+    '.chartSection',
+    '.rankingContent',
+    '.section1',
+    '.CriptoSection',
+    '.arrow_to_slides2',
+    '.mainSection',
+    '.graphic_chart',
+    '.loadinCripto'
+  ];
+
+  // open menu with slide "fingers"
+  c.menu_Slide(menuValidate, { 
+    slideRight: {
+      onStartOne:(value)=>{
+        if(!$('.menu').classList.contains('hidde')){
+          $('.menu-bars').click();
+        }
+      },
+      onEnd:(value)=>{
+        if(value.velocity.fast){
+          if(!$('.menu').classList.contains('hidde')){
+            $('.menu-bars').click();
+          }
+        }
+      }
+    },
+    slideLeft: {
+      // this it is execcute when reached the maxLeng in this case maxLength.left, only one time
+      onStartOne:(value)=>{
+        if($('.menu').classList.contains('hidde')){
+          $('.menu-bars').click();
+        }
+      },
+      onEnd:(value)=>{
+        if(value.velocity.fast){
+          if($('.menu').classList.contains('hidde')){
+            $('.menu-bars').click();
+          }
+        }
+      }
     }
-  },
-  slideLeft: (value) => { // -
-    // close
-    if($('.menu').classList.contains('hidde')){
-      $('.menu-bars').click();
+  });
+
+  let menuConfig ={
+    maxLength:{
+        up:80,
+        down:80,
+        left:$('.statusSection').clientWidth/1.5,
+        right:$('.historySection').clientWidth/1.5
+    },
+    minLength:{
+        up:0,
+        down:0,
+        left:20,
+        right:20
     }
   }
-});
+  menuValidate=[
+    '.statusContent',
+    '.statusSection'
+  ]
+  //open menu of statusSection with slide "fingers" change of windows
+  c.menu_Slide(menuValidate, { 
+    slideLeft: {
+      onStart:(value)=>{ // every move
 
-// open menu of statusSection with slide "fingers"
-menuSlide($('.openMenu_right_statusSection'), {
-  slideRight: (value) => { // +
-    // open 
-    if(!$('.section2_option').classList.contains('active')){
-      $('.section2_option_window').click();
+        $('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px);');
+        $('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px);');
+        
+      },onStartOne:(value)=>{ // when reached the maxLenght set up
+        if($('.section2_option').classList.contains('active')){
+          $('.section2_option_window').click();
+          $('.statusSection').removeAttribute('style')
+          $('.historySection').setAttribute('style','left:0%;');
+
+        }
+      },onEnd:(value)=>{ // end of the event "up the finger"
+        
+        // open the next slide if the move is faster
+        if(value.velocity.fast){
+          $('.section2_option_window').click();
+          $('.statusSection').removeAttribute('style')
+          $('.historySection').removeAttribute('style')
+          return
+        }
+
+        if(value.reached){ // reached the configured maxLenght
+          $('.statusSection').removeAttribute('style')
+          $('.historySection').removeAttribute('style')
+          return
+        }
+        //restrar position
+        $('.statusSection').setAttribute('style','left:0%')
+        $('.historySection').setAttribute('style','left:100%;');
+      }
     }
-  },
-  slideLeft: (value) => { // -
-    // close 
-    if($('.section2_option').classList.contains('active')){
-      $('.section2_option_window').click();
-    }
+  },menuConfig);
+
+  // move between page of .historySection
+  let menu_large_btn_lenght = $('.menu_large_btn','all').length;
+  var index=Array.from($('.menu_large_btn','all')).findIndex(function(element, i){
+    return element.checked == true;
+  });
+
+  // effect of opacity to show and hidde the pages 
+  function adjustOpacity(element, values, fatherWidth) {
+    let value = (values/fatherWidth)*100
+    // Adjust the value to be between 0 and 1
+    const opacityValue = value >= 0 ? Math.min(value / 100, 1) : Math.max((100 + value) / 100, 0);
+    
+    // set opacity
+    element.setAttribute('style','display:flex; opacity:'+opacityValue.toString()+' !important')
   }
-});
+  menuValidate=[
+    '.Content_ghost',
+    '.Content_chart',
+    '.Content_history'
+  ]
+  let pages= $('.page_ct','all');
+  c.menu_Slide(menuValidate, { 
+    slideLeft: {
+      onStart:(value)=>{ // every move
+        if(index < menu_large_btn_lenght-1){
+          // effect of opacity to show and hidde the pages 
+          adjustOpacity(pages[index], -value.position, menuConfig.maxLength.left)
+          adjustOpacity(pages[index+1], value.position, menuConfig.maxLength.left)
+        }
+        
+      },onStartOne:(value)=>{ // when reached the maxLenght set up
+        if(index < menu_large_btn_lenght-1){
+          $('.menu_large_btn','all')[index+1].checked = true;
+          $('.menu_large_btn','all')[index].checked = false;
+          pages.forEach(element => {
+            element.removeAttribute('style')
+          });
+          return
+        }
+        $('.menu-bars').click();
+        
+      },onEnd:(value)=>{ // end of the event "up the finger"
+        // remove effect of opacity
+        pages.forEach(element => {
+          element.removeAttribute('style')
+        });
 
-let menu_large_btn_lenght = $('.menu_large_btn','all').length;
-// open menu of historySection with slide "fingers"
-menuSlide($('.slide_left_historySection'), {
-  slideRight: (value) => { // +
-    // slide to the right
-    var index=Array.from($('.menu_large_btn','all')).findIndex(function(element, i){
-      return element.checked == true;
-    });
+        if(value.velocity.fast){
+          if(index < menu_large_btn_lenght-1){
+            $('.menu_large_btn','all')[index+1].checked = true;
+            $('.menu_large_btn','all')[index].checked = false;
+            return
+          }
+          $('.menu-bars').click();
+          
+        }
+      }
+    },
+    slideRight: {
+      onStart:(value)=>{ // every move
+        // to validate the first element to change to .statusSection
+       if(index == 0){
+        $('.statusSection').setAttribute('style','left:calc(-100% + '+(-value.position)+'px);');
+        $('.historySection').setAttribute('style','left:calc(0% - '+value.position+'px);');
+        return
+       }
+       if(index <= menu_large_btn_lenght-1){
+        // effect of opacity to show and hidde the pages 
+        adjustOpacity(pages[index], value.position, menuConfig.maxLength.left)
+        adjustOpacity(pages[index-1], -value.position, menuConfig.maxLength.left)
+      }
+      },onStartOne:(value)=>{ // when reached the maxLenght set up
+        if(index <= menu_large_btn_lenght-1){
+         if(index != 0 ){
+          $('.menu_large_btn','all')[index-1].checked = true;
+          $('.menu_large_btn','all')[index].checked = false;
+          
+         }else{
+          //open the .statusSection
+          $('.section2_option_window').click();
+          $('.statusSection').removeAttribute('style')
+          $('.historySection').removeAttribute('style')
+         }
+        }
 
-    if(index <= menu_large_btn_lenght-1){
-      $('.menu_large_btn','all')[index-1].checked = true;
-      $('.menu_large_btn','all')[index].checked = false;
+      },onEnd:(value, method)=>{ // end of the event "up the finger"
+        method.hola();
+        // remove effect of opacity
+        pages.forEach(element => {
+          element.removeAttribute('style')
+        });
+
+        if(value.velocity.fast && index <= menu_large_btn_lenght-1){
+          if(index != 0 ){
+            $('.menu_large_btn','all')[index-1].checked = true;
+            $('.menu_large_btn','all')[index].checked = false;
+            
+           }else{
+            //open the .statusSection
+            $('.section2_option_window').click();
+            $('.statusSection').removeAttribute('style')
+            $('.historySection').removeAttribute('style')
+           }
+          return
+        }
+        if(value.reached){ // reached the configured maxLenght
+          $('.statusSection').removeAttribute('style')
+          $('.historySection').removeAttribute('style')
+          return
+        }
+        $('.statusSection').setAttribute('style','left:-100%')
+        $('.historySection').setAttribute('style','left:0%;');
+      }
     }
-  }
-});
-
-menuSlide($('.slide_right_historySection'), {
-  slideLeft: (value) => { // -
-    // slide to the left 
-    var index=Array.from($('.menu_large_btn','all')).findIndex(function(element, i){
-      return element.checked == true;
-    });
-
-    if(index < menu_large_btn_lenght-1){
-      $('.menu_large_btn','all')[index+1].checked = true;
-      $('.menu_large_btn','all')[index].checked = false;
-    }
-  }
+  },menuConfig);
 });
 
 loadCircularProgressBar($('.Content_chart'),75);

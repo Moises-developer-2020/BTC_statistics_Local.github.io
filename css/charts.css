@@ -121,5 +121,6 @@
     top: 36px;
     position: relative;
     cursor: pointer;
+    z-index: 2;
 }
 

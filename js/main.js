@@ -133,7 +133,7 @@ async function paintingData(){
             arrow_to_slides_clickEvent(coin);
         }
     }
-    console.log(user);
+    //console.log(user);
     //take a peek if there is saved wallets
     if(user.coins[0] !== undefined && user.coins[0] !== ""){
         //get data of saved wallets
@@ -684,7 +684,7 @@ loadChart= async()=>{
                 user_saved_data.invested=0;
             }
 
-            await getChart(idCripto);
+            //await getChart(idCripto);
         }
         
     }
