@@ -88,9 +88,9 @@ class touch{
                 menu(this);
             }
         }
-        
+        console.log(50000000);
         function menu(element){
-            //console.log(eventElement);
+            console.log(eventElement);
             // methods
             const {
             slideRight: {
@@ -331,8 +331,9 @@ class touch{
             // start all the events
             handleTouchStart(element.event);
         }
-
+        
     }
+    
 }
 // main event
 touch_slide = (element, validate, callback)=>{

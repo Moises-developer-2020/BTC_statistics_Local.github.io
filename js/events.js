@@ -810,6 +810,32 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
       }
     }
   },menuConfig);
+
+  //events to .myCripto
+  // move slide "fingers"
+  c.menu_Slide('.myCriptos', { 
+    slideRight: {
+      onEnd:(value)=>{
+        if(value.velocity.fast){
+          
+          $('.arrow_to_slides1').click();
+        }
+      }
+    },
+    slideLeft: {
+      onEnd:(value)=>{
+        if(value.velocity.fast){
+          if($('.CriptoSection').classList.contains('listing')){
+            $('.menu-bars').click();
+            return
+          }
+          $('.arrow_to_slides2').click();
+
+        }
+      }
+    }
+  });
+
 });
 
 loadCircularProgressBar($('.Content_chart'),75);

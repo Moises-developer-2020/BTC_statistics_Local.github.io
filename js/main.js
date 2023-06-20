@@ -684,7 +684,7 @@ loadChart= async()=>{
                 user_saved_data.invested=0;
             }
 
-            //await getChart(idCripto);
+            await getChart(idCripto);
         }
         
     }

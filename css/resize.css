@@ -891,7 +891,7 @@
     }
     /* to menuSlide*/
     .myCriptos::after,.statusContent::after,.Content_chart::after,.Content_ghost::after,.Content_history::after{
-        background: rgb(255, 0, 0);
+        /* background: rgb(255, 0, 0); */
         position: absolute;
         content: '';
         width: 100%;
