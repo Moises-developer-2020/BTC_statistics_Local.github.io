@@ -35,8 +35,9 @@ class touch{
     }
 
     menu_Slide(eventElement=[], callback = {}, config=this.slideConfig){
-        console.log(this.event.target.classList.value);
+        
         const seleccionado = '.'+this.event.target.classList.value;
+        console.log(seleccionado);
         //document.querySelector(seleccionado).parentElement.classList.add('moi');
         // function validarElementoEnRango(tophijo,seleccionado) {
         //     const tophijoElement = document.querySelector(tophijo);
