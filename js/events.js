@@ -665,8 +665,8 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
   c.menu_Slide(menuValidate, { 
     slideLeft: {
       onStart:(value)=>{ // every move
-        $('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px);');
-        $('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px);');
+        $('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px); transition: 0.01s !important');
+        $('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px); transition: 0.01s !important');
         
       },onEnd:(value)=>{ // end of the event "up the finger"
         // open the next slide if the move is faster and dont come back of it move
@@ -686,7 +686,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           return
         }
         //restrar position
-        $('.statusSection').setAttribute('style','left:0%')
+        $('.statusSection').setAttribute('style','left:0%;')
         $('.historySection').setAttribute('style','left:100%;');
       }
     }
@@ -752,8 +752,8 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
       onStart:(value)=>{ // every move
         // to validate the first element to change to .statusSection
        if(index == 0){
-        $('.statusSection').setAttribute('style','left:calc(-100% + '+(-value.position)+'px);');
-        $('.historySection').setAttribute('style','left:calc(0% - '+value.position+'px);');
+        $('.statusSection').setAttribute('style','left:calc(-100% + '+(-value.position)+'px); transition: 0.05s !important');
+        $('.historySection').setAttribute('style','left:calc(0% - '+value.position+'px); transition: 0.05s !important');
         return
        }
        if(index <= menu_large_btn_lenght-1){
