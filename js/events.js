@@ -672,15 +672,15 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
       },onEnd:(value)=>{ // end of the event "up the finger"
         test.children.item(1).innerHTML='fast: '+value.velocity.fast+ ' v: '+value.velocity.value;
 
-        // open the next slide if the move is faster
-        if(value.velocity.fast){
+        // open the next slide if the move is faster and dont come back of it move
+        if(value.velocity.fast && !value.comeBack.status){
           $('.section2_option_window').click();
           $('.statusSection').removeAttribute('style')
           $('.historySection').removeAttribute('style')
           return
         }
 
-        if(value.reached){ // reached the configured maxLenght
+        if(value.reached && !value.comeBack.status){ // reached the configured maxLenght
           $('.section2_option_window').click();
 
           $('.statusSection').removeAttribute('style')
@@ -730,7 +730,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           element.removeAttribute('style')
         });
 
-        if(value.velocity.fast){
+        if(value.velocity.fast && !value.comeBack.status){
           if(index < menu_large_btn_lenght-1){
             $('.menu_large_btn','all')[index+1].checked = true;
             $('.menu_large_btn','all')[index].checked = false;
@@ -739,7 +739,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           $('.menu-bars').click();
           return
         }
-        if(value.reached){
+        if(value.reached && !value.comeBack.status){
           if(index < menu_large_btn_lenght-1){
             $('.menu_large_btn','all')[index+1].checked = true;
             $('.menu_large_btn','all')[index].checked = false;
@@ -769,7 +769,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           element.removeAttribute('style')
         });
 
-        if(value.velocity.fast && index <= menu_large_btn_lenght-1){
+        if(value.velocity.fast && index <= menu_large_btn_lenght-1 && !value.comeBack.status){
           if(index != 0 ){
             $('.menu_large_btn','all')[index-1].checked = true;
             $('.menu_large_btn','all')[index].checked = false;
@@ -782,7 +782,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
            }
           return
         }
-        if(value.reached){ // reached the configured maxLenght
+        if(value.reached && !value.comeBack.status){ // reached the configured maxLenght
           if(index <= menu_large_btn_lenght-1){
             if(index != 0 ){
              $('.menu_large_btn','all')[index-1].checked = true;
@@ -812,7 +812,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
   c.menu_Slide('.myCriptos', { 
     slideRight: {
       onEnd:(value)=>{
-        if(value.velocity.fast){
+        if(value.velocity.fast && !value.comeBack.status){
           
           $('.arrow_to_slides1').click();
         }
@@ -820,7 +820,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     },
     slideLeft: {
       onEnd:(value)=>{
-        if(value.velocity.fast){
+        if(value.velocity.fast && !value.comeBack.status){
           if($('.CriptoSection').classList.contains('listing')){
             $('.menu-bars').click();
             return

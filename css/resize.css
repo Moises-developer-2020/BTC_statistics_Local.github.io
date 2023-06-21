@@ -628,7 +628,7 @@
         margin-top: 15px;
         max-width: none;
         left: 0;
-        transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .open_statusSection::after{
         position: absolute;

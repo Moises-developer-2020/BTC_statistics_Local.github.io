@@ -125,7 +125,6 @@ class touch{
             let startY = 0;
             let currentX = 0;
             let currentY = 0;
-            let startTime=0;
             let direction = ""; // to validate only the direction started to not change it when it is moving
             let status={
                 position:0,
@@ -143,6 +142,13 @@ class touch{
                     fast:false,
                     low:false,
                     value:0
+                },
+                comeBack:{ // when start the event has diireccion but when it change opposite direction it`s comeBack
+                    status:false,
+                    x:0,
+                    y:0,
+                    difference:0,
+                    lastPosition:0,
                 }
             }
 
@@ -171,6 +177,7 @@ class touch{
                         direction = "izquierda";
                         status.position =deltaX;
                         status.elapsedTime.startTime=event.timeStamp;
+                        status.comeBack.x = deltaX
 
                         // execute it in every mmove
                         status.reached=false;
@@ -188,6 +195,7 @@ class touch{
                         direction = "derecha";
                         status.position =deltaX;
                         status.elapsedTime.startTime=event.timeStamp;
+                        status.comeBack.x = deltaX
 
                         status.reached=false;
 
@@ -206,6 +214,7 @@ class touch{
                         direction = "arriba";
                         status.position =deltaY;
                         status.elapsedTime.startTime=event.timeStamp;
+                        status.comeBack.y = deltaY
 
                         status.reached=false;
                         
@@ -220,6 +229,7 @@ class touch{
                         direction = "abajo";
                         status.position =deltaY;
                         status.elapsedTime.startTime=event.timeStamp;
+                        status.comeBack.y = deltaY
 
                         status.reached=false;
                         
@@ -238,7 +248,30 @@ class touch{
                 status.cursor.x=currentX;
                 status.cursor.y=currentY;
                 followOnStart(status)
+                
+                // vlidate if come back of direction 
+                if(Math.sign(parseFloat(status.position)) == -1 || Math.sign(parseFloat(status.position)) == -0){
+                    if(status.position < status.comeBack.lastPosition){
+                        status.comeBack.lastPosition = status.position;
+                        status.comeBack.status =false;
+                    }else{
+                        status.comeBack.status =true;
+                        status.comeBack.lastPosition = status.position;
+                        status.comeBack.difference = status.position - status.comeBack.lastPosition;
+                    } 
+                }else{
+                    if(status.position > status.comeBack.lastPosition){
+                        status.comeBack.lastPosition = status.position;
+                        status.comeBack.status =false;
+                    }else{
+                        status.comeBack.status =true;
+                        status.comeBack.lastPosition = status.position;
+
+                        status.comeBack.difference = status.comeBack.lastPosition - status.position;
+                    } 
+                }
                 //console.log(direction+":"+status.position);
+                console.log(status.comeBack);
             }
 
             function handleTouchEnd(event) {
