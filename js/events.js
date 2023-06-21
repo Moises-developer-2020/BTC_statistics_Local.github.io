@@ -652,7 +652,8 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         down:0,
         left:20,
         right:20
-    }
+    },
+    fastVelocity:8.5
   }
   menuValidate=[
     '.statusContent',
@@ -662,19 +663,10 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
   c.menu_Slide(menuValidate, { 
     slideLeft: {
       onStart:(value)=>{ // every move
-
         $('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px);');
         $('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px);');
         
-      },onStartOne:(value)=>{ // when reached the maxLenght set up
-        if($('.section2_option').classList.contains('active')){
-          $('.section2_option_window').click();
-          $('.statusSection').removeAttribute('style')
-          $('.historySection').setAttribute('style','left:0%;');
-
-        }
       },onEnd:(value)=>{ // end of the event "up the finger"
-        
         // open the next slide if the move is faster
         if(value.velocity.fast){
           $('.section2_option_window').click();
@@ -684,6 +676,8 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         }
 
         if(value.reached){ // reached the configured maxLenght
+          $('.section2_option_window').click();
+
           $('.statusSection').removeAttribute('style')
           $('.historySection').removeAttribute('style')
           return
@@ -725,17 +719,6 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           adjustOpacity(pages[index+1], value.position, menuConfig.maxLength.left)
         }
         
-      },onStartOne:(value)=>{ // when reached the maxLenght set up
-        if(index < menu_large_btn_lenght-1){
-          $('.menu_large_btn','all')[index+1].checked = true;
-          $('.menu_large_btn','all')[index].checked = false;
-          pages.forEach(element => {
-            element.removeAttribute('style')
-          });
-          return
-        }
-        $('.menu-bars').click();
-        
       },onEnd:(value)=>{ // end of the event "up the finger"
         // remove effect of opacity
         pages.forEach(element => {
@@ -749,7 +732,16 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
             return
           }
           $('.menu-bars').click();
-          
+          return
+        }
+        if(value.reached){
+          if(index < menu_large_btn_lenght-1){
+            $('.menu_large_btn','all')[index+1].checked = true;
+            $('.menu_large_btn','all')[index].checked = false;
+           
+            return
+          }
+          $('.menu-bars').click();
         }
       }
     },
@@ -766,22 +758,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         adjustOpacity(pages[index], value.position, menuConfig.maxLength.left)
         adjustOpacity(pages[index-1], -value.position, menuConfig.maxLength.left)
       }
-      },onStartOne:(value)=>{ // when reached the maxLenght set up
-        if(index <= menu_large_btn_lenght-1){
-         if(index != 0 ){
-          $('.menu_large_btn','all')[index-1].checked = true;
-          $('.menu_large_btn','all')[index].checked = false;
-          
-         }else{
-          //open the .statusSection
-          $('.section2_option_window').click();
-          $('.statusSection').removeAttribute('style')
-          $('.historySection').removeAttribute('style')
-         }
-        }
-
       },onEnd:(value, method)=>{ // end of the event "up the finger"
-        method.hola();
         // remove effect of opacity
         pages.forEach(element => {
           element.removeAttribute('style')
@@ -801,6 +778,20 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           return
         }
         if(value.reached){ // reached the configured maxLenght
+          if(index <= menu_large_btn_lenght-1){
+            if(index != 0 ){
+             $('.menu_large_btn','all')[index-1].checked = true;
+             $('.menu_large_btn','all')[index].checked = false;
+             
+            }else{
+             //open the .statusSection
+             $('.section2_option_window').click();
+             $('.statusSection').removeAttribute('style')
+             $('.historySection').removeAttribute('style')
+            }
+            return
+           }
+
           $('.statusSection').removeAttribute('style')
           $('.historySection').removeAttribute('style')
           return

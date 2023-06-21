@@ -17,7 +17,8 @@ class touch{
             down:0,
             left:0,
             right:0
-        }
+           },
+           fastVelocity:8.5
         },
         this.elapsedTimeEvents={
             click:{
@@ -93,30 +94,30 @@ class touch{
             console.log(eventElement);
             // methods
             const {
-            slideRight: {
-                onStart: slideRightOnStart = () => {},
-                onEnd: slideRightOnEnd = () => {},
-                onStartOne: slideRightOnStartOne = () => {}
-            } = {},
-            slideLeft:{
-                onStart: slideLeftOnStart = () => {},
-                onEnd: slideLeftOnEnd = () => {},
-                onStartOne: slideLeftOnStartOne = () => {}
-            } = {} ,
-            slideUp: {
-                onStart: slideUpOnStart = () => {},
-                onEnd: slideUpOnEnd = () => {},
-                onStartOne: slideUpOnStartOne = () => {}
-            } = {},
-            slideDown: {
-                onStart: slideDownOnStart = () => {},
-                onEnd: slideDownOnEnd = () => {},
-                onStartOne: slideDownOnStartOne = () => {}
-            } = {},
-            follow: {
-                onStart: followOnStart = () => {},
-                onEnd: followOnEnd = () => {}
-            } = {}
+                slideRight: {
+                    onStart: slideRightOnStart = () => {},
+                    onEnd: slideRightOnEnd = () => {},
+                    onStartOne: slideRightOnStartOne = () => {}
+                } = {},
+                slideLeft:{
+                    onStart: slideLeftOnStart = () => {},
+                    onEnd: slideLeftOnEnd = () => {},
+                    onStartOne: slideLeftOnStartOne = () => {}
+                } = {} ,
+                slideUp: {
+                    onStart: slideUpOnStart = () => {},
+                    onEnd: slideUpOnEnd = () => {},
+                    onStartOne: slideUpOnStartOne = () => {}
+                } = {},
+                slideDown: {
+                    onStart: slideDownOnStart = () => {},
+                    onEnd: slideDownOnEnd = () => {},
+                    onStartOne: slideDownOnStartOne = () => {}
+                } = {},
+                follow: {
+                    onStart: followOnStart = () => {},
+                    onEnd: followOnEnd = () => {}
+                } = {}
             } = callback;
 
             let divElement;
@@ -127,171 +128,153 @@ class touch{
             let startTime=0;
             let direction = ""; // to validate only the direction started to not change it when it is moving
             let status={
-            position:0,
-            reached:false,
-            cursor:{
-                x:0,
-                y:0
-            },
-            elapsedTime:{
-                startTime:0,
-                endTime:0,
-                elapsedTime: 0
-            },
-            velocity:{
-                fast:false,
-                low:false,
-                value:0
-            }
-            
+                position:0,
+                reached:false,
+                cursor:{
+                    x:0,
+                    y:0
+                },
+                elapsedTime:{
+                    startTime:0,
+                    endTime:0,
+                    elapsedTime: 0
+                },
+                velocity:{
+                    fast:false,
+                    low:false,
+                    value:0
+                }
             }
 
             function handleTouchStart(event) {
-            divElement = eventElement;
-            startX = event.touches[0].clientX;
-            startY = event.touches[0].clientY;
-            //$('.statusContent').classList.add('after')
+                divElement = eventElement;
+                startX = event.touches[0].clientX;
+                startY = event.touches[0].clientY;
+                //$('.statusContent').classList.add('after')
 
-            $el(divElement).addEventListener('touchmove', handleTouchMove);
-            $el(divElement).addEventListener('touchend', handleTouchEnd);
+                $el(divElement).addEventListener('touchmove', handleTouchMove);
+                $el(divElement).addEventListener('touchend', handleTouchEnd);
             }
 
             function handleTouchMove(event) {
-            currentX = event.touches[0].clientX;
-            currentY = event.touches[0].clientY;
-            
-            const deltaX = startX - currentX;
-            const deltaY = startY - currentY;
-
-            //startTime = event.timeStamp; // Guardar la marca de tiempo inicial
-
-
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                if(deltaX > config.minLength.left && direction == "" || direction == "izquierda"){
-                direction = "izquierda";
-                status.position =deltaX;
-                status.elapsedTime.startTime=event.timeStamp;
-
-                // execute it in every mmove
-                status.reached=false;
-                slideLeftOnStart(status)
+                currentX = event.touches[0].clientX;
+                currentY = event.touches[0].clientY;
                 
-                // reached the limit of the move selected
-                if(deltaX > config.maxLength.left){
-                    status.reached=true;
+                const deltaX = startX - currentX;
+                const deltaY = startY - currentY;
 
-                    // to sent exacty the configured maxLength
-                    status.position = config.maxLength.left;
+                //startTime = event.timeStamp; // Guardar la marca de tiempo inicial
 
-                    //execute onStartOne()
-                    slideLeftOnStartOne(status);
 
-                    // end event and move to the left
-                    $el(divElement).removeEventListener('touchmove', handleTouchMove);
-                    return;
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if(deltaX > config.minLength.left && direction == "" || direction == "izquierda"){
+                        direction = "izquierda";
+                        status.position =deltaX;
+                        status.elapsedTime.startTime=event.timeStamp;
+
+                        // execute it in every mmove
+                        status.reached=false;
+                        
+                        // reached the limit of the move selected
+                        if(deltaX > config.maxLength.left){
+                            status.reached=true;
+
+                            //execute onStartOne()
+                            slideLeftOnStartOne(status,methods_on);
+                        }
+                        // execute in every move
+                        slideLeftOnStart(status,methods_on)
+                    }else if(deltaX < -(config.minLength.right) && direction == "" || direction == "derecha"){
+                        direction = "derecha";
+                        status.position =deltaX;
+                        status.elapsedTime.startTime=event.timeStamp;
+
+                        status.reached=false;
+
+                        if(deltaX < -(config.maxLength.right)){
+                            status.reached=true;
+                            // execute one
+                            slideRightOnStartOne(status,methods_on);
+
+                        }
+                        // execute in every move 
+                        slideRightOnStart(status,methods_on);
+                    }
+                    
+                } else {
+                    if(deltaY > config.minLength.up && direction == "" || direction == "arriba"){
+                        direction = "arriba";
+                        status.position =deltaY;
+                        status.elapsedTime.startTime=event.timeStamp;
+
+                        status.reached=false;
+                        
+                        if(deltaY > config.maxLength.up){
+                            status.reached=true;
+                            // execute one
+                            slideUpOnStartOne(status,methods_on);
+                        }
+                        // execute in every move
+                        slideUpOnStart(status,methods_on);
+                    }else if(deltaY < -(config.minLength.down) && direction == "" || direction == "abajo"){
+                        direction = "abajo";
+                        status.position =deltaY;
+                        status.elapsedTime.startTime=event.timeStamp;
+
+                        status.reached=false;
+                        
+                        if(deltaY < -(config.maxLength.down) ){
+                            status.reached=true;
+                           
+                            // execute one
+                            slideDownOnStartOne(status,methods_on);
+
+                        }
+                        // execute in every move 
+                        slideDownOnStart(status,methods_on);
+                    }
                 }
-                }else if(deltaX < -(config.minLength.right) && direction == "" || direction == "derecha"){
-                direction = "derecha";
-                status.position =deltaX;
-                status.elapsedTime.startTime=event.timeStamp;
-
-                status.reached=false;
-                slideRightOnStart(status);
-
-                if(deltaX < -(config.maxLength.right)){
-                    status.reached=true;
-
-                    // to sent exacty the configured maxLength
-                    status.position = -config.maxLength.right;
-
-                    slideRightOnStartOne(status);
-
-                    $el(divElement).removeEventListener('touchmove', handleTouchMove);
-                    return;
-
-                } 
-                }
-                
-            } else {
-                if(deltaY > config.minLength.up && direction == "" || direction == "arriba"){
-                direction = "arriba";
-                status.position =deltaY;
-                status.elapsedTime.startTime=event.timeStamp;
-
-                status.reached=false;
-                slideUpOnStart(status);
-                
-                if(deltaY > config.maxLength.up){
-                    status.reached=true;
-
-                    // to sent exacty the configured maxLength
-                    status.position = config.maxLength.up;
-
-                    slideUpOnStartOne(status);
-
-                    $el(divElement).removeEventListener('touchmove', handleTouchMove);
-                    return;
-                }
-                }else if(deltaY < -(config.minLength.down) && direction == "" || direction == "abajo"){
-                direction = "abajo";
-                status.position =deltaY;
-                status.elapsedTime.startTime=event.timeStamp;
-
-                status.reached=false;
-                slideDownOnStart(status);
-                
-                if(deltaY < -(config.maxLength.down) ){
-                    status.reached=true;
-
-                    // to sent exacty the configured maxLength
-                    status.position = -config.maxLength.down;
-
-                    slideDownOnStartOne(status);
-
-                    $el(divElement).removeEventListener('touchmove', handleTouchMove);
-                    return;
-
-                } 
-                }
-            }
-            //to follow finger`s move
-            status.cursor.x=currentX;
-            status.cursor.y=currentY;
-            followOnStart(status)
-            console.log(direction+":"+status.position);
+                //to follow finger`s move
+                status.cursor.x=currentX;
+                status.cursor.y=currentY;
+                followOnStart(status)
+                //console.log(direction+":"+status.position);
             }
 
             function handleTouchEnd(event) {
-            startX = 0;
-            startY = 0;
-            currentX = 0;
-            currentY = 0;
-            config.minLength.down=0;
-            config.minLength.up=0;
-            config.minLength.left=0;
-            config.minLength.right=0;
-            status.elapsedTime.endTime=event.timeStamp;
-            // Calcular el tiempo transcurrido en milisegundos
-            status.elapsedTime.elapsedTime = status.elapsedTime.endTime - status.elapsedTime.startTime;
+                startX = 0;
+                startY = 0;
+                currentX = 0;
+                currentY = 0;
+                config.minLength.down=0;
+                config.minLength.up=0;
+                config.minLength.left=0;
+                config.minLength.right=0;
+                status.elapsedTime.endTime=event.timeStamp;
+                // Calcular el tiempo transcurrido en milisegundos
+                status.elapsedTime.elapsedTime = status.elapsedTime.endTime - status.elapsedTime.startTime;
 
-            //velocity of the move
-            let velocity = Math.abs(status.position / status.elapsedTime.elapsedTime);
-            status.velocity.value = velocity;
+                //velocity of the move
+                let velocity = Math.abs(status.position / status.elapsedTime.elapsedTime);
+                status.velocity.value = velocity;
 
-            // valocity considerate fast
-            if(velocity > 1.5){
-                status.velocity.fast=true
-            }else{
-                status.velocity.low=true
+                // valocity considerate fast
+                if(velocity > config.fastVelocity){
+                    status.velocity.fast=true
+                    status.velocity.low=false
+                }else{
+                    status.velocity.low=true
+                    status.velocity.fast=false
 
-            };
+                };
+                //console.log(status.velocity.fast);
 
-            //event end of the methods
-            onEndEvent();
+                //event end of the methods
+                onEndEvent();
 
-            // remove events to the children
-            $el(divElement).removeEventListener('touchend', handleTouchEnd);
-            $el(divElement).removeEventListener('touchmove', handleTouchMove);
+                // remove events to the children
+                $el(divElement).removeEventListener('touchend', handleTouchEnd);
+                $el(divElement).removeEventListener('touchmove', handleTouchMove);
 
             
             }
@@ -318,13 +301,10 @@ class touch{
                 }
             
             }
-
+            // methods to onStart, onStartOne and onEnd
             let methods_on={
-                hola:()=>{
-                    console.log('hola');
-                },
-                moi:()=>{
-                    console.log('moi');
+                stop:()=>{// stop events 'it wont move more'
+                    $el(divElement).removeEventListener('touchmove', handleTouchMove);
                 }
             }
             
@@ -337,14 +317,14 @@ class touch{
 }
 // main event
 touch_slide = (element, validate, callback)=>{
-if(!validate){return}
+    if(!validate){return}
 
-$el(element).ontouchstart=(eventt)=>{
-    const k = new touch(eventt)
+    $el(element).ontouchstart=(eventt)=>{
+        const k = new touch(eventt)
 
-    // pass the methods of k to touch_slide(c)
-    callback(k);
-}   
+        // pass the methods of k to touch_slide(c)
+        callback(k);
+    }   
 
 }
   
