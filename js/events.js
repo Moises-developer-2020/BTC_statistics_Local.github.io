@@ -604,7 +604,8 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     '.arrow_to_slides2',
     '.mainSection',
     '.graphic_chart',
-    '.loadinCripto'
+    '.loadinCripto',
+    '.titleSecion'
   ];
 
   // open menu with slide "fingers"
@@ -659,6 +660,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     '.statusContent',
     '.statusSection'
   ]
+  let test =$('.test');
   //open menu of statusSection with slide "fingers" change of windows
   c.menu_Slide(menuValidate, { 
     slideLeft: {
@@ -666,7 +668,10 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         $('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px);');
         $('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px);');
         
+        test.children.item(0).innerHTML='position: '+value.position+ ' mx: '+menuConfig.maxLength.left
       },onEnd:(value)=>{ // end of the event "up the finger"
+        test.children.item(1).innerHTML='fast: '+value.velocity.fast+ ' v: '+value.velocity.value;
+
         // open the next slide if the move is faster
         if(value.velocity.fast){
           $('.section2_option_window').click();
