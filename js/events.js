@@ -605,7 +605,8 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     '.mainSection',
     '.graphic_chart',
     '.loadinCripto',
-    '.titleSecion'
+    '.titleSecion',
+    '.menu'
   ];
 
   // open menu with slide "fingers"
@@ -645,8 +646,8 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     maxLength:{
         up:80,
         down:80,
-        left:$('.statusSection').clientWidth/1.5,
-        right:$('.historySection').clientWidth/1.5
+        left:$('.statusSection').clientWidth/2,
+        right:$('.historySection').clientWidth/2
     },
     minLength:{
         up:0,
@@ -654,13 +655,12 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         left:20,
         right:20
     },
-    fastVelocity:8.5
+    fastVelocity:8.5 // considerate fast
   }
   menuValidate=[
     '.statusContent',
     '.statusSection'
   ]
-  let test =$('.test');
   //open menu of statusSection with slide "fingers" change of windows
   c.menu_Slide(menuValidate, { 
     slideLeft: {
@@ -668,10 +668,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         $('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px);');
         $('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px);');
         
-        test.children.item(0).innerHTML='position: '+value.position+ ' mx: '+menuConfig.maxLength.left
       },onEnd:(value)=>{ // end of the event "up the finger"
-        test.children.item(1).innerHTML='fast: '+value.velocity.fast+ ' v: '+value.velocity.value;
-
         // open the next slide if the move is faster and dont come back of it move
         if(value.velocity.fast && !value.comeBack.status){
           $('.section2_option_window').click();
@@ -680,7 +677,8 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           return
         }
 
-        if(value.reached && !value.comeBack.status){ // reached the configured maxLenght
+        if(value.reached){ // reached the configured maxLenght
+          console.log(1);
           $('.section2_option_window').click();
 
           $('.statusSection').removeAttribute('style')
@@ -707,7 +705,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     const opacityValue = value >= 0 ? Math.min(value / 100, 1) : Math.max((100 + value) / 100, 0);
     
     // set opacity
-    element.setAttribute('style','display:flex; opacity:'+opacityValue.toString()+' !important')
+    element.setAttribute('style','display:flex; opacity:'+opacityValue.toString()+' !important; transition:0s;')
   }
   menuValidate=[
     '.Content_ghost',
@@ -739,7 +737,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           $('.menu-bars').click();
           return
         }
-        if(value.reached && !value.comeBack.status){
+        if(value.reached ){
           if(index < menu_large_btn_lenght-1){
             $('.menu_large_btn','all')[index+1].checked = true;
             $('.menu_large_btn','all')[index].checked = false;
@@ -782,7 +780,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
            }
           return
         }
-        if(value.reached && !value.comeBack.status){ // reached the configured maxLenght
+        if(value.reached ){ // reached the configured maxLenght
           if(index <= menu_large_btn_lenght-1){
             if(index != 0 ){
              $('.menu_large_btn','all')[index-1].checked = true;
@@ -820,7 +818,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     },
     slideLeft: {
       onEnd:(value)=>{
-        if(value.velocity.fast && !value.comeBack.status){
+        if(value.velocity.fast ){
           if($('.CriptoSection').classList.contains('listing')){
             $('.menu-bars').click();
             return

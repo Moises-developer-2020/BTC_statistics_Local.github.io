@@ -169,14 +169,12 @@ class touch{
                 const deltaX = startX - currentX;
                 const deltaY = startY - currentY;
 
-                //startTime = event.timeStamp; // Guardar la marca de tiempo inicial
-
 
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     if(deltaX > config.minLength.left && direction == "" || direction == "izquierda"){
                         direction = "izquierda";
                         status.position =deltaX;
-                        status.elapsedTime.startTime=event.timeStamp;
+                        status.elapsedTime.startTime=event.timeStamp; // Guardar la marca de tiempo inicial
                         status.comeBack.x = deltaX
 
                         // execute it in every mmove
@@ -249,7 +247,7 @@ class touch{
                 status.cursor.y=currentY;
                 followOnStart(status)
                 
-                // vlidate if come back of direction 
+                // vlidate if it come back of direction 
                 if(Math.sign(parseFloat(status.position)) == -1 || Math.sign(parseFloat(status.position)) == -0){
                     if(status.position < status.comeBack.lastPosition){
                         status.comeBack.lastPosition = status.position;
@@ -271,7 +269,7 @@ class touch{
                     } 
                 }
                 //console.log(direction+":"+status.position);
-                console.log(status.comeBack);
+                //console.log(status.comeBack);
             }
 
             function handleTouchEnd(event) {
@@ -283,8 +281,9 @@ class touch{
                 config.minLength.up=0;
                 config.minLength.left=0;
                 config.minLength.right=0;
-                status.elapsedTime.endTime=event.timeStamp;
+
                 // Calcular el tiempo transcurrido en milisegundos
+                status.elapsedTime.endTime=event.timeStamp;
                 status.elapsedTime.elapsedTime = status.elapsedTime.endTime - status.elapsedTime.startTime;
 
                 //velocity of the move
@@ -317,7 +316,7 @@ class touch{
                 followOnEnd(status);
 
                 if(direction == 'izquierda' ){
-                    slideLeftOnEnd(status)
+                    slideLeftOnEnd(status, methods_on)
                     return
                 }
                 if(direction == 'derecha' ){
@@ -325,11 +324,11 @@ class touch{
                     return
                 }
                 if(direction == 'arriba'  ){
-                    slideUpOnEnd(status)
+                    slideUpOnEnd(status, methods_on)
                     return
                 }
                 if(direction == 'abajo' ){
-                    slideDownOnEnd(status)
+                    slideDownOnEnd(status, methods_on)
                     return
                 }
             
@@ -339,6 +338,7 @@ class touch{
                 stop:()=>{// stop events 'it wont move more'
                     $el(divElement).removeEventListener('touchmove', handleTouchMove);
                 }
+                
             }
             
             // start all the events

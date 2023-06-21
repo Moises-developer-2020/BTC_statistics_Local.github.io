@@ -1166,7 +1166,7 @@ margin-top: 5px;
     right: 0;
     left: 0;
     margin: auto;
-    transition: 0.5s;
+    transition: 0.3s; 
 }
 .menu_large:has(.menu_large_item:nth-child(1) input[type="checkbox"]:checked) + .historyContent .page_ct:nth-child(1).active,
 .menu_large:has(.menu_large_item:nth-child(2) input[type="checkbox"]:checked) + .historyContent .page_ct:nth-child(2).active,
@@ -1174,10 +1174,10 @@ margin-top: 5px;
     display: flex !important; 
     animation: showPage 0.3s linear forwards;
 }
+
 @keyframes showPage{
     100%{
         /* opacity: 1;  */
-        
     }
 }
 
