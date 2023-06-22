@@ -155,7 +155,7 @@ class touch{
                 
                 const deltaX = startX - currentX;
                 const deltaY = startY - currentY;
-
+                event.preventDefault();
 
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     if(deltaX > config.minLength.left && direction == "" || direction == "izquierda"){
