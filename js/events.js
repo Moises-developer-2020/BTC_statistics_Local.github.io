@@ -654,7 +654,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         //$('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px); transition: 0.01s !important');
         //$('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px); transition: 0.01s !important');
         methods.open_close('.statusSection','.historySection').direction('left');
-        console.log(methods);
+   
       },onEnd:(value,methods)=>{ // end of the event "up the finger"
         // open the next slide if the move is faster and dont come back of it move
         if(value.velocity.fast && !value.comeBack.status){
@@ -830,7 +830,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
 // all childre of .section2 will make the effect to .section2
   c.menu_Slide(['.section2','.section2','parentContent'], { 
     slideDown: {
-      onEnd:(value,methods)=>{
+      onStartOne:(value,methods)=>{
         methods.click('.close_sect2');
       }
     }

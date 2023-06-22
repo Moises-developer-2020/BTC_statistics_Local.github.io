@@ -155,7 +155,11 @@ class touch{
                 
                 const deltaX = startX - currentX;
                 const deltaY = startY - currentY;
-                event.preventDefault();
+
+                // validate if have scroll vertical, becouse this is to avoid "pull-to-refresh" on movil
+                if (!element.event.target.scrollHeight > element.event.target.clientHeight) {
+                    event.preventDefault();
+                }
 
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     if(deltaX > config.minLength.left && direction == "" || direction == "izquierda"){
