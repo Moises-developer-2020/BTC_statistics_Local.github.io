@@ -36,52 +36,40 @@ class touch{
 
     menu_Slide(eventElement=[], callback = {}, config=this.slideConfig){
         
-        const seleccionado = '.'+this.event.target.classList.value;
-        console.log(seleccionado);
-        //document.querySelector(seleccionado).parentElement.classList.add('moi');
-        // function validarElementoEnRango(tophijo,seleccionado) {
-        //     const tophijoElement = document.querySelector(tophijo);
-            
-        //     const seleccionadoElement = document.querySelector(seleccionado);
-            
-        //     if (!tophijoElement || !seleccionadoElement) {
-        //       // Si no se encuentran los elementos con las clases especificadas, se retorna false
-        //       return false;
-        //     }
-            
-            
-        //       return tophijoElement.contains(seleccionadoElement[0]);
-        //   }
-        //   console.log(validarElementoEnRango(eventElement[0],seleccionado));
+        const seleccionado = this.event.target
+        
 
-        // function validateParentChildRelationship(hijo, padre) {
-        //     const hijoElement = document.querySelector(hijo);
-        //     const padreElement = document.querySelector(padre);
-            
-        //     if (!hijoElement || !padreElement) {
-        //       // Si no se encuentran los elementos con las clases especificadas, se retorna false
-        //       return false;
-        //     }
-            
-        //     return padreElement.contains(hijoElement);
-        // }
-
-        // valida all element class passed as array
-        if (Array.isArray(eventElement)) {
-            for (let index = 0; index < eventElement.length; index++) {
-            const classElement = eventElement[index].split('.')[1];
-            
-            // to avoid all call of menu_slide and only the call of the one touched
-            if (this.event.target.classList.contains(classElement) ) {
-                eventElement = '.'+classElement
-                //console.log(eventElement);
+        // all elements inside of the parent will eject the funcion menu()
+        if(eventElement[2] == 'parentContent'){
+            console.log(1);
+            function checkParentContent(parent){
+                const parentContent = document.querySelector(parent);
+                //console.log(seleccionado);
+                if(!parentContent){
+                    return false
+                }
+                return parentContent.contains(seleccionado);
+            }
+            console.log(checkParentContent(eventElement[1]));
+            if(checkParentContent(eventElement[1])){
                 menu(this);
-                break;
             }
+            return
+        }else if (Array.isArray(eventElement)) {// valida all element class passed as array
+            console.log(2);
+            for (let index = 0; index < eventElement.length; index++) {
+                const classElement = eventElement[index].split('.')[1];
                 
+                // to avoid all call of menu_slide and only the call of the one touched
+                if (this.event.target.classList.contains(classElement) ) {
+                    eventElement = '.'+classElement
+                    //console.log(eventElement);
+                    menu(this);
+                    break;
+                }
             }
-
-        } else { // just one class passed
+        } else { // just one class passed but many can have the same class
+            console.log(3);
             const classElement = eventElement.split('.')[1];
 
             // to avoid all call of menu_slide and only the call of the one touched
@@ -90,9 +78,9 @@ class touch{
                 menu(this);
             }
         }
-        console.log(50000000);
+        //console.log(50000000);
         function menu(element){
-            console.log(eventElement);
+            console.log("yes");
             // methods
             const {
                 slideRight: {
@@ -121,7 +109,6 @@ class touch{
                 } = {}
             } = callback;
 
-            let divElement;
             let startX = 0;
             let startY = 0;
             let currentX = 0;
@@ -154,13 +141,12 @@ class touch{
             }
 
             function handleTouchStart(event) {
-                divElement = eventElement;
                 startX = event.touches[0].clientX;
                 startY = event.touches[0].clientY;
                 //$('.statusContent').classList.add('after')
 
-                $el(divElement).addEventListener('touchmove', handleTouchMove);
-                $el(divElement).addEventListener('touchend', handleTouchEnd);
+                element.event.target.addEventListener('touchmove', handleTouchMove);
+                element.event.target.addEventListener('touchend', handleTouchEnd);
             }
 
             function handleTouchMove(event) {
@@ -306,8 +292,8 @@ class touch{
                 onEndEvent();
 
                 // remove events to the children
-                $el(divElement).removeEventListener('touchend', handleTouchEnd);
-                $el(divElement).removeEventListener('touchmove', handleTouchMove);
+                element.event.target.removeEventListener('touchend', handleTouchEnd);
+                element.event.target.removeEventListener('touchmove', handleTouchMove);
 
             
             }
@@ -337,7 +323,53 @@ class touch{
             // methods to onStart, onStartOne and onEnd
             let methods_on={
                 stop:()=>{// stop events 'it wont move more'
-                    $el(divElement).removeEventListener('touchmove', handleTouchMove);
+                    element.event.target.removeEventListener('touchmove', handleTouchMove);
+                },
+                click:(e)=>{
+                    $el(e).click();
+                },
+                open_close:(elementToOpen, elementToClose)=>{
+                    return {
+                        direction:(direction)=>{
+                            if(direction == 'right'){
+                                direction = 'left'
+                                $el(elementToOpen).setAttribute('style',`${direction}:calc(-100% + ${-status.position}px) !important; transition: 0.01s !important`);
+                                $el(elementToClose).setAttribute('style',`${direction}:calc(0% - ${status.position}px) !important; transition: 0.01s !important`);
+                                
+                            }else{
+                                $el(elementToOpen).setAttribute('style',`${direction}:calc(0% - ${status.position}px) !important; transition: 0.01s !important`);
+                                $el(elementToClose).setAttribute('style',`${direction}:calc(100% - ${status.position}px) !important; transition: 0.01s !important`);
+                            }
+
+                            return {
+                                click:(e)=>{
+                                    $el(e).click();
+                                }
+                            }
+                        },
+                        restartEffect:()=>{
+                            $el(elementToOpen).removeAttribute('style');
+                            $el(elementToClose).removeAttribute('style');
+                            return {
+                                click:(e)=>{
+                                    $el(e).click();
+                                }
+                            }
+                        },
+                        fadeIn:(maxWidth)=>{
+                            function adjustOpacity(element, values, fatherWidth) {
+                                let value = (values/fatherWidth)*100
+                                // Adjust the value to be between 0 and 1
+                                const opacityValue = value >= 0 ? Math.min(value / 100, 1) : Math.max((100 + value) / 100, 0);
+                                
+                                // set opacity
+                                element.setAttribute('style','display:flex; opacity:'+opacityValue.toString()+' !important; transition:0s;')
+                            }
+                            adjustOpacity(elementToOpen, -status.position, maxWidth)
+                            adjustOpacity(elementToClose, status.position, maxWidth)
+
+                        }
+                    }
                 }
                 
             }

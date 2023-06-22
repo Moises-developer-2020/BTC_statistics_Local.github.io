@@ -612,31 +612,17 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
   // open menu with slide "fingers"
   c.menu_Slide(menuValidate, { 
     slideRight: {
-      onStartOne:(value)=>{
+      onStartOne:(value,methods)=>{
         if(!$('.menu').classList.contains('hidde')){
-          $('.menu-bars').click();
-        }
-      },
-      onEnd:(value)=>{
-        if(value.velocity.fast){
-          if(!$('.menu').classList.contains('hidde')){
-            $('.menu-bars').click();
-          }
+          methods.click('.menu-bars');
         }
       }
     },
     slideLeft: {
       // this it is execcute when reached the maxLeng in this case maxLength.left, only one time
-      onStartOne:(value)=>{
+      onStartOne:(value,methods)=>{
         if($('.menu').classList.contains('hidde')){
-          $('.menu-bars').click();
-        }
-      },
-      onEnd:(value)=>{
-        if(value.velocity.fast){
-          if($('.menu').classList.contains('hidde')){
-            $('.menu-bars').click();
-          }
+          methods.click('.menu-bars');
         }
       }
     }
@@ -664,30 +650,32 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
   //open menu of statusSection with slide "fingers" change of windows
   c.menu_Slide(menuValidate, { 
     slideLeft: {
-      onStart:(value)=>{ // every move
-        $('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px); transition: 0.01s !important');
-        $('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px); transition: 0.01s !important');
-        
-      },onEnd:(value)=>{ // end of the event "up the finger"
+      onStart:(value,methods)=>{ // every move
+        //$('.statusSection').setAttribute('style','left:calc(0% - '+value.position+'px); transition: 0.01s !important');
+        //$('.historySection').setAttribute('style','left:calc(100% - '+value.position+'px); transition: 0.01s !important');
+        methods.open_close('.statusSection','.historySection').direction('left');
+        console.log(methods);
+      },onEnd:(value,methods)=>{ // end of the event "up the finger"
         // open the next slide if the move is faster and dont come back of it move
         if(value.velocity.fast && !value.comeBack.status){
-          $('.section2_option_window').click();
-          $('.statusSection').removeAttribute('style')
-          $('.historySection').removeAttribute('style')
+          //$('.section2_option_window').click();
+          //$('.statusSection').removeAttribute('style')
+          //$('.historySection').removeAttribute('style')
+          methods.open_close('.statusSection','.historySection').restartEffect().click('.section2_option_window');
           return
         }
 
         if(value.reached){ // reached the configured maxLenght
-          console.log(1);
-          $('.section2_option_window').click();
-
-          $('.statusSection').removeAttribute('style')
-          $('.historySection').removeAttribute('style')
+          // $('.section2_option_window').click();
+          // $('.statusSection').removeAttribute('style')
+          // $('.historySection').removeAttribute('style')
+          methods.open_close('.statusSection','.historySection').restartEffect().click('.section2_option_window');
           return
         }
-        //restrar position
-        $('.statusSection').setAttribute('style','left:0%;')
-        $('.historySection').setAttribute('style','left:100%;');
+        //restart position
+        //$('.statusSection').setAttribute('style','left:0%;')
+        //$('.historySection').setAttribute('style','left:100%;');
+        methods.open_close('.statusSection','.historySection').restartEffect()
       }
     }
   },menuConfig);
@@ -699,14 +687,14 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
   });
 
   // effect of opacity to show and hidde the pages 
-  function adjustOpacity(element, values, fatherWidth) {
+  /*function adjustOpacity(element, values, fatherWidth) {
     let value = (values/fatherWidth)*100
     // Adjust the value to be between 0 and 1
     const opacityValue = value >= 0 ? Math.min(value / 100, 1) : Math.max((100 + value) / 100, 0);
     
     // set opacity
     element.setAttribute('style','display:flex; opacity:'+opacityValue.toString()+' !important; transition:0s;')
-  }
+  }*/
   menuValidate=[
     '.Content_ghost',
     '.Content_chart',
@@ -715,11 +703,12 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
   let pages= $('.page_ct','all');
   c.menu_Slide(menuValidate, { 
     slideLeft: {
-      onStart:(value)=>{ // every move
+      onStart:(value,methods)=>{ // every move
         if(index < menu_large_btn_lenght-1){
           // effect of opacity to show and hidde the pages 
-          adjustOpacity(pages[index], -value.position, menuConfig.maxLength.left)
-          adjustOpacity(pages[index+1], value.position, menuConfig.maxLength.left)
+          // adjustOpacity(pages[index], -value.position, menuConfig.maxLength.left)
+          // adjustOpacity(pages[index+1], value.position, menuConfig.maxLength.left)
+          methods.open_close(pages[index],pages[index+1]).fadeIn(menuConfig.maxLength.left)
         }
         
       },onEnd:(value)=>{ // end of the event "up the finger"
@@ -749,19 +738,23 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
       }
     },
     slideRight: {
-      onStart:(value)=>{ // every move
+      onStart:(value,methods)=>{ // every move
         // to validate the first element to change to .statusSection
        if(index == 0){
-        $('.statusSection').setAttribute('style','left:calc(-100% + '+(-value.position)+'px); transition: 0.05s !important');
-        $('.historySection').setAttribute('style','left:calc(0% - '+value.position+'px); transition: 0.05s !important');
+        //$('.statusSection').setAttribute('style','left:calc(-100% + '+(-value.position)+'px); transition: 0.05s !important');
+        //$('.historySection').setAttribute('style','left:calc(0% - '+value.position+'px); transition: 0.05s !important');
+        methods.open_close('.statusSection','.historySection').direction('right');
+
         return
        }
        if(index <= menu_large_btn_lenght-1){
         // effect of opacity to show and hidde the pages 
-        adjustOpacity(pages[index], value.position, menuConfig.maxLength.left)
-        adjustOpacity(pages[index-1], -value.position, menuConfig.maxLength.left)
+        // adjustOpacity(pages[index], value.position, menuConfig.maxLength.left)
+        // adjustOpacity(pages[index-1], -value.position, menuConfig.maxLength.left)
+        methods.open_close(pages[index-1],pages[index]).fadeIn(menuConfig.maxLength.left)
+
       }
-      },onEnd:(value, method)=>{ // end of the event "up the finger"
+      },onEnd:(value, methods)=>{ // end of the event "up the finger"
         // remove effect of opacity
         pages.forEach(element => {
           element.removeAttribute('style')
@@ -774,9 +767,10 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
             
            }else{
             //open the .statusSection
-            $('.section2_option_window').click();
-            $('.statusSection').removeAttribute('style')
-            $('.historySection').removeAttribute('style')
+            // $('.section2_option_window').click();
+            // $('.statusSection').removeAttribute('style')
+            // $('.historySection').removeAttribute('style')
+            methods.open_close('.statusSection','.historySection').restartEffect().click('.section2_option_window');
            }
           return
         }
@@ -788,26 +782,30 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
              
             }else{
              //open the .statusSection
-             $('.section2_option_window').click();
-             $('.statusSection').removeAttribute('style')
-             $('.historySection').removeAttribute('style')
+            //  $('.section2_option_window').click();
+            //  $('.statusSection').removeAttribute('style')
+            //  $('.historySection').removeAttribute('style')
+             methods.open_close('.statusSection','.historySection').restartEffect().click('.section2_option_window');
+
             }
             return
            }
 
-          $('.statusSection').removeAttribute('style')
-          $('.historySection').removeAttribute('style')
+          // $('.statusSection').removeAttribute('style')
+          // $('.historySection').removeAttribute('style')
+          methods.open_close('.statusSection','.historySection').restartEffect()
           return
         }
-        $('.statusSection').setAttribute('style','left:-100%')
-        $('.historySection').setAttribute('style','left:0%;');
+        // $('.statusSection').setAttribute('style','left:-100%')
+        // $('.historySection').setAttribute('style','left:0%;');
+        methods.open_close('.statusSection','.historySection').restartEffect()
       }
     }
   },menuConfig);
 
   //events to .myCripto
   // move slide "fingers"
-  c.menu_Slide('.myCriptos', { 
+  c.menu_Slide('.myCriptos', { // all that have .myCripto class
     slideRight: {
       onEnd:(value)=>{
         if(value.velocity.fast && !value.comeBack.status){
@@ -826,6 +824,19 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
           $('.arrow_to_slides2').click();
 
         }
+      }
+    }
+  });
+// all childre of .CriptoSection will make the effect to .myCriptos
+  c.menu_Slide(['.myCriptos','.CriptoSection','parentContent'], { 
+    slideRight: {
+      onStart:(value,methods)=>{
+        console.log('moisesRight');
+      }
+    },
+    slideLeft: {
+      onStart:(value)=>{
+        console.log('moisesLeft');
       }
     }
   });
