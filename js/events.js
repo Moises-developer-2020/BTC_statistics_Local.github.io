@@ -827,16 +827,11 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
       }
     }
   });
-// all childre of .CriptoSection will make the effect to .myCriptos
-  c.menu_Slide(['.myCriptos','.CriptoSection','parentContent'], { 
-    slideRight: {
-      onStart:(value,methods)=>{
-        console.log('moisesRight');
-      }
-    },
-    slideLeft: {
-      onStart:(value)=>{
-        console.log('moisesLeft');
+// all childre of .section2 will make the effect to .section2
+  c.menu_Slide(['.section2','.section2','parentContent'], { 
+    slideDown: {
+      onEnd:(value,methods)=>{
+        methods.click('.close_sect2');
       }
     }
   });

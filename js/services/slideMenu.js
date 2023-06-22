@@ -370,6 +370,20 @@ class touch{
 
                         }
                     }
+                },
+                open:(elementToOpen)=>{
+                    return{
+                        direction:(direction)=>{
+                            $el(elementToOpen).setAttribute('style',`${direction}:calc(0% + ${status.position}px) !important; transition: 0.01s !important`);
+                        }
+                    }
+                },
+                close:(elementToOpen)=>{
+                    return{
+                        direction:(direction)=>{
+                            $el(elementToOpen).setAttribute('style',`${direction}:calc(0% + ${-status.position}px) !important; transition: 0.01s !important`);
+                        }
+                    }
                 }
                 
             }
