@@ -157,10 +157,11 @@ class touch{
                 const deltaY = startY - currentY;
 
                 // validate if have scroll vertical, becouse this is to avoid "pull-to-refresh" on movil
-                if (!element.event.target.scrollHeight > element.event.target.clientHeight) {
+                if (element.event.target.clientHeight == element.event.target.scrollHeight ) {
+                    console.log('entra');
                     event.preventDefault();
                 }
-
+console.log(element.event.target.scrollHeight +" : " + element.event.target.clientHeight);
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     if(deltaX > config.minLength.left && direction == "" || direction == "izquierda"){
                         direction = "izquierda";
@@ -379,7 +380,15 @@ class touch{
                     return{
                         direction:(direction)=>{
                             $el(elementToOpen).setAttribute('style',`${direction}:calc(0% + ${status.position}px) !important; transition: 0.01s !important`);
-                        }
+                        },
+                        restartEffect:()=>{
+                            $el(elementToOpen).removeAttribute('style');
+                            return {
+                                click:(e)=>{
+                                    $el(e).click();
+                                }
+                            }
+                        },
                     }
                 },
                 close:(elementToOpen)=>{

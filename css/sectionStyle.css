@@ -687,24 +687,9 @@ margin-top: 5px;
     align-items: center;
     z-index: 3;
 }
-.buySpace{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 70px;
-}
+
 .statusContent.active .buySpace{
-    position: relative;
-    display: block;
-    z-index: 2;
-    height: auto;
-    top: 40px;
-    max-width: 530px;
-    width: 95%;
-    margin: auto;
+    display: flex;
 }
 .statusContent.active{
     position: fixed;
@@ -721,36 +706,139 @@ margin-top: 5px;
 }
 .statusContent.active .center{
     position: relative;
-    height: auto;
+    height: calc(55% - 70px);
     margin: auto;
     max-width: 530px;
     width: 95%;
     top: 50px;
-    
+    overflow: auto;
+    z-index: 1;
 }
 .statusContent.active .center .invest_status_img::after{
     content: '';
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    width: 98%;
+    height: 98%;
+    border-radius: 1000px;
     background-image: linear-gradient(0deg, black 24%, transparent 100%)
 }
+.statusContent.active .center .invest_status_img{
+    transition: 2.5s;
+    position: fixed;
+    top: 100%;
+    width: 100%;
+    height: auto;
+    z-index: -2;
+    filter: blur(10px);
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: filterShow 0.5s linear  forwards, blurEffect 1.5s linear 2s forwards;
+}
+@keyframes filterShow {
+    0%{
+        top: 100%;
+        filter:blur(0px);
+    }
+    100%{
+        filter:blur(0px);
+        top: 0%;
+    }
+}
+
+@keyframes blurEffect {
+    0%{
+        filter:blur(0px);
+    }
+    100%{
+        filter:blur(50px);
+       
+    }
+}
+.statusContent.active .center .p_n{
+    left: 10px;
+    position: relative;
+}
+.statusContent.active .center .investex2{
+    padding:10px;
+}
+.statusContent.active .center .invest_status_info,
+.statusContent.active .center .p_n,
+.statusContent.active .center .investex2 {
+    opacity: 0;
+    animation: appear 1.5s linear 2.5s forwards;
+}
+.statusContent.active .center .p_n,
+.statusContent.active .center .earningStatus {
+    box-shadow:0 0 15px 5px #0000004d;
+}
+@keyframes appear {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+        text-shadow: 0 0 5px #00000075;
+    }
+}
+/* .statusContent.active .center div span{
+    opacity: 0;
+} */
+.statusContent.active .center .earnings .blue,
+.statusContent.active .center .earnings .blue,
+.statusContent.active .center .investeInfo,
+.statusContent.active .center .status,
+.statusContent.active .center .elapseTime2,
+.statusContent.active .center .priceSavd2{
+    opacity: 0;
+    display: none;
+}
+.statusContent.active .center .invest_status_info{
+    font-size: 1.2em;
+}
+.statusContent.active .center .earnings .p_n{
+    border-bottom: 2px solid aliceblue;
+}
+
+
+@keyframes OpacityEffect {
+    0%{
+        filter:blur(0px);
+    }
+    100%{
+        filter:blur(50px);
+       
+    }
+}
+
 .statusContent.active .reload{
     display: none;
 }
-.buySpace_content{
+.buySpace{
     font-size: 0.6em;
-    /* background: linear-gradient(rgb(0, 21, 171), transparent) rgb(0, 0, 0); */
+    height: 100%;
+    background: #f0f8ff0f;
+    bottom: 0;
+    position: fixed;
+    height: 40%;
+    width: calc(100% - 20px);
+    left: 0;
+    padding: 10px;
+    border-radius: 40px 40px 0 0px;
+    overflow: auto;
+    display: none;
+    z-index: 2;
+}
+.buySpace_content{
+    position: relative;
     width: 100%;
     height: 100%;
 }
-
 .buySpace_content_flex{
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 .buySpace_card_data{
@@ -876,6 +964,10 @@ margin-top: 5px;
 .statusContent.active + .profits_bottom{
     display: flex;
     z-index: 3;
+    background: #0e1032;
+}
+.section2:not(.show)  .statusSection .profits_bottom{
+    background: #0f1011;
 }
 .statusContent.show_loading + .profits_bottom .profits_content{
     display: none;
@@ -999,12 +1091,14 @@ margin-top: 5px;
 }
 
 .chart_percent{
-    height: 40px;
+    height: calc(40% - 100px);
     max-width: 530px;
-    width: 100%;
-    display: flex;
-    position: relative;
-    font-size: 0.5em;
+    width: 50%;
+    display: none;
+    position: absolute;
+    right: 10px;
+    bottom: 45%;
+    font-size: 0.4em;
     justify-content: center;
     align-items: center;
     color: aliceblue;
@@ -1012,31 +1106,58 @@ margin-top: 5px;
     padding-top: 20px;
     border-radius: 5px;
     overflow: hidden;
+    z-index: 1;
+    /*background: rgb(240 248 255 / 5%);*/
+}
+.statusContent.active .chart_percent{
+    display: flex;
+    align-items: end;
 }
 .chart_percent_negativo{
+    position: relative;
+    bottom: 0;
     background-color: #e91e63 ;
-    width: 0%;
-    border-radius: 5px 0 0px 5px;
-    height: 27px;
+    width: 30%;
+    border-radius: 5px;
+    height: 0%;
     font-size: 0.8em;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* transition: 5.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
+    margin-right: 10px;
+    box-shadow: 0 0 26px 15px #0000002e;
+    animation: increase 1.5s linear 2.5s forwards;
+    opacity: 0;
+    text-shadow: 0 0 5px #00000075;
 }
 .chart_percent_positivo{
+    position: relative;
+    bottom: 0;
     background-color: #007e05 ;
-    width: 0%;
-    border-radius: 0 5px 5px 0;
-    height: 27px;
+    width: 30%;
+    border-radius:5px;
+    height: 0% ;
     font-size: 0.8em;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* transition: 5.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
+    box-shadow: 0 0 26px 15px #0000002e;
+    animation: increase 1.5s linear 4.5s forwards;
+    opacity: 0;
+    text-shadow: 0 0 5px #00000075;
 }
 
-
+@keyframes increase {
+    0%{
+        height:0px;
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
 /*list style to .myCriptos*/
 .grid_list span{
     transition: 0.5s;

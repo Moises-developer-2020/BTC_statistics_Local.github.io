@@ -748,7 +748,7 @@ body {
     display: flex;
   }
   .statusContent.active .not_buys_to_show.show{
-    display: none;
+    height: auto;
   }
   .center.hidde{
     height: 0 !important;

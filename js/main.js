@@ -693,8 +693,8 @@ loadChart= async()=>{
 linearChart= async (data)=>{
     // remove last data
     // last colors and width
-    $('.chart_percent_negativo').setAttribute('style','width:0%;');
-    $('.chart_percent_positivo').setAttribute('style','width:0%;');
+    $('.chart_percent_negativo').setAttribute('style','height:0%;');
+    $('.chart_percent_positivo').setAttribute('style','height:0%;');
 
     // last value
     $('.chart_percent_negativo').innerHTML='0%';
@@ -702,8 +702,8 @@ linearChart= async (data)=>{
 
     let chart_data=await calculatePercentage(data);
     // to colors and width
-    $('.chart_percent_negativo').setAttribute('style','width:'+chart_data.decrease+'%;');
-    $('.chart_percent_positivo').setAttribute('style','width:'+chart_data.increase+'%;');
+    $('.chart_percent_negativo').setAttribute('style','height:'+chart_data.decrease+'%;');
+    $('.chart_percent_positivo').setAttribute('style','height:'+chart_data.increase+'%;');
 
     // value
     $('.chart_percent_negativo').innerHTML=chart_data.decrease+'%';
