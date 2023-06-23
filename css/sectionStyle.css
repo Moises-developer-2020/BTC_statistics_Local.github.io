@@ -717,8 +717,8 @@ margin-top: 5px;
 .statusContent.active .center .invest_status_img::after{
     content: '';
     position: absolute;
-    width: 98%;
-    height: 98%;
+    width: 100%;
+    height: 100%;
     border-radius: 1000px;
     background-image: linear-gradient(0deg, black 24%, transparent 100%)
 }
@@ -734,6 +734,7 @@ margin-top: 5px;
     right: 0;
     margin: auto;
     animation: filterShow 0.5s linear  forwards, blurEffect 1.5s linear 2s forwards;
+    user-select: none;
 }
 @keyframes filterShow {
     0%{
@@ -743,17 +744,46 @@ margin-top: 5px;
     100%{
         filter:blur(0px);
         top: 0%;
+        
     }
 }
 
 @keyframes blurEffect {
     0%{
-        filter:blur(0px);
+        filter:blur(10px);
     }
     100%{
         filter:blur(50px);
-       
+        background: #0088ff;
+        border-radius: 0px;
     }
+}
+.statusContent.active .center .invest_status_img::after{
+    animation: colorEffect 1.5s linear 1.8s forwards;
+ }
+@keyframes colorEffect {
+    0%{
+        background-image: linear-gradient(0deg, black 24%, transparent 100%);
+    }
+    20%{
+        background: black;
+        background-image: linear-gradient(0deg, black 34%, transparent 100%);
+    }
+    40%{
+        background-image: linear-gradient(0deg, black 44%, transparent 100%);
+    }
+    60%{
+        background: black;
+        background-image: linear-gradient(0deg, black 54%, transparent 100%);
+    }
+    80%{
+        background-image: linear-gradient(0deg, black 64%, black 100%);
+    }
+    100%{
+        background: black;
+        background-image: linear-gradient(0deg, black 100%, black 100%);
+    }
+    
 }
 .statusContent.active .center .p_n{
     left: 10px;
@@ -820,14 +850,24 @@ margin-top: 5px;
     background: #f0f8ff0f;
     bottom: 0;
     position: fixed;
-    height: 40%;
+    height: 0%;
     width: calc(100% - 20px);
     left: 0;
     padding: 10px;
     border-radius: 40px 40px 0 0px;
-    overflow: auto;
+    overflow: hidden;
     display: none;
     z-index: 2;
+    box-shadow: 0 0 26px 15px #0000002e;
+    animation: showEffect 0.5s linear 0.2s forwards;
+}
+@keyframes showEffect {
+    
+    100%{
+        height: 40%;
+        overflow: auto;
+       
+    }
 }
 .buySpace_content{
     position: relative;
