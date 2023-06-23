@@ -677,6 +677,25 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         //$('.historySection').setAttribute('style','left:100%;');
         methods.open_close('.statusSection','.historySection').restartEffect()
       }
+    },
+    slideDown: {
+      onStart:(value,methods)=>{ // every move
+        //console.log(value);
+        $el('.section2').setAttribute('style',`top:calc(45% + ${-value.position}px - 75px) !important; transition: 0.05s !important`);
+   
+      },onEnd:(value,methods)=>{ // end of the event "up the finger"
+        // open the next slide if the move is faster and dont come back of it move
+        if(value.velocity.fast && !value.comeBack.status){
+          methods.open('.section2').restartEffect().click('.close_sect2');
+          return
+        }
+
+        if(value.reached){ // reached the configured maxLenght
+          methods.open('.section2').restartEffect().click('.close_sect2');
+          return
+        }
+        methods.open('.section2').restartEffect();
+      }
     }
   },menuConfig);
 
@@ -701,7 +720,7 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     '.Content_history'
   ]
   let pages= $('.page_ct','all');
-  c.menu_Slide(menuValidate, { 
+  c.menu_Slide('.page_ct', { 
     slideLeft: {
       onStart:(value,methods)=>{ // every move
         if(index < menu_large_btn_lenght-1){
@@ -800,6 +819,26 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
         // $('.historySection').setAttribute('style','left:0%;');
         methods.open_close('.statusSection','.historySection').restartEffect()
       }
+    },
+    slideDown: {
+      onStart:(value,methods)=>{ // every move
+        console.log(menuConfig.maxLength.down);
+        console.log(value);
+        $el('.section2').setAttribute('style',`top:calc(45% + ${-value.position}px - 75px) !important; transition: 0.05s !important`);
+   
+      },onEnd:(value,methods)=>{ // end of the event "up the finger"
+        // open the next slide if the move is faster and dont come back of it move
+        if(value.velocity.fast && !value.comeBack.status){
+          methods.open('.section2').restartEffect().click('.close_sect2');
+          return
+        }
+
+        if(value.reached){ // reached the configured maxLenght
+          methods.open('.section2').restartEffect().click('.close_sect2');
+          return
+        }
+        methods.open('.section2').restartEffect();
+      }
     }
   },menuConfig);
 
@@ -827,28 +866,6 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
       }
     }
   });
-// all childre of .section2 will make the effect to .section2
-  c.menu_Slide(['.section2','.section2','parentContent'], { 
-    slideDown: {
-      onStart:(value,methods)=>{ // every move
-        console.log(value);
-        $el('.section2').setAttribute('style',`top:calc(45% + ${-value.position}px - 75px) !important; transition: 0.01s !important`);
-   
-      },onEnd:(value,methods)=>{ // end of the event "up the finger"
-        // open the next slide if the move is faster and dont come back of it move
-        if(value.velocity.fast && !value.comeBack.status){
-          methods.open('.section2').restartEffect().click('.close_sect2');
-          return
-        }
-
-        if(value.reached){ // reached the configured maxLenght
-          methods.open('.section2').restartEffect().click('.close_sect2');
-          return
-        }
-        methods.open('.section2').restartEffect();
-      }
-    }
-  },menuConfig);
 
 });
 

@@ -50,6 +50,7 @@ class touch{
                 }
                 return parentContent.contains(seleccionado);
             }
+            console.log(seleccionado);
             console.log(checkParentContent(eventElement[1]));
             if(checkParentContent(eventElement[1])){
                 menu(this);
@@ -158,10 +159,9 @@ class touch{
 
                 // validate if have scroll vertical, becouse this is to avoid "pull-to-refresh" on movil
                 if (element.event.target.clientHeight == element.event.target.scrollHeight ) {
-                    console.log('entra');
+                    /*console.log('entra');*/
                     event.preventDefault();
                 }
-console.log(element.event.target.scrollHeight +" : " + element.event.target.clientHeight);
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     if(deltaX > config.minLength.left && direction == "" || direction == "izquierda"){
                         direction = "izquierda";
@@ -179,6 +179,10 @@ console.log(element.event.target.scrollHeight +" : " + element.event.target.clie
                             //execute onStartOne()
                             slideLeftOnStartOne(status,methods_on);
                         }
+                        // to avoid move the opposite dirrecion one it start moving
+                        if(deltaX < config.minLength.down){
+                            status.position=0;
+                        }
                         // execute in every move
                         slideLeftOnStart(status,methods_on)
                     }else if(deltaX < -(config.minLength.right) && direction == "" || direction == "derecha"){
@@ -194,6 +198,10 @@ console.log(element.event.target.scrollHeight +" : " + element.event.target.clie
                             // execute one
                             slideRightOnStartOne(status,methods_on);
 
+                        }
+                        // to avoid move the opposite dirrecion one it start moving
+                        if(deltaX > -(config.minLength.right)){
+                            status.position=0;
                         }
                         // execute in every move 
                         slideRightOnStart(status,methods_on);
@@ -213,6 +221,10 @@ console.log(element.event.target.scrollHeight +" : " + element.event.target.clie
                             // execute one
                             slideUpOnStartOne(status,methods_on);
                         }
+                        // to avoid move the opposite dirrecion one it start moving
+                        if(deltaY < config.minLength.up){
+                            status.position=0;
+                        }
                         // execute in every move
                         slideUpOnStart(status,methods_on);
                     }else if(deltaY < -(config.minLength.down) && direction == "" || direction == "abajo"){
@@ -229,6 +241,10 @@ console.log(element.event.target.scrollHeight +" : " + element.event.target.clie
                             // execute one
                             slideDownOnStartOne(status,methods_on);
 
+                        }
+                        // to avoid move the opposite dirrecion one it start moving
+                        if(deltaY > -(config.minLength.down)){
+                            status.position=0;
                         }
                         // execute in every move 
                         slideDownOnStart(status,methods_on);
@@ -338,12 +354,12 @@ console.log(element.event.target.scrollHeight +" : " + element.event.target.clie
                         direction:(direction)=>{
                             if(direction == 'right'){
                                 direction = 'left'
-                                $el(elementToOpen).setAttribute('style',`${direction}:calc(-100% + ${-status.position}px) !important; transition: 0.01s !important`);
-                                $el(elementToClose).setAttribute('style',`${direction}:calc(0% - ${status.position}px) !important; transition: 0.01s !important`);
+                                $el(elementToOpen).setAttribute('style',`${direction}:calc(-100% + ${-status.position}px) !important; transition: 0.05s !important`);
+                                $el(elementToClose).setAttribute('style',`${direction}:calc(0% - ${status.position}px) !important; transition: 0.05s !important`);
                                 
                             }else{
-                                $el(elementToOpen).setAttribute('style',`${direction}:calc(0% - ${status.position}px) !important; transition: 0.01s !important`);
-                                $el(elementToClose).setAttribute('style',`${direction}:calc(100% - ${status.position}px) !important; transition: 0.01s !important`);
+                                $el(elementToOpen).setAttribute('style',`${direction}:calc(0% - ${status.position}px) !important; transition: 0.05s !important`);
+                                $el(elementToClose).setAttribute('style',`${direction}:calc(100% - ${status.position}px) !important; transition: 0.05s !important`);
                             }
 
                             return {
@@ -379,7 +395,7 @@ console.log(element.event.target.scrollHeight +" : " + element.event.target.clie
                 open:(elementToOpen)=>{
                     return{
                         direction:(direction)=>{
-                            $el(elementToOpen).setAttribute('style',`${direction}:calc(0% + ${status.position}px) !important; transition: 0.01s !important`);
+                            $el(elementToOpen).setAttribute('style',`${direction}:calc(0% + ${status.position}px) !important; transition: 0.05s !important`);
                         },
                         restartEffect:()=>{
                             $el(elementToOpen).removeAttribute('style');
@@ -394,7 +410,7 @@ console.log(element.event.target.scrollHeight +" : " + element.event.target.clie
                 close:(elementToOpen)=>{
                     return{
                         direction:(direction)=>{
-                            $el(elementToOpen).setAttribute('style',`${direction}:calc(0% + ${-status.position}px) !important; transition: 0.01s !important`);
+                            $el(elementToOpen).setAttribute('style',`${direction}:calc(0% + ${-status.position}px) !important; transition: 0.05s !important`);
                         }
                     }
                 }
