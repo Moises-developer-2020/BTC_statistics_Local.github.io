@@ -109,7 +109,7 @@ class touch{
                     onEnd: followOnEnd = () => {}
                 } = {}
             } = callback;
-
+            let detectMove = 0;
             let startX = 0;
             let startY = 0;
             let currentX = 0;
@@ -151,6 +151,8 @@ class touch{
             }
 
             function handleTouchMove(event) {
+                //console.error("end");
+                detectMove++;
                 currentX = event.touches[0].clientX;
                 currentY = event.touches[0].clientY;
                 
@@ -205,9 +207,12 @@ class touch{
                         }
                         // execute in every move 
                         slideRightOnStart(status,methods_on);
+                    }else{
+                        console.error("out the window");
+                        onEndEvent()
                     }
                     
-                } else {
+                } else{
                     if(deltaY > config.minLength.up && direction == "" || direction == "arriba"){
                         direction = "arriba";
                         status.position =deltaY;
@@ -248,6 +253,9 @@ class touch{
                         }
                         // execute in every move 
                         slideDownOnStart(status,methods_on);
+                    }else{
+                        console.error("out the window");
+                        onEndEvent()
                     }
                 }
                 //to follow finger`s move
@@ -277,7 +285,8 @@ class touch{
                     } 
                 }
                 //console.log(direction+":"+status.position);
-                //console.log(status.comeBack);
+                console.log(status.position)
+                console.log(status.cursor);
             }
 
             function handleTouchEnd(event) {
@@ -289,7 +298,7 @@ class touch{
                 config.minLength.up=0;
                 config.minLength.left=0;
                 config.minLength.right=0;
-
+                detectMove = 0;
                 // Calcular el tiempo transcurrido en milisegundos
                 status.elapsedTime.endTime=event.timeStamp;
                 status.elapsedTime.elapsedTime = status.elapsedTime.endTime - status.elapsedTime.startTime;
