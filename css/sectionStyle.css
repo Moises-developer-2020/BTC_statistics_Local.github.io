@@ -874,6 +874,7 @@ margin-top: 5px;
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 .buySpace_content_flex{
     display: flex;
@@ -883,12 +884,27 @@ margin-top: 5px;
 }
 
 .buySpace_card_data{
-    position: relative;
-    display: block;
+    display: flex;
     width: 100%;
-
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
-
+.buySpace_item{
+    text-align: center;
+}
+.buySpace_card_data .page1,
+.buySpace_card_data .buySpace_bottom{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+}
+.buySpace_card_data .buySpace_bottom{
+    left: 100%;
+    top: 50%;
+    bottom: 50%;
+}
 .buySpace_ghostBuy.active{
     height: 120px;
 }
@@ -927,6 +943,27 @@ margin-top: 5px;
 .buySpace_ghostBuy .ghostBuy2{
     padding-top: 10px !important;
     padding-bottom: 10px !important;
+}
+.buySpace-pages-option {
+    position: absolute;
+    content: '';
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    left: 0;
+    top: 5px;
+}
+.buySpace-pages-option span{
+    margin: 5px;
+    height: 15px;
+    width: 15px;
+    background: bisque;
+    border-radius: 50px;
+}
+.buySpace-pages-option span.active{
+    background: blue;
 }
 .buySpace input {
     font-size: 18px;

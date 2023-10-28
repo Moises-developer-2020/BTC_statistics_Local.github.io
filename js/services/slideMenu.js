@@ -41,7 +41,7 @@ class touch{
 
         // all elements inside of the parent will eject the funcion menu()
         if(eventElement[2] == 'parentContent'){
-            console.log(1);
+            console.log('parentContent');
             function checkParentContent(parent){
                 const parentContent = document.querySelector(parent);
                 //console.log(seleccionado);
@@ -208,7 +208,7 @@ class touch{
                         // execute in every move 
                         slideRightOnStart(status,methods_on);
                     }else{
-                        console.error("out the window");
+                        // console.error("out the window");
                         onEndEvent()
                     }
                     
@@ -254,7 +254,7 @@ class touch{
                         // execute in every move 
                         slideDownOnStart(status,methods_on);
                     }else{
-                        console.error("out the window");
+                        // console.error("out the window");
                         onEndEvent()
                     }
                 }

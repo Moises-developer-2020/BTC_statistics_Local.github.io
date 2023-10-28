@@ -811,4 +811,18 @@ function mainEvent(event, handle){
     default:
         break;
     }
-  }
+}
+// effect to show how the number increase or decrease
+increase_decrease_numbers=(maxNumber, element)=>{
+    element = $(element);
+    let number = 0;
+    let setIntervalTimer=100;
+    var timer=setInterval(() => {
+        number++;
+        element.innerHTML= number
+        if(number == maxNumber){
+        setIntervalTimer=0;
+        clearInterval(timer);
+        }
+    }, setIntervalTimer);
+}

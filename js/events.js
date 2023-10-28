@@ -867,6 +867,29 @@ touch_slide('.main ',validateScreenSize(0,0),c =>{
     }
   });
 
+  c.menu_Slide(['.page1','buySpace','parentContent'], { 
+    slideRight: {
+      onEnd:(value)=>{
+        if(value.velocity.fast && !value.comeBack.status){
+          
+          $('.arrow_to_slides1').click();
+        }
+      }
+    },
+    slideLeft: {
+      onEnd:(value)=>{
+        if(value.velocity.fast ){
+          if($('.CriptoSection').classList.contains('listing')){
+            $('.menu-bars').click();
+            return
+          }
+          $('.arrow_to_slides2').click();
+
+        }
+      }
+    }
+  });
+
 });
 
 loadCircularProgressBar($('.Content_chart'),75);
@@ -879,3 +902,6 @@ $('.changeGoal_btn').onclick=()=>{
   loadCircularProgressBar($('.Content_chart'),random(-100,100));
   console.log(random(-100,100));
 }
+
+// testing
+//increase_decrease_numbers(100,'#price');
